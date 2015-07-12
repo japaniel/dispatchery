@@ -68,12 +68,19 @@
 
 <template name="techs">
     <div class="techs">
+      <thead>
+      <tr>
+          <th class="left col-md-1">Techs</th>
+          <th class="center col-md-1">Monday</th>
+          <th class="center col-md-2">Tuesday</th>
+          <th class="center col-md-2">Wednesday</th>
+          <th class="center col-md-2">Thursday</th>
+          <th class="center col-md-2">Friday</th>
+          <th class="right col-md-2">Saturday</th>
+          <th class="right col-md-2">Sunday</th>
+      </tr>
+      </thead>
         <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Techs</th>
-            </tr>
-            </thead>
             <tbody>
             {{#each techs}}
                 {{> tech}}
@@ -85,10 +92,9 @@
 
 <template name='tech'>
     <tr class="tech">
-        <td><span>{{name}}</span>
+      <th class="left col-md-1">{{name}}</th>
             <div class="btn-group text-right pull-right">
                 <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
             </div>
-        </td>
-    </tr>
+       </tr>            
 </template>
