@@ -1,0 +1,55 @@
+<template name="variables">
+
+{{>statusTable}}
+</template>
+
+<template name="statusTable">
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control inputName" id="exampleInputEmail3" placeholder="Status">
+        </div>
+        <div class="form-group">
+            <div class="input-group demo2">
+                <input type="text" value="" class="form-control inputColor" />
+                <span class="input-group-addon"><i></i></span>
+            </div>
+            <!--<input type="text" class="demo1 inputColor form-control" placeholder="Color" />-->
+        </div>
+        <button type="submit" id="addStatusId" class="btn btn-default">Add In</button>
+    </form>
+
+    <div class="techsWorking">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="left col-md-10">Name</th>
+                <th class="col-md-1 center ">Color</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each status}}
+              {{>statusRow}}
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<template name="statusRow">
+    <!--<tr class="tech">-->
+        <!--<td>-->
+            <!--{{name}}-->
+        <!--</td>-->
+        <!--<td>-->
+            <!--{{color}}-->
+        <!--</td>-->
+    <!--</tr>-->
+
+        <tr class="techWorking">
+            <td class=""> {{statusName}}</td>
+            <td class="center" bgcolor="{{color}}"></td>
+            <button class="btn btn-default">
+               <span class="glyphicon glyphicon-remove pull-right xmarks" ></span>
+            </button>
+        </tr>
+</template>
