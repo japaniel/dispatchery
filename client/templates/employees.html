@@ -70,14 +70,7 @@
     <div class="techs">
       <thead>
       <tr>
-          <th class="left col-md-1">Techs</th>
-          <th class="center col-md-1">Monday</th>
-          <th class="center col-md-2">Tuesday</th>
-          <th class="center col-md-2">Wednesday</th>
-          <th class="center col-md-2">Thursday</th>
-          <th class="center col-md-2">Friday</th>
-          <th class="right col-md-2">Saturday</th>
-          <th class="right col-md-2">Sunday</th>
+        <th>Techs</th>
       </tr>
       </thead>
         <table class="table table-hover">
@@ -92,9 +85,19 @@
 
 <template name='tech'>
     <tr class="tech">
-      <th class="left col-md-1">{{name}}</th>
+      <th class="col-sm-1 col-sm-offset-1">1{{name}}</th>
+      <div class="checkbox">
+      <lable class="left col-sm-1"><input type="checkbox">Monday</lable>
+      <lable class="left col-sm-1"><input type="checkbox">Tuseday</lable>
+      <lable class="left col-sm-1"><input type="checkbox">Wedensday</lable>
+      <lable class="left col-sm-1"><input type="checkbox">Thursday</lable>
+      <lable class="left col-sm-1"><input type="checkbox">Friday</lable>
+      <lable class="left col-sm-1"><input type="checkbox">Saturday</lable>
+      <lable class="left col-sm-1"><input type="checkbox">Sunday</lable>
+
             <div class="btn-group text-right pull-right">
                 <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
             </div>
-       </tr>            
+            </div>
+       </tr>
 </template>
