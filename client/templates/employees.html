@@ -63,41 +63,127 @@
 </template>
 
 
-
-
-
 <template name="techs">
     <div class="techs">
-      <thead>
-      <tr>
-        <th>Techs</th>
-      </tr>
-      </thead>
         <table class="table table-hover">
-            <tbody>
-            {{#each techs}}
+            <thead>
+            <tr>
+              <th>Techs</th>
+              <th>Scheduled Time</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wedensday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Send<br> To Work</th>
+            </tr>
+            </thead>
+            <tbody><tr>
+            <td>{{#each techs}}
                 {{> tech}}
-            {{/each}}
-            </tbody>
+            {{/each}}</td>
+            <td>{{#each techs}}
+                {{> time}}
+            {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> monday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> Tuesday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> Wedensday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> Thursday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> Friday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> Saturday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> Sunday}}
+              {{/each}}</td>
+              <td>{{#each techs}}
+                  {{> sendwork}}
+              {{/each}}</td>
+            </tr>
+              </tbody>
         </table>
     </div>
 </template>
 
 <template name='tech'>
     <tr class="tech">
-      <th class="row-fluid">{{name}}</th>
-      <div class="checkbox">
-      <lable class="left col-sm-1"><input type="checkbox">Monday</lable>
-      <lable class="left col-sm-1"><input type="checkbox">Tuseday</lable>
-      <lable class="left col-sm-1"><input type="checkbox">Wedensday</lable>
-      <lable class="left col-sm-1"><input type="checkbox">Thursday</lable>
-      <lable class="left col-sm-1"><input type="checkbox">Friday</lable>
-      <lable class="left col-sm-1"><input type="checkbox">Saturday</lable>
-      <lable class="left col-sm-1"><input type="checkbox">Sunday</lable>
+        <td><span>{{name}}</span>
+        </td>
+    </tr>
+</template>
 
-            <div class="btn-group text-right pull-right">
-                <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
+<template name='monday'>
+    <tr class="monday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Monday</lable>
             </div>
+       </tr>
+</template>
+
+<template name='Tuesday'>
+    <tr class="Tuesday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Tuesday</lable>
             </div>
+       </tr>
+</template>
+
+<template name='Wedensday'>
+    <tr class="Wedensday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Wedensday</lable>
+            </div>
+       </tr>
+</template>
+
+<template name='Thursday'>
+    <tr class="Thursday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Thursday</lable>
+            </div>
+       </tr>
+</template>
+
+<template name='Friday'>
+    <tr class="Friday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Friday</lable>
+            </div>
+       </tr>
+</template>
+
+<template name='Saturday'>
+    <tr class="Saturday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Saturday</lable>
+            </div>
+       </tr>
+</template>
+
+<template name='Sunday'>
+    <tr class="Sunday">
+      <div class="row checkbox">
+      <lable class="left col-md-1"><input type="checkbox">Sunday</lable>
+            </div>
+       </tr>
+</template>
+
+<template name='sendwork'>
+    <tr class="sendwork">
+         <div class="btn-group text-right pull-right">
+             <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
+         </div>
        </tr>
 </template>
