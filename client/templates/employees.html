@@ -76,40 +76,54 @@
                                     <tr>
                                       <th>
                                       <div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Monday</button>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Monday
+                                          </label>
                                       </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Tuseday</button>
-                                      </div>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Tuseday
+                                          </label>
+                                        </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Wedesnday</button>
-                                      </div>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Wednesday
+                                          </label>
+                                        </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Thurday</button>
-                                      </div>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Thurday
+                                          </label>
+                                        </div>
                                   </th>
                                   </tr>
                                   </thead>
                                     <tbody><tr>
                                       <td><div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Friday</button>
-                                      </div>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Friday
+                                          </label>
+                                        </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Saturday</button>
-                                      </div>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Saturday
+                                          </label>
+                                        </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
-                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Sunday</button>
-                                      </div>
+                                        <label>
+                                          <input type="checkbox" data-toggle="toggle">Sunday
+                                          </label>
+                                        </div>
                                     </td>
                                     </tr>
                                   </tbody>
@@ -151,39 +165,6 @@
                 {{#each techs}}
                     {{>schedule}}
                 {{/each}}
-         <!-- <td>{{#each techs}}
-                {{> tech}}<br>
-            {{/each}}</td>
-            <td>Workin on this</td>
-              <td>{{#each techs}}
-                  {{> monday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> Tuesday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> Wedensday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> Thursday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> Friday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> Saturday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> Sunday}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> sendwork}}
-              {{/each}}</td>
-              <td>{{#each techs}}
-                  {{> removeTech}}
-              {{/each}}</td> -->
-
-
               </tbody>
         </table>
     </div>
@@ -195,16 +176,56 @@
           <div>{{name}}</div>
         </td>
         <td>
+          <label>Time Of<br>Day Here</label>
+        </td>
+        <td>
           <div class="row checkbox">
             <label class="left col-md-1"><input type="checkbox">Monday</label>
           </div>
         </td>
         <td>
           <div class="row checkbox">
-            <lable class="left col-md-1"><input type="checkbox">Tuesday</lable>
+          <label class="left col-md-1"><input type="checkbox">Tuesday</label>
           </div>
-        </td>
-      </tr>
+          </td>
+          <td>
+            <div class="row checkbox">
+            <label class="left col-md-1"><input type="checkbox">Wedensday</label>
+            </div>
+            </td>
+            <td>
+              <div class="row checkbox">
+              <label class="left col-md-1"><input type="checkbox">Thursday</label>
+            </div>
+            </td>
+            <td>
+              <div class="row checkbox">
+              <label class="left col-md-1"><input type="checkbox">Friday</label>
+            </div>
+            </td>
+            <td>
+              <div class="row checkbox">
+              <label class="left col-md-1"><input type="checkbox">Saturday</label>
+            </div>
+            </td>
+            <td>
+              <div class="row checkbox">
+              <label class="left col-md-1"><input type="checkbox">Sunday</label>
+            </div>
+            </td>
+            <td>
+              <div class="btn-group center">
+              <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
+            </div>
+          </td>
+            <td>
+              <div>
+              <button class="btn btn-default">
+                 <span class="glyphicon glyphicon-remove deleteTech"></span>
+              </button>
+            </div>
+              </td>
+  </tr>
 </template>
 
 
@@ -218,7 +239,7 @@
 <template name='monday'>
     <tr class="monday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Monday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Monday</label>
             </div>
        </tr>
 </template>
@@ -226,7 +247,7 @@
 <template name='Tuesday'>
     <tr class="Tuesday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Tuesday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Tuesday</label>
             </div>
        </tr>
 </template>
@@ -234,7 +255,7 @@
 <template name='Wedensday'>
     <tr class="Wedensday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Wedensday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Wedensday</label>
             </div>
        </tr>
 </template>
@@ -242,7 +263,7 @@
 <template name='Thursday'>
     <tr class="Thursday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Thursday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Thursday</label>
             </div>
        </tr>
 </template>
@@ -250,7 +271,7 @@
 <template name='Friday'>
     <tr class="Friday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Friday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Friday</label>
             </div>
        </tr>
 </template>
@@ -258,7 +279,7 @@
 <template name='Saturday'>
     <tr class="Saturday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Saturday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Saturday</label>
             </div>
        </tr>
 </template>
@@ -266,7 +287,7 @@
 <template name='Sunday'>
     <tr class="Sunday">
       <div class="row checkbox">
-      <lable class="left col-md-1"><input type="checkbox">Sunday</lable>
+      <label> class="left col-md-1"><input type="checkbox">Sunday</label>
             </div>
        </tr>
 </template>
