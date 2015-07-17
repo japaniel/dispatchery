@@ -5,8 +5,11 @@
 # but you can also edit it by hand.
 
 meteor-platform
+insecure
+iron:router
+accounts-meteor-developer
 twbs:bootstrap
 underscore
-accounts-meteor-developer
-iron:router
-insecure
+mrt:moment
+copleykj:livestamp
+risul:bootstrap-colorpicker
