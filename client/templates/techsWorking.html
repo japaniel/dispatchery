@@ -1,0 +1,112 @@
+<template name="techsWorking">
+
+
+
+    {{#if showChatModal}}
+        {{>chatModal}}
+    {{/if}}
+
+  <div class="techsWorking">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Techs</th>
+            <th class="center col-md-4">Chat</th>
+            <th class="col-md-1 center ">Status</th>
+            <th class="col-md-2 center">Tickets Before Today</th>
+            <th class="col-md-1 center">Dispatched Today</th>
+            <th class="col-md-2 center">Time Since Last</th>
+            <th class="col-md-1 center">Click it and Ticket</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each techsWorking}}
+          {{> techWorking}}
+        {{/each}}
+      </tbody>
+      </table>
+  </div>
+</template>
+
+
+
+<template name="chat">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-comment"></span> Chat
+                        <div class="btn-group pull-right">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height: 450px; overflow:auto;">
+                        <ul class="chat">
+                             {{#each chatMessage}}
+                                {{> chatLines}}
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input" type="text" class="form-control input-sm input" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm save" id="btn-chat">
+                                Send</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="chatLines">
+    <li class="left clearfix"><span class="chat-img pull-left">
+                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                        </span>
+        <div class="chat-body clearfix">
+            <div class="header">
+                <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
+                <span class="glyphicon glyphicon-time"></span>{{livestamp time}}</small>
+            </div>
+            <p>
+                {{message}}
+            </p>
+        </div>
+    </li>
+</template>
+
+<template name='techWorking'>
+    <tr class="techWorking" bgcolor="{{color}}">
+        <td>{{name}}</td>
+        <td class="lastChatLine"> {{line}}</td>
+        <td class="center">{{>options}}</td>
+        <td class="center">{{dispatched}}</td>
+        <td class="center">{{totaltickets}}</td>
+        <td class="center">{{livestamp timesincelast}}</td>
+        <td class="center">
+            <a><span style="font-size:1.5em" class="glyphicons glyphicon glyphicon-plus plus-one"></span></a>
+            <a><span class="glyphicon glyphicon-option-horizontal"></span></a>
+            <a><span class="glyphicon glyphicon-earphone"></span></a>
+          </td>
+    </tr>
+</template>
+
+<template name="options">
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+            {{status}}
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                {{#each statuses }}
+                    <li role="presentation">{{statusName}}</li>
+                {{/each}}
+                <li role="presentation" class="divider"></li>
+                <li id="remove" role="presentation">Remove From Work</li>
+
+        </ul>
+    </div>
+</template>

@@ -5,3 +5,11 @@
 .center {
    text-align: center;
 }
+
+.lastChatLine {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /*border: 1px solid black;*/
+}
