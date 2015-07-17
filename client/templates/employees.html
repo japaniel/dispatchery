@@ -16,7 +16,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                    <h4 class="modal-title">Modal title</h4>
+                    <h3 class="modal-title">New Tech Form</h3>
                 </div>
 
                 <!--<form data-toggle="validator" role="form">-->
@@ -44,11 +44,77 @@
                     <!--</form>-->
 
                     <form data-toggle="validator" role="form">
-                        <legend>Form Title</legend>
                         <div class="form-group">
-                            <label for="InputName" class="control-label">Name:</label>
                             <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required>
                         </div>
+                        <table class="">
+                            <thead>
+                            <tr>
+                              <th>Start Time</th>
+                              <th>end Time</th>
+                              </tr>
+                              </thead>
+                              <tbody><tr>
+                                <td>
+                        <div class="bootstrap-timepicker start">
+                          <input id="timepicker" type="text" value="">
+                        </div>
+                      </td>
+                      <td>
+              <div class="bootstrap-timepicker end">
+                <input id="timepicker" type="text" value="">
+              </div>
+              </td>
+              </tr>
+          </tbody>
+        </table>
+
+                        <label for="InputName" class="control-label">Days This Tech Works</label>
+                            <div class="techSchedule">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                      <th>
+                                      <div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Monday</button>
+                                      </div>
+                                  </th>
+                                      <th>
+                                      <div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Tuseday</button>
+                                      </div>
+                                  </th>
+                                      <th>
+                                      <div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Wedesnday</button>
+                                      </div>
+                                  </th>
+                                      <th>
+                                      <div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Thurday</button>
+                                      </div>
+                                  </th>
+                                  </tr>
+                                  </thead>
+                                    <tbody><tr>
+                                      <td><div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Friday</button>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Saturday</button>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="btn-group text-left pull-left">
+                                          <button type="button" class="btn btn-default sendToWork" {{disabled}}>Sunday</button>
+                                      </div>
+                                    </td>
+                                    </tr>
+                                  </tbody>
+                                  </table>
+                                </div>
                         <div class="modal-footer form-group">
                             <button type="submit" class="btn btn-primary submit">Submit</button>
                             <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
@@ -69,7 +135,7 @@
             <thead>
             <tr>
               <th>Techs</th>
-              <th>Scheduled Time</th>
+              <th>Scheduled<br>Time</th>
                 <th>Monday</th>
                 <th>Tuesday</th>
                 <th>Wedensday</th>
@@ -77,16 +143,18 @@
                 <th>Friday</th>
                 <th>Saturday</th>
                 <th>Sunday</th>
-                <th>Send<br> To Work</th>
+                <th>Send <br>To Work</th>
+                <th>X</th>
             </tr>
             </thead>
-            <tbody><tr>
-            <td>{{#each techs}}
-                {{> tech}}
+            <tbody>
+                {{#each techs}}
+                    {{>schedule}}
+                {{/each}}
+         <!-- <td>{{#each techs}}
+                {{> tech}}<br>
             {{/each}}</td>
-            <td>{{#each techs}}
-                {{> time}}
-            {{/each}}</td>
+            <td>Workin on this</td>
               <td>{{#each techs}}
                   {{> monday}}
               {{/each}}</td>
@@ -111,14 +179,37 @@
               <td>{{#each techs}}
                   {{> sendwork}}
               {{/each}}</td>
-            </tr>
+              <td>{{#each techs}}
+                  {{> removeTech}}
+              {{/each}}</td> -->
+
+
               </tbody>
         </table>
     </div>
 </template>
 
+<template name='schedule'>
+  <tr>
+        <td>
+          <div>{{name}}</div>
+        </td>
+        <td>
+          <div class="row checkbox">
+            <label class="left col-md-1"><input type="checkbox">Monday</label>
+          </div>
+        </td>
+        <td>
+          <div class="row checkbox">
+            <lable class="left col-md-1"><input type="checkbox">Tuesday</lable>
+          </div>
+        </td>
+      </tr>
+</template>
+
+
 <template name='tech'>
-    <tr class="tech">
+    <tr class="row tech">
         <td><span>{{name}}</span>
         </td>
     </tr>
@@ -181,9 +272,17 @@
 </template>
 
 <template name='sendwork'>
-    <tr class="sendwork">
+    <tr class="row sendwork">
          <div class="btn-group text-right pull-right">
              <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
          </div>
+       </tr>
+</template>
+
+<template name='removeTech'>
+    <tr class="removeTech">
+          <button class="btn btn-default">
+          <span class="glyphicon glyphicon-remove removeTech"></span>
+          </button>
        </tr>
 </template>
