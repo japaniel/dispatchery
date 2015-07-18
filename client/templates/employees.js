@@ -66,7 +66,7 @@ var updateProject = function(name){
 
 
 
-Template.tech.helpers({
+Template.schedule.helpers({
 
     disabled : function(){
 
@@ -80,7 +80,7 @@ Template.tech.helpers({
 
 });
 
-Template.tech.events({
+Template.schedule.events({
     "click .sendToWork" :  function(event,template){
         event.preventDefault();
         _Queue.insert({
@@ -91,11 +91,16 @@ Template.tech.events({
             timesincelast : new Date(),
             status : "working"
         })
-    },"dblclick .tech" : function(event, tmpl){
+    },"dblclick .schedule" : function(event, tmpl){
         event.preventDefault();
         Session.set('SelectedTech', this._id);
         Session.set('ShowProjectDialog', true);
-    }
+    },
+    "click .removetech" :  function(event, tmpl){
+      _Queue.remove({
+          _id : this._id})
+           db.close();
+        }
 });
 
 

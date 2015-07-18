@@ -18,31 +18,7 @@
                     <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
                     <h3 class="modal-title">New Tech Form</h3>
                 </div>
-
-                <!--<form data-toggle="validator" role="form">-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="inputName" class="control-label">Name</label>-->
-                        <!--<input type="text" class="form-control" id="inputName" placeholder="Cina Saffary" required>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<button type="submit" class="btn btn-primary">Submit</button>-->
-                    <!--</div>-->
-                <!--</form>-->
-
-
                 <div class="modal-body">
-
-                    <!--<form data-toggle="validator" role="form">-->
-                        <!--<legend>Form Title</legend>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="inputName" class="control-label">Name</label>-->
-                        <!--<input type="text" class="form-control" id="inputName" placeholder="Cina Saffary" required>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                    <!--<button type="submit" class="btn btn-primary">Submit</button>-->
-                    <!--</div>-->
-                    <!--</form>-->
-
                     <form data-toggle="validator" role="form">
                         <div class="form-group">
                             <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required>
@@ -68,7 +44,6 @@
               </tr>
           </tbody>
         </table>
-
                         <label for="InputName" class="control-label">Days This Tech Works</label>
                             <div class="techSchedule">
                                 <table class="table">
@@ -171,57 +146,66 @@
 </template>
 
 <template name='schedule'>
-  <tr>
+  <tr class="schedule">
         <td>
           <div>{{name}}</div>
         </td>
         <td>
+          <div style="display: none">{{name}}</div>
           <label>Time Of<br>Day Here</label>
         </td>
         <td>
           <div class="row checkbox">
+            <div style="display: none">{{name}}</div>
             <label class="left col-md-1"><input type="checkbox">Monday</label>
           </div>
         </td>
         <td>
           <div class="row checkbox">
+            <div style="display: none">{{name}}</div>
           <label class="left col-md-1"><input type="checkbox">Tuesday</label>
           </div>
           </td>
           <td>
             <div class="row checkbox">
+              <div style="display: none">{{name}}</div>
             <label class="left col-md-1"><input type="checkbox">Wedensday</label>
             </div>
             </td>
             <td>
               <div class="row checkbox">
+                <div style="display: none">{{name}}</div>
               <label class="left col-md-1"><input type="checkbox">Thursday</label>
             </div>
             </td>
             <td>
               <div class="row checkbox">
+                <div style="display: none">{{name}}</div>
               <label class="left col-md-1"><input type="checkbox">Friday</label>
             </div>
             </td>
             <td>
               <div class="row checkbox">
+                <div style="display: none">{{name}}</div>
               <label class="left col-md-1"><input type="checkbox">Saturday</label>
             </div>
             </td>
             <td>
               <div class="row checkbox">
+                <div style="display: none">{{name}}</div>
               <label class="left col-md-1"><input type="checkbox">Sunday</label>
             </div>
             </td>
             <td>
               <div class="btn-group center">
+                <div style="display: none">{{name}}</div>
               <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
             </div>
           </td>
             <td>
               <div>
               <button class="btn btn-default">
-                 <span class="glyphicon glyphicon-remove deleteTech"></span>
+                 <span class="glyphicon glyphicon-remove removetech"></span>
               </button>
             </div>
               </td>
@@ -230,16 +214,16 @@
 
 
 <template name='tech'>
-    <tr class="row tech">
+    <tr>
         <td><span>{{name}}</span>
         </td>
     </tr>
 </template>
-
+<!--
 <template name='monday'>
-    <tr class="monday">
+    <tr>
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Monday</label>
+      <label><input type="checkbox">Monday</label>
             </div>
        </tr>
 </template>
@@ -247,7 +231,7 @@
 <template name='Tuesday'>
     <tr class="Tuesday">
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Tuesday</label>
+      <label><input type="checkbox">Tuesday</label>
             </div>
        </tr>
 </template>
@@ -255,7 +239,7 @@
 <template name='Wedensday'>
     <tr class="Wedensday">
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Wedensday</label>
+      <label><input type="checkbox">Wedensday</label>
             </div>
        </tr>
 </template>
@@ -263,7 +247,7 @@
 <template name='Thursday'>
     <tr class="Thursday">
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Thursday</label>
+      <label><input type="checkbox">Thursday</label>
             </div>
        </tr>
 </template>
@@ -271,7 +255,7 @@
 <template name='Friday'>
     <tr class="Friday">
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Friday</label>
+      <label><input type="checkbox">Friday</label>
             </div>
        </tr>
 </template>
@@ -279,7 +263,7 @@
 <template name='Saturday'>
     <tr class="Saturday">
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Saturday</label>
+      <label><input type="checkbox">Saturday</label>
             </div>
        </tr>
 </template>
@@ -287,15 +271,15 @@
 <template name='Sunday'>
     <tr class="Sunday">
       <div class="row checkbox">
-      <label> class="left col-md-1"><input type="checkbox">Sunday</label>
+      <label><input type="checkbox">Sunday</label>
             </div>
        </tr>
 </template>
 
-<template name='sendwork'>
-    <tr class="row sendwork">
+<template name='sendToWork'>
+    <tr class="row sendToWork">
          <div class="btn-group text-right pull-right">
-             <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send to Work</button>
+             <button type="button" class="btn btn-default sendToWork" >Send to Work</button>
          </div>
        </tr>
 </template>
@@ -306,4 +290,4 @@
           <span class="glyphicon glyphicon-remove removeTech"></span>
           </button>
        </tr>
-</template>
+</template> -->
