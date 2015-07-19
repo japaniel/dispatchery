@@ -13,14 +13,7 @@ Template.employees.events = {
     "click .addUser" :  function(event,template){
        event.preventDefault();
        Session.set('ShowProjectDialog', true);
-        //$("#" + $(event.target).attr("href")).modal("show");
     }
-    //,
-    //'click save' :  function(event,template){
-    //    event.preventDefault();
-    //    $("#" + $(event.target).attr("href")).modal("show");
-    //
-    //}
 };
 
 //add User Form
@@ -56,8 +49,38 @@ Template.addUserForm.helpers({
 });
 
 var addUser = function(name){
-    _Techs.insert({name:name})
+    _Techs.insert({name : name,
+    Monday : MondayForm,
+    Tuesday : TuesdayForm,
+    Wedensday : WedensdayForm,
+    Thursday : ThursdayForm,
+    Friday : FridayForm,
+    Saturday : SaturdayForm,
+    Sunday : SundayForm})
 };
+
+var MondayForm = function(){
+  document.getElementById("Monday").checked
+};
+var TuesdayForm = function(){
+  document.getElementById("Tuesday").checked
+};
+var WedensdayForm = function(){
+  document.getElementById("Wedensday").checked
+};
+var ThursdayForm = function(){
+  document.getElementById("Thursday").checked
+};
+var FridayForm = function(){
+  document.getElementById("Friday").checked
+};
+var SaturdayForm = function(){
+  document.getElementById("Saturday").checked
+};
+var SundayForm = function(){
+  document.getElementById("Sunday").checked
+};
+
 
 var updateProject = function(name){
     _Techs.update(Session.get('SelectedTech'), {$set :{name : name}});
@@ -72,12 +95,10 @@ Template.schedule.helpers({
 
         if(_Queue.findOne({_id : this._id}))
         {
-            return {disabled : ""};
+        return {disabled : ""};
         }
         return {};
     }
-
-
 });
 
 Template.schedule.events({
@@ -97,9 +118,15 @@ Template.schedule.events({
         Session.set('ShowProjectDialog', true);
     },
     "click .removetech" :  function(event, tmpl){
+      if(_Queue.findOne({_id : this._id}))
+      {
       _Queue.remove({
           _id : this._id})
-           db.close();
+           }
+           else {
+             _Techs.remove({
+             _id : this._id});
+           }
         }
 });
 
