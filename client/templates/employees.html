@@ -51,28 +51,28 @@
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Monday" value="Monday" data-toggle="toggle">Monday
+                                          <input type="checkbox" class="Monday" name="dayGroup" >Monday
                                           </label>
                                       </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Tuseday" value="Tuseday" data-toggle="toggle">Tuseday
+                                          <input type="checkbox" class="Tuseday" name="dayGroup" >Tuseday
                                           </label>
                                         </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Wednesday" value="Wednesday" data-toggle="toggle">Wednesday
+                                          <input type="checkbox" class="Wednesday" name="dayGroup" >Wednesday
                                           </label>
                                         </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Thurday" value="Thurday" data-toggle="toggle">Thurday
+                                          <input type="checkbox" class="Thursday" name="dayGroup" >Thursday
                                           </label>
                                         </div>
                                   </th>
@@ -81,21 +81,21 @@
                                     <tbody><tr>
                                       <td><div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Friday" value="Friday" data-toggle="toggle">Friday
+                                          <input type="checkbox" class="Friday" name="dayGroup" >Friday
                                           </label>
                                         </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Saturday" value="Saturday" data-toggle="toggle">Saturday
+                                          <input type="checkbox" class="Saturday" name="dayGroup" >Saturday
                                           </label>
                                         </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" id="Sunday" value="Sunday" data-toggle="toggle">Sunday
+                                          <input type="checkbox" class="Sunday" name="dayGroup" >Sunday
                                           </label>
                                         </div>
                                     </td>
@@ -156,43 +156,43 @@
         <td>
           <div class="row radio">
             <div style="display: none">{{name}}</div>
-            <label class="left col-md-1"><input type="radio" id="day" disabled >Monday</label>
+            <label class="left col-md-1"><input type="radio" id="0" class="day" value="0" disabled {{today}}>Monday</label>
           </div>
         </td>
         <td>
           <div class="row radio">
             <div style="display: none">{{name}}</div>
-          <label class="left col-md-1"><input type="radio" id="day">Tuesday</label>
+          <label class="left col-md-1"><input type="radio" id="1" class="day" value="1" disabled {{today}}>Tuesday</label>
           </div>
           </td>
           <td>
             <div class="row radio">
               <div style="display: none">{{name}}</div>
-            <label class="left col-md-1"><input type="radio" id="day">Wedensday</label>
+            <label class="left col-md-1"><input type="radio" id="2" class="day" value="2" disabled {{today}}>Wedensday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="day">Thursday</label>
+              <label class="left col-md-1"><input type="radio" id="3" class="day" value="3" disabled {{today}}>Thursday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="day">Friday</label>
+              <label class="left col-md-1"><input type="radio" id="4" class="day" value="4" disabled {{today}}>Friday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="day">Saturday</label>
+              <label class="left col-md-1"><input type="radio" id="5" class="day" value="5" disabled {{today}}>Saturday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="day">Sunday</label>
+              <label class="left col-md-1"><input type="radio" id="6" class="day" value="6" disabled {{today}}>Sunday</label>
             </div>
             </td>
             <td>
