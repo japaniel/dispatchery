@@ -19,13 +19,14 @@ Template.employees.events = {
 //add User Form
 
 Template.addUserForm.events = {
-    "click .close" :  function(event,template){
+    "click .close" :  function (event,template){
         event.preventDefault();
         Session.set('ShowProjectDialog', false);
         Session.set('SelectedTech', null);
     },
     'click .submit' :  function(event,template){
         event.preventDefault();
+        var workingDays = new array();
         var name = template.find('.inputName').value;
         if(Session.get('SelectedTech'))
         {
@@ -37,7 +38,8 @@ Template.addUserForm.events = {
 
         Session.set('ShowProjectDialog', false);
         Session.set('SelectedTech', null);
-}
+},
+
 };
 
 Template.addUserForm.helpers({
@@ -45,53 +47,40 @@ Template.addUserForm.helpers({
     tech : function(){
         return _Techs.findOne({_id : Session.get('SelectedTech')});
     }
-
 });
 
 var addUser = function(name){
-    _Techs.insert({name : name,
-    Monday : MondayForm,
-    Tuesday : TuesdayForm,
-    Wedensday : WedensdayForm,
-    Thursday : ThursdayForm,
-    Friday : FridayForm,
-    Saturday : SaturdayForm,
-    Sunday : SundayForm})
+    _Techs.insert({
+      name : name,
+      workingDays : workingDays
+    });
 };
 
-var MondayForm = function(){
-  document.getElementById("Monday").checked
+function getCheckedFromForm(dayGroup)
+{
+    var elements = document.getElementsByName(dayGroup);
+    for (var i = 0, l = elements.length; i < l; i++)
+    {
+        if (elements[i].checked)
+        {
+          workingDays.push({day : checked});
+        }
+        workingDays.push({day : "null"});
+    }
 };
-var TuesdayForm = function(){
-  document.getElementById("Tuesday").checked
-};
-var WedensdayForm = function(){
-  document.getElementById("Wedensday").checked
-};
-var ThursdayForm = function(){
-  document.getElementById("Thursday").checked
-};
-var FridayForm = function(){
-  document.getElementById("Friday").checked
-};
-var SaturdayForm = function(){
-  document.getElementById("Saturday").checked
-};
-var SundayForm = function(){
-  document.getElementById("Sunday").checked
-};
-
 
 var updateProject = function(name){
-    _Techs.update(Session.get('SelectedTech'), {$set :{name : name}});
+    _Techs.update(Session.get('SelectedTech'), {$set :{
+      name : name,
+      workingDays : workingDays
+    }
+  });
     Meteor.call('updateWorking', Session.get('SelectedTech'));
 };
 
-
-
 Template.schedule.helpers({
 
-    disabled : function(){
+    disabled : function disabled (){
 
         if(_Queue.findOne({_id : this._id}))
         {
@@ -99,6 +88,15 @@ Template.schedule.helpers({
         }
         return {};
     }
+    // today : function today(){
+    //   var day = document.getElementById(this.id).value
+    //  if(_Techs.find(day))
+    // {
+    //   return {checked : ""};
+    // }
+    // return {};
+    // }
+
 });
 
 Template.schedule.events({
@@ -112,7 +110,7 @@ Template.schedule.events({
             timesincelast : new Date(),
             status : "working"
         })
-    },"dblclick .schedule" : function(event, tmpl){
+    },"dblclick .schedule" : function editTech (event, tmpl){
         event.preventDefault();
         Session.set('SelectedTech', this._id);
         Session.set('ShowProjectDialog', true);
@@ -129,8 +127,6 @@ Template.schedule.events({
            }
         }
 });
-
-
 
 Template.techs.helpers({
     techs: function () {

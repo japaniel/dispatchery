@@ -41,9 +41,6 @@ Meteor.methods({
     updateWorking : function(id) {
         var temp = _Techs.findOne({_id: id});
         _Queue.update({_id: id}, {$set: {name : temp.name}});
-        if(status === "Remove"){
-          Session.set('working_loaded', true);
-        }
     },
     updateStatus : function(id, status){
         _Queue.update({_id : id}, {$set: {status : status}});
