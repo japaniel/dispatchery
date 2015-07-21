@@ -20,7 +20,7 @@
                 <div class="modal-body">
                     <form data-toggle="validator" role="form">
                         <div class="form-group">
-                            <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required>
+                            <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required autofocus>
                         </div>
                         <table class="">
                             <thead>
@@ -51,28 +51,28 @@
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Monday" name="dayGroup" >Monday
+                                          <input type="checkbox" class="day1" value="{{tech.Monday}}" >Monday
                                           </label>
                                       </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Tuseday" name="dayGroup" >Tuseday
+                                          <input type="checkbox" class="day2" value="{{tech.Tuseday}}" >Tuseday
                                           </label>
                                         </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Wednesday" name="dayGroup" >Wednesday
+                                          <input type="checkbox" class="day3" value="{{tech.Saturday}}" >Saturday
                                           </label>
                                         </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Thursday" name="dayGroup" >Thursday
+                                          <input type="checkbox" class="day4" value="{{tech.Saturday}}" >Saturday
                                           </label>
                                         </div>
                                   </th>
@@ -81,21 +81,21 @@
                                     <tbody><tr>
                                       <td><div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Friday" name="dayGroup" >Friday
+                                          <input type="checkbox" class="day5" value="{{tech.Saturday}}" >Saturday
                                           </label>
                                         </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Saturday" name="dayGroup" >Saturday
+                                          <input type="checkbox" class="day6" value="{{tech.Saturday}}" >Saturday
                                           </label>
                                         </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="Sunday" name="dayGroup" >Sunday
+                                          <input type="checkbox" class="day7" value="{{tech.Sunday}}" >Sunday
                                           </label>
                                         </div>
                                     </td>
@@ -156,43 +156,71 @@
         <td>
           <div class="row radio">
             <div style="display: none">{{name}}</div>
-            <label class="left col-md-1"><input type="radio" id="0" class="day" value="0" disabled {{today}}>Monday</label>
+            {{#if Monday}}
+            {{>mondaycheck}}
+          {{else}}
+          {{>mondayuncheck}}
+          {{/if}}
           </div>
         </td>
         <td>
           <div class="row radio">
             <div style="display: none">{{name}}</div>
-          <label class="left col-md-1"><input type="radio" id="1" class="day" value="1" disabled {{today}}>Tuesday</label>
+            {{#if Tuesday}}
+            {{>tuesdaycheck}}
+          {{else}}
+          {{>tuesdayuncheck}}
+          {{/if}}
           </div>
           </td>
           <td>
             <div class="row radio">
               <div style="display: none">{{name}}</div>
-            <label class="left col-md-1"><input type="radio" id="2" class="day" value="2" disabled {{today}}>Wedensday</label>
+              {{#if Wedensday}}
+              {{>wedensdaycheck}}
+            {{else}}
+            {{>wedensdayuncheck}}
+            {{/if}}
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="3" class="day" value="3" disabled {{today}}>Thursday</label>
+                {{#if Thursday}}
+                {{>thursdaycheck}}
+              {{else}}
+              {{>thursdayuncheck}}
+              {{/if}}
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="4" class="day" value="4" disabled {{today}}>Friday</label>
+                {{#if Friday}}
+                {{>fridaycheck}}
+              {{else}}
+              {{>fridayuncheck}}
+              {{/if}}
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="5" class="day" value="5" disabled {{today}}>Saturday</label>
+                {{#if Saturday}}
+                {{>saturdaycheck}}
+              {{else}}
+              {{>saturdayuncheck}}
+              {{/if}}
             </div>
             </td>
             <td>
               <div class="row radio">
                 <div style="display: none">{{name}}</div>
-              <label class="left col-md-1"><input type="radio" id="6" class="day" value="6" disabled {{today}}>Sunday</label>
+                {{#if Sunday}}
+                {{>sundaycheck}}
+              {{else}}
+              {{>sundayuncheck}}
+              {{/if}}
             </div>
             </td>
             <td>
@@ -209,4 +237,53 @@
             </div>
               </td>
   </tr>
+</template>
+<!-- Monday -->
+<template name='mondaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Monday</strong></label>
+</template>
+<template name='mondayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Monday</label>
+</template>
+<!-- Tuesday -->
+<template name='tuesdaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Tuesday</strong></label>
+</template>
+<template name='tuesdayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Tuesday</label>
+</template>
+<!-- Wedensday -->
+<template name='wedensdaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Wedensday</strong></label>
+</template>
+<template name='wedensdayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Wedensday</label>
+</template>
+<!-- Thursday -->
+<template name='thursdaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Thursday</strong></label>
+</template>
+<template name='thursdayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Thursday</label>
+</template>
+<!-- Friday -->
+<template name='fridaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Friday</strong></label>
+</template>
+<template name='fridayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Friday</label>
+</template>
+<!-- Saturday -->
+<template name='saturdaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Saturday</strong></label>
+</template>
+<template name='saturdayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Saturday</label>
+</template> 
+<!-- Sunday -->
+<template name='sundaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Sunday</strong></label>
+</template>
+<template name='sundayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Sunday</label>
 </template>

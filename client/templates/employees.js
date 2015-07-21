@@ -8,7 +8,6 @@ Template.employees.helpers({
     }
 });
 
-
 Template.employees.events = {
     "click .addUser" :  function openForm(event,template){
        event.preventDefault();
@@ -17,7 +16,6 @@ Template.employees.events = {
 };
 
 //add User Form
-
 Template.addUserForm.events = {
     "click .close" :  function closeForm(event,template){
         event.preventDefault();
@@ -27,12 +25,19 @@ Template.addUserForm.events = {
     'click .submit' :  function submitForm(event,template){
         event.preventDefault();
         var name = template.find('.inputName').value;
+        var Monday = template.find('.day1').checked;
+        var Tuesday = template.find('.day2').checked;
+        var Wednesday = template.find('.day3').checked;
+        var Thursday = template.find('.day4').checked;
+        var Friday = template.find('.day5').checked;
+        var Saturday = template.find('.day6').checked;
+        var Sunday = template.find('.day7').checked;
         if(Session.get('SelectedTech'))
         {
-            updateProject(name);
+            updateProject(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
         }
         else{
-            addUser(name);
+            addUser(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
         }
 
         Session.set('ShowProjectDialog', false);
@@ -47,30 +52,29 @@ Template.addUserForm.helpers({
     }
 });
 
-var addUser = function addUser(name){
+var addUser = function addUser(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday){
     _Techs.insert({
       name : name,
-      workingDays : getCheckedFromForm
+      Monday : Monday,
+      Tuesday : Tuesday,
+      Wednesday  : Wednesday,
+      Thursday : Thursday,
+      Friday : Friday,
+      Saturday : Saturday,
+      Sunday : Sunday
     });
 };
 
-function getCheckedFromForm(dayGroup)
-{
-    var elements = document.getElementsByName(dayGroup);
-    for (var i = 0, l = elements.length; i < l; i++)
-    {
-        if (elements[i].checked)
-        {
-          return {$push: {day : checked}};
-        }
-        return {$push: {day : "null"}};
-    }
-};
-
-var updateProject = function updateProject(name){
+var updateProject = function updateProject(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday){
     _Techs.update(Session.get('SelectedTech'), {$set :{
       name : name,
-      workingDays : getCheckedFromForm
+      Monday : Monday,
+      Tuesday : Tuesday,
+      Wednesday  : Wednesday,
+      Thursday : Thursday,
+      Friday : Friday,
+      Saturday : Saturday,
+      Sunday : Sunday
     }
   });
     Meteor.call('updateWorking', Session.get('SelectedTech'));
@@ -85,10 +89,6 @@ Template.schedule.helpers({
         return {disabled : ""};
         }
         return {};
-    },
-    today : function today(){
-      var val = document.getElementById(this.id)
-      _Techs.findOne({_id : this._id}, {workingDays: {$slice: [val , 1] }})
     }
 
 });
