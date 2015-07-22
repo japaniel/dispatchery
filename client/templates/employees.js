@@ -22,6 +22,9 @@ Template.addUserForm.events = {
         Session.set('ShowProjectDialog', false);
         Session.set('SelectedTech', null);
     },
+    'click .clockpicker' : function () {
+    $('.clockpicker').clockpicker();
+},
     'click .submit' :  function submitForm(event,template){
         event.preventDefault();
         var name = template.find('.inputName').value;
