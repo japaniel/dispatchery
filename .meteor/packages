@@ -13,3 +13,6 @@ underscore
 mrt:moment
 copleykj:livestamp
 risul:bootstrap-colorpicker
+jplack:bootstrap-timepicker
+benjaminrh:bootstrap-timepicker
+andrasph:clockpicker

@@ -22,6 +22,9 @@ Template.addUserForm.events = {
         Session.set('ShowProjectDialog', false);
         Session.set('SelectedTech', null);
     },
+    'click .clockpicker' : function () {
+    $('.clockpicker').clockpicker();
+},
     'click .submit' :  function submitForm(event,template){
         event.preventDefault();
         var name = template.find('.inputName').value;
@@ -32,12 +35,25 @@ Template.addUserForm.events = {
         var Friday = template.find('.day5').checked;
         var Saturday = template.find('.day6').checked;
         var Sunday = template.find('.day7').checked;
+<<<<<<< HEAD
+        var startT = template.find('.startT').value;
+        var endT = template.find('.endT').value;
+        console.log(startT);
+        console.log(endT);
+        if(Session.get('SelectedTech'))
+        {
+            updateProject(name,startT,endT,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
+        }
+        else{
+            addUser(name,startT,endT,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
+=======
         if(Session.get('SelectedTech'))
         {
             updateProject(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
         }
         else{
             addUser(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
+>>>>>>> 73df1a86cf84e1f0a1bde96ff7fffe3ad97ee4d5
         }
 
         Session.set('ShowProjectDialog', false);
@@ -52,9 +68,17 @@ Template.addUserForm.helpers({
     }
 });
 
+<<<<<<< HEAD
+var addUser = function addUser(name,startT,endT,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday){
+    _Techs.insert({
+      name : name,
+      StartTime : startT,
+      EndTime : endT,
+=======
 var addUser = function addUser(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday){
     _Techs.insert({
       name : name,
+>>>>>>> 73df1a86cf84e1f0a1bde96ff7fffe3ad97ee4d5
       Monday : Monday,
       Tuesday : Tuesday,
       Wednesday  : Wednesday,
@@ -65,9 +89,17 @@ var addUser = function addUser(name,Monday,Tuesday,Wednesday,Thursday,Friday,Sat
     });
 };
 
+<<<<<<< HEAD
+var updateProject = function updateProject(name,startT,endT,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday){
+    _Techs.update(Session.get('SelectedTech'), {$set :{
+      name : name,
+      StartTime : startT,
+      EndTime : endT,
+=======
 var updateProject = function updateProject(name,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday){
     _Techs.update(Session.get('SelectedTech'), {$set :{
       name : name,
+>>>>>>> 73df1a86cf84e1f0a1bde96ff7fffe3ad97ee4d5
       Monday : Monday,
       Tuesday : Tuesday,
       Wednesday  : Wednesday,

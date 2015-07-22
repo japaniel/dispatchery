@@ -26,24 +26,42 @@
                             <thead>
                             <tr>
                               <th>Start Time</th>
+                              <th>     </th>
                               <th>end Time</th>
                               </tr>
                               </thead>
                               <tbody><tr>
                                 <td>
-                        <div class="timepicker start">
-                          <input id="timepicker" type="text" value="">
-                        </div>
-                      </td>
+                                  <div class="left input-group clockpicker">
+<<<<<<< HEAD
+                                    <input type="text" class="form-control startT" id="startT" value="{{tech.startT}}">
+=======
+                                    <input type="text" class="form-control" value="09:30">
+>>>>>>> 73df1a86cf84e1f0a1bde96ff7fffe3ad97ee4d5
+                                      <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-time"></span>
+                                      </span>
+                                    </div>
+                                  </td>
+<<<<<<< HEAD
+                                  <td></td>
                       <td>
-              <div class="bootstrap-timepicker end">
-                <input id="timepicker" type="text" value="">
-              </div>
-              </td>
+                        <div class="right input-group clockpicker">
+                          <input type="text" class="form-control endT" id="endT" value="{{tech.endT}}">
+=======
+                      <td>
+                        <div class="right input-group clockpicker">
+                          <input type="text" class="form-control" value="09:30">
+>>>>>>> 73df1a86cf84e1f0a1bde96ff7fffe3ad97ee4d5
+                            <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                          </div>
+                        </td>
               </tr>
           </tbody>
         </table>
-                        <label for="InputName" class="control-label">Days This Tech Works</label>
+                        <label for="InputName" class="control-label"><strong>Days This Tech Works</strong></label>
                             <div class="techSchedule">
                                 <table class="table">
                                     <thead>
@@ -123,7 +141,11 @@
             <thead>
             <tr>
               <th>Techs</th>
-              <th>Scheduled<br>Time</th>
+              <th>Scheduled
+                <div class="center">
+                  Time
+                </div>
+                </th>
                 <th>Monday</th>
                 <th>Tuesday</th>
                 <th>wednesday</th>
@@ -151,7 +173,8 @@
         </td>
         <td>
           <div style="display: none">{{name}}</div>
-          <label>Time Of<br>Day Here</label>
+            <div>Start {{StartTime}}</div>
+            <div>End {{EndTime}}</div>
         </td>
         <td>
           <div class="row radio">
