@@ -1,8 +1,11 @@
 accounts-base@1.2.0
 accounts-meteor-developer@1.0.4
 accounts-oauth@1.1.5
+aldeed:template-extension@3.4.3
+andrasph:clockpicker@0.0.2
 autoupdate@1.2.1
 base64@1.0.3
+benjaminrh:bootstrap-timepicker@0.1.0
 binary-heap@1.0.3
 blaze@2.1.2
 blaze-tools@1.0.3
@@ -28,6 +31,7 @@ iron:location@1.0.7
 iron:middleware-stack@1.0.7
 iron:router@1.0.7
 iron:url@1.0.7
+jplack:bootstrap-timepicker@0.2.1
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
