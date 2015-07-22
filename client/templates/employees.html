@@ -31,7 +31,7 @@
                               </thead>
                               <tbody><tr>
                                 <td>
-                        <div class="bootstrap-timepicker start">
+                        <div class="timepicker start">
                           <input id="timepicker" type="text" value="">
                         </div>
                       </td>
@@ -51,28 +51,28 @@
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day1" value="{{tech.Monday}}" >Monday
+                                          <input type="checkbox" class="day1" >Monday
                                           </label>
                                       </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day2" value="{{tech.Tuseday}}" >Tuseday
+                                          <input type="checkbox" class="day2"  >Tuseday
                                           </label>
                                         </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day3" value="{{tech.Saturday}}" >Saturday
+                                          <input type="checkbox" class="day3" >Wednesday
                                           </label>
                                         </div>
                                   </th>
                                       <th>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day4" value="{{tech.Saturday}}" >Saturday
+                                          <input type="checkbox" class="day4" >Tursday
                                           </label>
                                         </div>
                                   </th>
@@ -81,21 +81,21 @@
                                     <tbody><tr>
                                       <td><div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day5" value="{{tech.Saturday}}" >Saturday
+                                          <input type="checkbox" class="day5" >Friday
                                           </label>
                                         </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day6" value="{{tech.Saturday}}" >Saturday
+                                          <input type="checkbox" class="day6" >Saturday
                                           </label>
                                         </div>
                                     </td>
                                     <td>
                                       <div class="btn-group text-left pull-left">
                                         <label>
-                                          <input type="checkbox" class="day7" value="{{tech.Sunday}}" >Sunday
+                                          <input type="checkbox" class="day7" >Sunday
                                           </label>
                                         </div>
                                     </td>
@@ -126,7 +126,7 @@
               <th>Scheduled<br>Time</th>
                 <th>Monday</th>
                 <th>Tuesday</th>
-                <th>Wedensday</th>
+                <th>wednesday</th>
                 <th>Thursday</th>
                 <th>Friday</th>
                 <th>Saturday</th>
@@ -176,10 +176,10 @@
           <td>
             <div class="row radio">
               <div style="display: none">{{name}}</div>
-              {{#if Wedensday}}
-              {{>wedensdaycheck}}
+              {{#if Wednesday}}
+              {{>wednesdaycheck}}
             {{else}}
-            {{>wedensdayuncheck}}
+            {{>wednesdayuncheck}}
             {{/if}}
             </div>
             </td>
@@ -252,12 +252,12 @@
 <template name='tuesdayuncheck'>
   <label class="left col-md-1"><input type="radio" disabled >Tuesday</label>
 </template>
-<!-- Wedensday -->
-<template name='wedensdaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Wedensday</strong></label>
+<!-- wednesday -->
+<template name='wednesdaycheck'>
+  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Wednesday</strong></label>
 </template>
-<template name='wedensdayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Wedensday</label>
+<template name='wednesdayuncheck'>
+  <label class="left col-md-1"><input type="radio" disabled >Wednesday</label>
 </template>
 <!-- Thursday -->
 <template name='thursdaycheck'>
@@ -279,7 +279,7 @@
 </template>
 <template name='saturdayuncheck'>
   <label class="left col-md-1"><input type="radio" disabled >Saturday</label>
-</template> 
+</template>
 <!-- Sunday -->
 <template name='sundaycheck'>
   <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Sunday</strong></label>
