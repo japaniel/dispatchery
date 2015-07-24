@@ -1,6 +1,10 @@
 Session.setDefault('ShowProjectDialog', false);
 Session.setDefault('SelectedTech', null);
 Session.set('techInQ', false);
+var d = new Date();
+var hours = d.getHours().toString().length == 1 ? '0'+d.getHours() : d.getHours();
+var min = d.getMinutes().toString().length == 1 ? '0'+d.getMinutes() : d.getMinutes();
+var newTime = hours+ ':' +min;
 
 Template.employees.helpers({
 
@@ -148,8 +152,64 @@ else if (day == "Sunday") {
 }
 }
   return {};
-}
-});
+},
+// qCheck : function qCheck(pull){
+//   console.log(timecheck);
+//   function removeFromQ(_id){
+//     _Queue.remove({
+//         _id : this._id})
+//   };
+//   function addToQ(_id){
+//     _Queue.insert({
+//         name : this.name,
+//         _id : this._id,
+//         totaltickets : 0,
+//         dispatched : false,
+//         timesincelast : new Date(),
+//         status : "working"
+//     })
+//   };
+//   function fun(){
+//   if(5>3){
+//     pull.addToQ
+//   }
+// }
+//   function timecheck(){
+//     if(this.StartTime < Date() && this.EndTime > Date()){
+//       addToQ
+//     }else {
+//       removeFromQ
+//     }
+//   }
+//   fun();
+//
+// }
+
+timecheck : function timecheck(){
+  console.log(this.StartTime < newTime && this.EndTime > newTime);
+  console.log(this.StartTime, this.EndTime);
+  console.log(newTime);
+     if(this.StartTime < newTime && this.EndTime > newTime){
+       if(_Queue.findOne({_id : this._id})) {
+         return {};
+       }else {
+       _Queue.insert({
+                name : this.name,
+                _id : this._id,
+                totaltickets : 0,
+                dispatched : false,
+                timesincelast : new Date(),
+                status : "working"
+            });
+            }
+     }else {
+       _Queue.remove({
+                _id : this._id})
+          };
+     }
+     });
+
+
 var getId = function( id ) { return document.getElementById( id ); };
 
 
@@ -169,7 +229,8 @@ Template.schedule.events({
         Session.set('SelectedTech', this._id);
         Session.set('ShowProjectDialog', true);
     },
-    "click .removetech" :  function removeTechButton(event, tmpl){
+    "click .removetech" :  function removeFromQButton(event, tmpl){
+      event.preventDefault();
       if(_Queue.findOne({_id : this._id}))
       {
         _Queue.remove({
@@ -184,8 +245,11 @@ Template.schedule.events({
 });
 
 Template.techs.helpers({
-    techs: function findTech() {
+    techs: function findTechs() {
         return _Techs.find();
+    },
+    findTech: function findTech(_id) {
+        return _Techs.find(this._id);
     }
 });
 
