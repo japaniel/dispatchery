@@ -2,7 +2,6 @@
     <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
     <button type="button" class="btn btn-default addUser">Add User</button>
 
-
     {{#if showProjectDialog}}
       {{>addUserForm}}
     {{/if}}
@@ -160,83 +159,46 @@
           <div>{{name}}</div>
         </td>
         <td>
-          <div style="display: none">{{name}}</div>
             <div>Start {{StartTime}}</div>
             <div>End {{EndTime}}</div>
         </td>
         <td>
           <div class="row radio">
-            <div style="display: none">{{name}}</div>
-            {{#if Monday}}
-            {{>mondaycheck}}
-          {{else}}
-          {{>mondayuncheck}}
-          {{/if}}
+            <label class="left col-md-1"><input type="radio" id="Monday" disabled {{checking "Monday"}}>Monday</label>
           </div>
         </td>
         <td>
           <div class="row radio">
-            <div style="display: none">{{name}}</div>
-            {{#if Tuesday}}
-            {{>tuesdaycheck}}
-          {{else}}
-          {{>tuesdayuncheck}}
-          {{/if}}
+            <label class="left col-md-1"><input type="radio" disabled {{checking "Tuesday"}}>Tuesday</label>
           </div>
           </td>
           <td>
             <div class="row radio">
-              <div style="display: none">{{name}}</div>
-              {{#if Wednesday}}
-              {{>wednesdaycheck}}
-            {{else}}
-            {{>wednesdayuncheck}}
-            {{/if}}
+              <label class="left col-md-1"><input type="radio" disabled {{checking "Wednesday"}}>Wednesday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
-                <div style="display: none">{{name}}</div>
-                {{#if Thursday}}
-                {{>thursdaycheck}}
-              {{else}}
-              {{>thursdayuncheck}}
-              {{/if}}
+                <label class="left col-md-1"><input type="radio" disabled {{checking "Thursday"}}>Thursday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
-                <div style="display: none">{{name}}</div>
-                {{#if Friday}}
-                {{>fridaycheck}}
-              {{else}}
-              {{>fridayuncheck}}
-              {{/if}}
+                <label class="left col-md-1"><input type="radio" disabled {{checking "Friday"}}>Friday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
-                <div style="display: none">{{name}}</div>
-                {{#if Saturday}}
-                {{>saturdaycheck}}
-              {{else}}
-              {{>saturdayuncheck}}
-              {{/if}}
+                <label class="left col-md-1"><input type="radio" disabled {{checking "Saturday"}}>Saturday</label>
             </div>
             </td>
             <td>
               <div class="row radio">
-                <div style="display: none">{{name}}</div>
-                {{#if Sunday}}
-                {{>sundaycheck}}
-              {{else}}
-              {{>sundayuncheck}}
-              {{/if}}
+                <label class="left col-md-1"><input type="radio" disabled {{checking "Sunday"}}>Sunday</label>
             </div>
             </td>
             <td>
               <div class="btn-group center">
-                <div style="display: none">{{name}}</div>
               <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send To Work</button>
             </div>
           </td>
@@ -248,53 +210,4 @@
             </div>
               </td>
   </tr>
-</template>
-<!-- Monday -->
-<template name='mondaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Monday</strong></label>
-</template>
-<template name='mondayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Monday</label>
-</template>
-<!-- Tuesday -->
-<template name='tuesdaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Tuesday</strong></label>
-</template>
-<template name='tuesdayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Tuesday</label>
-</template>
-<!-- wednesday -->
-<template name='wednesdaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Wednesday</strong></label>
-</template>
-<template name='wednesdayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Wednesday</label>
-</template>
-<!-- Thursday -->
-<template name='thursdaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Thursday</strong></label>
-</template>
-<template name='thursdayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Thursday</label>
-</template>
-<!-- Friday -->
-<template name='fridaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Friday</strong></label>
-</template>
-<template name='fridayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Friday</label>
-</template>
-<!-- Saturday -->
-<template name='saturdaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Saturday</strong></label>
-</template>
-<template name='saturdayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Saturday</label>
-</template>
-<!-- Sunday -->
-<template name='sundaycheck'>
-  <label style="color:#2E2EFE" class="left col-md-1"><input type="radio" disabled checked><strong>Sunday</strong></label>
-</template>
-<template name='sundayuncheck'>
-  <label class="left col-md-1"><input type="radio" disabled >Sunday</label>
 </template>

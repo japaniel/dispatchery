@@ -1,5 +1,6 @@
 Session.setDefault('ShowProjectDialog', false);
 Session.setDefault('SelectedTech', null);
+Session.set('techInQ', false);
 
 Template.employees.helpers({
 
@@ -14,7 +15,6 @@ Template.employees.events = {
        Session.set('ShowProjectDialog', true);
     }
 };
-
 //add User Form
 Template.addUserForm.events = {
     "click .close" :  function closeForm(event,template){
@@ -37,8 +37,6 @@ Template.addUserForm.events = {
         var Sunday = template.find('.day7').checked;
         var startT = template.find('.startT').value;
         var endT = template.find('.endT').value;
-        console.log(startT);
-        console.log(endT);
         if(Session.get('SelectedTech'))
         {
             updateProject(name,startT,endT,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday);
@@ -94,15 +92,66 @@ var updateProject = function updateProject(name,startT,endT,Monday,Tuesday,Wedne
 Template.schedule.helpers({
 
     disabled : function disabled (){
-
         if(_Queue.findOne({_id : this._id}))
         {
         return {disabled : ""};
         }
         return {};
+    },
+    checking : function checking ( day ){
+      if(day == "Monday"){
+        if(this.Monday)
+        {
+        return {checked : ""};
+        }
+        }
+        else if (day == "Tuesday") {
+          if(this.Tuesday)
+          {
+          return {checked : ""};
+        }
     }
-
+    else if (day == "Tuesday") {
+      if(this.Tuesday)
+      {
+      return {checked : ""};
+    }
+}
+else if (day == "Wednesday") {
+  if(this.Wednesday)
+  {
+  return {checked : ""};
+}
+}
+else if (day == "Thursday") {
+  if(this.Thursday)
+  {
+  return {checked : ""};
+}
+}
+else if (day == "Friday") {
+  if(this.Friday)
+  {
+  return {checked : ""};
+}
+}
+else if (day == "Saturday") {
+  if(this.Saturday)
+  {
+  return {checked : ""};
+}
+}
+else if (day == "Sunday") {
+  if(this.Sunday)
+  {
+  return {checked : ""};
+}
+}
+  return {};
+}
 });
+var getId = function( id ) { return document.getElementById( id ); };
+
 
 Template.schedule.events({
     "click .sendToWork" :  function addTechToQ(event,template){
@@ -120,12 +169,13 @@ Template.schedule.events({
         Session.set('SelectedTech', this._id);
         Session.set('ShowProjectDialog', true);
     },
-    "click .removetech" :  function removetech(event, tmpl){
+    "click .removetech" :  function removeTechButton(event, tmpl){
       if(_Queue.findOne({_id : this._id}))
       {
-      _Queue.remove({
-          _id : this._id})
-           }
+        _Queue.remove({
+            _id : this._id})
+
+      }
            else {
              _Techs.remove({
              _id : this._id});
