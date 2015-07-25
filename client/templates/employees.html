@@ -1,213 +1,225 @@
 <template name="employees">
-    <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
-    <button type="button" class="btn btn-default addUser">Add User</button>
+  <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
+  <button type="button" class="btn btn-default addUser">Add User</button>
 
-    {{#if showProjectDialog}}
-      {{>addUserForm}}
-    {{/if}}
-    {{>techs}}
+  {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{>techs}}
 </template>
 
 
 <template name="addUserForm">
-    <div class="modal show" id="addEmployee">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">New Tech Form</h3>
-                </div>
-                <div class="modal-body">
-                    <form data-toggle="validator" role="form">
-                        <div class="form-group">
-                            <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required autofocus>
-                        </div>
-                        <table class="">
-                            <thead>
-                            <tr>
-                              <th>Start Time</th>
-                              <th>end Time</th>
-                              </tr>
-                              </thead>
-                              <tbody><tr>
-                                <td>
-                                  <div class="left input-group clockpicker">
-                                    <input type="text" class="form-control startT" id="startT" value="{{tech.startT}}">
-                                      <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-time"></span>
-                                      </span>
-                                    </div>
-                                  </td>
-                      <td>
-                        <div class="right input-group clockpicker">
-                          <input type="text" class="form-control endT" id="endT" value="{{tech.endT}}">
-                            <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                          </div>
-                      </td>
-              </tr>
-          </tbody>
-        </table>
-                        <label for="InputName" class="control-label"><strong>Days This Tech Works</strong></label>
-                            <div class="techSchedule">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                      <th>
-                                      <div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day1" >Monday
-                                          </label>
-                                      </div>
-                                  </th>
-                                      <th>
-                                      <div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day2"  >Tuseday
-                                          </label>
-                                        </div>
-                                  </th>
-                                      <th>
-                                      <div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day3" >Wednesday
-                                          </label>
-                                        </div>
-                                  </th>
-                                      <th>
-                                      <div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day4" >Tursday
-                                          </label>
-                                        </div>
-                                  </th>
-                                  </tr>
-                                  </thead>
-                                    <tbody><tr>
-                                      <td><div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day5" >Friday
-                                          </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                      <div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day6" >Saturday
-                                          </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                      <div class="btn-group text-left pull-left">
-                                        <label>
-                                          <input type="checkbox" class="day7" >Sunday
-                                          </label>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                  </tbody>
-                                  </table>
-                                </div>
-                        <div class="modal-footer form-group">
-                            <button type="submit" class="btn btn-primary submit">Submit</button>
-                            <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
+  <div class="modal show" id="addEmployee">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">New Tech Form</h3>
+        </div>
+        <div class="modal-body">
+          <form data-toggle="validator" role="form">
+            <div class="form-group">
+              <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required autofocus>
+            </div>
+            <table class="">
+              <thead>
+                <tr>
+                  <th>Start Time</th>
+                  <th>end Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="left input-group clockpicker">
+                      <input type="text" class="form-control startT" id="startT" value="{{tech.startT}}">
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="right input-group clockpicker">
+                      <input type="text" class="form-control endT" id="endT" value="{{tech.endT}}">
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <label for="InputName" class="control-label">
+              <strong>Days This Tech Works</strong>
+            </label>
+            <div class="techSchedule">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day1">Monday
+                        </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day2">Tuseday
+                        </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day3">Wednesday
+                        </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day4">Tursday
+                        </label>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day5">Friday
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day6">Saturday
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day7">Sunday
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer form-group">
+              <button type="submit" class="btn btn-primary submit">Submit</button>
+              <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
+            </div>
+          </form>
 
-                </div>
+        </div>
 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 </template>
 
 
 <template name="techs">
-    <div class="techs">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-              <th>Techs</th>
-              <th>Scheduled
-                <div class="center">
-                  Time
-                </div>
-                </th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-                <th>Send <br>To Work</th>
-                <th>Remove From Q<br>Than Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-                {{#each techs}}
-                    {{>schedule}}
-                {{/each}}
-              </tbody>
-        </table>
-    </div>
+  <div class="techs">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Techs</th>
+          <th>Scheduled
+            <div class="center">
+              Time
+            </div>
+          </th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+          <th>Send
+            <br>To Work</th>
+          <th>Remove From Q
+            <br>Than Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each techs}} {{>schedule}} {{/each}}
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <template name='schedule'>
   <tr class="schedule">
-        <td>
-          <div>{{name}}</div>
-        </td>
-        <td>
-            <div>Start {{StartTime}}</div>
-            <div>End {{EndTime}} {{timecheck}}</div>
-        </td>
-        <td>
-          <div class="row radio">
-            <label class="left col-md-1"><input type="radio" disabled {{checking "Monday"}}>Monday</label>
-          </div>
-        </td>
-        <td>
-          <div class="row radio">
-            <label class="left col-md-1"><input type="radio" disabled {{checking "Tuesday"}}>Tuesday</label>
-          </div>
-          </td>
-          <td>
-            <div class="row radio">
-              <label class="left col-md-1"><input type="radio" disabled {{checking "Wednesday"}}>Wednesday</label>
-            </div>
-            </td>
-            <td>
-              <div class="row radio">
-                <label class="left col-md-1"><input type="radio" disabled {{checking "Thursday"}}>Thursday</label>
-            </div>
-            </td>
-            <td>
-              <div class="row radio">
-                <label class="left col-md-1"><input type="radio" disabled {{checking "Friday"}}>Friday</label>
-            </div>
-            </td>
-            <td>
-              <div class="row radio">
-                <label class="left col-md-1"><input type="radio" disabled {{checking "Saturday"}}>Saturday</label>
-            </div>
-            </td>
-            <td>
-              <div class="row radio">
-                <label class="left col-md-1"><input type="radio" disabled {{checking "Sunday"}}>Sunday</label>
-            </div>
-            </td>
-            <td>
-              <div class="btn-group center">
-              <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send To Work</button>
-            </div>
-          </td>
-            <td>
-              <div>
-              <button class="btn btn-default">
-                 <span class="glyphicon glyphicon-remove removetech center col-md-1"></span>
-              </button>
-            </div>
-              </td>
+    <td>
+      <div class="names">{{name}}</div>
+    </td>
+    <td>
+      <div>Start {{StartTime}}</div>
+      <div>End {{EndTime}}</div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Monday"}}>Monday</label>
+      </div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Tuesday"}}>Tuesday</label>
+      </div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Wednesday"}}>Wednesday</label>
+      </div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Thursday"}}>Thursday</label>
+      </div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Friday"}}>Friday</label>
+      </div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Saturday"}}>Saturday</label>
+      </div>
+    </td>
+    <td>
+      <div class="row radio">
+        <label class="left col-md-1">
+          <input type="radio" disabled {{checking "Sunday"}}>Sunday</label>
+      </div>
+    </td>
+    <td>
+      <div class="btn-group center">
+        <button type="button" class="btn btn-default sendToWork" {{disabled}} {{checkAll}}>Send To Work</button>
+      </div>
+    </td>
+    <td>
+      <div>
+        <button class="btn btn-default">
+          <span class="glyphicon glyphicon-remove removetech center col-md-1"></span>
+        </button>
+      </div>
+    </td>
   </tr>
 </template>

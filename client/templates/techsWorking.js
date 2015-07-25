@@ -1,11 +1,8 @@
-
-
 //tech working
 Template.techsWorking.helpers({
   techsWorking: function () {
     return _Queue.find({}, {sort : {timesincelast : 1}});
   }
-
 });
 
 Template.techsWorking.events({
@@ -13,14 +10,10 @@ Template.techsWorking.events({
 });
 
 Template.techsWorking.rendered = function(){
-
-
 };
 
 Meteor.startup(function () {
-
 });
-
 
 //techWorking
 Template.techWorking.helpers({
@@ -32,7 +25,6 @@ Template.techWorking.helpers({
             return _Statuses.findOne({statusName : this.status}).color;
         }
 }
-
 });
 
 Template.techWorking.events({
@@ -49,7 +41,6 @@ Template.techWorking.events({
 
 Template.techWorking.rendered = function(){
     jscolor.install();
-
 };
 
 Template.options.helpers({
