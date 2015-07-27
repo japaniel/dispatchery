@@ -15,8 +15,7 @@ weekday[5] = "Friday";
 weekday[6] = "Saturday";
 
 var n = weekday[d.getDay()];
-
-var newDay = n;
+var today = n;
 
 Template.employees.helpers({
 
@@ -58,7 +57,7 @@ Template.addUserForm.events = {
     } else {
       addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
     }
-
+    Meteor.call("updateCron");
     Session.set('ShowProjectDialog', false);
     Session.set('SelectedTech', null);
   }
@@ -70,6 +69,14 @@ Template.addUserForm.helpers({
     return _Techs.findOne({
       _id: Session.get('SelectedTech')
     });
+  },
+  checking: function checking(day) {
+    if (Session.get('SelectedTech', this[day])) {
+      return {
+        checked: ""
+      };
+    }
+    return {};
   }
 });
 
@@ -84,8 +91,10 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Thursday: Thursday,
     Friday: Friday,
     Saturday: Saturday,
-    Sunday: Sunday
+    Sunday: Sunday,
+    queue: false
   });
+  Meteor.call("updateCron");
 };
 
 var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) {
@@ -100,17 +109,19 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Thursday: Thursday,
       Friday: Friday,
       Saturday: Saturday,
-      Sunday: Sunday
+      Sunday: Sunday,
+      queue: false
     }
   });
-  Meteor.call('updateWorking', Session.get('SelectedTech'));
+  Meteor.call("updateCron");
 };
 
 Template.schedule.helpers({
 
   disabled: function disabled() {
-    if (_Queue.findOne({
-        _id: this._id
+    if (_Techs.findOne({
+        _id: this._id,
+          queue : true
       })) {
       return {
         disabled: ""
@@ -119,105 +130,27 @@ Template.schedule.helpers({
     return {};
   },
   checking: function checking(day) {
-    if (day == "Monday") {
-      if (this.Monday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Tuesday") {
-      if (this.Tuesday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Tuesday") {
-      if (this.Tuesday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Wednesday") {
-      if (this.Wednesday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Thursday") {
-      if (this.Thursday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Friday") {
-      if (this.Friday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Saturday") {
-      if (this.Saturday) {
-        return {
-          checked: ""
-        };
-      }
-    } else if (day == "Sunday") {
-      if (this.Sunday) {
-        return {
-          checked: ""
-        };
-      }
+    if (this[day]) {
+      return {
+        checked: ""
+      };
     }
     return {};
-  },
-  qCheck: function qCheck() {
-    var techId = _Techs.findOne(this._id);
-    timecheck(techId);
-  },
-  checkAll: function checkAll() {
-    _Techs.find({},{_id: ""}).forEach(timecheck);
-    console.log("fun");
   }
 });
-// Meteor.startup(checkAll);
-
-
-
-function timecheck(techId) {
-  if (techId.StartTime < newTime && techId.EndTime > newTime) {
-    if (_Queue.findOne({
-        _id: techId._id
-      })) {
-      return "";
-    } else {
-      _Queue.insert({
-        name: techId.name,
-        _id: techId._id,
-        totaltickets: 0,
-        dispatched: false,
-        timesincelast: new Date(),
-        status: "working"
-      });
-    }
-  } else {
-    _Queue.remove({
-      _id: techId._id
-    })
-  };
-};
-
 
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
     event.preventDefault();
-    _Queue.insert({
-      name: this.name,
-      _id: this._id,
-      totaltickets: 0,
-      dispatched: false,
-      timesincelast: new Date(),
-      status: "working"
-    })
+    _Techs.update({_id : this._id},{
+      $set : {
+        queue : true,
+        totaltickets: 0,
+        dispatched: false,
+        timesincelast: new Date(),
+        status: "Working"
+      }
+    });
   },
   "dblclick .schedule": function editTech(event, tmpl) {
     event.preventDefault();
@@ -226,12 +159,17 @@ Template.schedule.events({
   },
   "click .removetech": function removeFromQButton(event, tmpl) {
     event.preventDefault();
-    if (_Queue.findOne({
-        _id: this._id
-      })) {
-      _Queue.remove({
-        _id: this._id
+    if (_Techs.findOne({
+        _id: this._id,
+        queue : true
       })
+    ){
+      _Techs.update({ _id : this._id },
+         {
+        $set : {
+        queue : false
+        }
+      });
 
     } else {
       _Techs.remove({
@@ -244,12 +182,10 @@ Template.schedule.events({
 Template.techs.helpers({
   techs: function findTechs() {
     return _Techs.find();
-  },
-
+  }
 });
 
 Template.techs.events({
-
 });
 
 Template.registerHelper("prettifyDate", function timer(timestamp) {

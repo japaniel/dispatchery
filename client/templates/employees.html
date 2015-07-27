@@ -29,7 +29,7 @@
                 <tr>
                   <td>
                     <div class="left input-group clockpicker">
-                      <input type="text" class="form-control startT" id="startT" value="{{tech.startT}}">
+                      <input type="text" class="form-control startT" id="startT" value="{{tech.StartTime}}">
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                       </span>
@@ -37,7 +37,7 @@
                   </td>
                   <td>
                     <div class="right input-group clockpicker">
-                      <input type="text" class="form-control endT" id="endT" value="{{tech.endT}}">
+                      <input type="text" class="form-control endT" id="endT" value="{{tech.EndTime}}">
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                       </span>
@@ -56,28 +56,28 @@
                     <th>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day1">Monday
+                          <input type="checkbox" class="day1" {{checking "Monday"}}>Monday
                         </label>
                       </div>
                     </th>
                     <th>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day2">Tuseday
+                          <input type="checkbox" class="day2" {{checking "Tuesday"}}>Tuesday
                         </label>
                       </div>
                     </th>
                     <th>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day3">Wednesday
+                          <input type="checkbox" class="day3" {{checking "Wednesday"}}>Wednesday
                         </label>
                       </div>
                     </th>
                     <th>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day4">Tursday
+                          <input type="checkbox" class="day4" {{checking "Thursday"}}>Thursday
                         </label>
                       </div>
                     </th>
@@ -88,21 +88,21 @@
                     <td>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day5">Friday
+                          <input type="checkbox" class="day5" {{checking "Friday"}}>Friday
                         </label>
                       </div>
                     </td>
                     <td>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day6">Saturday
+                          <input type="checkbox" class="day6" {{checking "Saturday"}}>Saturday
                         </label>
                       </div>
                     </td>
                     <td>
                       <div class="btn-group text-left pull-left">
                         <label>
-                          <input type="checkbox" class="day7">Sunday
+                          <input type="checkbox" class="day7" {{checking "Sunday"}}>Sunday
                         </label>
                       </div>
                     </td>
@@ -211,7 +211,7 @@
     </td>
     <td>
       <div class="btn-group center">
-        <button type="button" class="btn btn-default sendToWork" {{disabled}} {{checkAll}}>Send To Work</button>
+        <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send To Work</button>
       </div>
     </td>
     <td>

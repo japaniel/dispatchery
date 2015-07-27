@@ -38,13 +38,96 @@ Meteor.methods({
     removeChat : function(id){
         _Chat.remove({ owner : id });
     },
-    updateWorking : function(id) {
-        var temp = _Techs.findOne({_id: id});
-        _Queue.update({_id: id}, {$set: {name : temp.name}});
-    },
     updateStatus : function(id, status){
         _Queue.update({_id : id}, {$set: {status : status}});
+    },
+    TechsInQ : function(){
+      _Queue.find({});
+    },
+    updateCron : function(){
+        SyncedCron.stop();
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        console.log("");
+        var temp = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ];
+
+        temp.forEach(function(day) {
+            var temp = {};
+            temp[day] = true;
+
+            _Techs.find(temp).forEach(function (tech){
+                var startTimeTemp = 'at ' + tech.StartTime + " every "+ day;
+                var endTimeTemp = 'at ' + tech.EndTime + " every "+ day;
+
+                if(tech.startTime != "")
+                {
+                    console.log(startTimeTemp);
+                    SyncedCron.add(
+                        {
+                            name: tech.name + " " + day,
+                            schedule: function(parser) {
+                                // parser is a later.parse object
+                                //return parser.text('every '+day+' at '+ tech.StartTime);
+                                return parser.text(startTimeTemp);
+                            },
+                            job: function() {
+                                _Techs.update({ _id : tech._id },
+                                    {
+                                        $set : {queue : true}
+                                    });
+                                console.log(tech.name + " Entered Queue");
+                                return "Worked";
+                            }
+                        }
+                    );
+                }
+
+                if(tech.endTime != "") {
+                    console.log(endTimeTemp);
+                    SyncedCron.add(
+                        {
+                            name: tech.name + ' hour End Time for ' + day,
+                            schedule: function (parser) {
+                                // parser is a later.parse object
+                                //return parser.text('every '+day+' at '+ tech.StartTime);
+                                return parser.text(endTimeTemp);
+                            },
+                            job: function () {
+                                _Techs.update({_id: tech._id},
+                                    {
+                                        $set: {queue: true}
+                                    });
+                                console.log(tech.name + " Left Queue");
+                                return "Worked";
+                            }
+                        }
+                    );
+                }
+            });
+        });
+        SyncedCron.start();
     }
 
 
+});
+
+
+
+
+Meteor.startup(function() {
+    SyncedCron.start();
+    Meteor.call("updateCron");
 });

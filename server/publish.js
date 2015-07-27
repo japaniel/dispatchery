@@ -16,3 +16,16 @@ Meteor.publish('tasks', function () {
 Meteor.publish('chat', function () {
   return _Chat.find({});
 });
+
+_Techs.allow({
+  'insert' : function(){
+    return true;
+  },
+  'update' : function(){
+    return true;
+  },
+  'remove' : function(){
+    return true;
+  }
+});
+
