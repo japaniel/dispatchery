@@ -1,7 +1,6 @@
 <template name="employees">
   <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
   <button type="button" class="btn btn-default addUser">Add User</button>
-
   {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{>techs}}
 </template>
 
@@ -16,7 +15,7 @@
         <div class="modal-body">
           <form data-toggle="validator" role="form">
             <div class="form-group">
-              <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." required autofocus>
+              <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." ofocus>
             </div>
             <table class="">
               <thead>
@@ -217,9 +216,115 @@
     <td>
       <div>
         <button class="btn btn-default">
+          {{#if ShowDeleteTechBox}} {{>deleteUser}} {{/if}}
           <span class="glyphicon glyphicon-remove removetech center col-md-1"></span>
         </button>
       </div>
     </td>
   </tr>
+</template>
+
+<template name="deleteUser">
+  <div class="modal show">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Are You Sure!!???</h3>
+        </div>
+        <div class="modal-body">
+          <form data-toggle="validator" role="form">
+            <div class="form-group">
+              <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." disabled>
+            </div>
+            <table class="">
+              <thead>
+                <tr>
+                  <th>Start Time</th>
+                  <th>end Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                      <input type="text" class="form-control startT" id="startT" value="{{tech.StartTime}}" disabled>
+                  </td>
+                  <td>
+                      <input type="text" class="form-control endT" id="endT" value="{{tech.EndTime}}" disabled>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <label for="InputName" class="control-label">
+              <strong>Days This Tech Works</strong>
+            </label>
+            <div class="techSchedule">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day1" {{checking "Monday"}} disabled>Monday
+                        </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day2" {{checking "Tuesday"}} disabled>Tuesday
+                        </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day3" {{checking "Wednesday"}} disabled>Wednesday
+                        </label>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day4" {{checking "Thursday"}} disabled>Thursday
+                        </label>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day5" {{checking "Friday"}} disabled>Friday
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day6" {{checking "Saturday"}} disabled>Saturday
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="btn-group text-left pull-left">
+                        <label>
+                          <input type="checkbox" class="day7" {{checking "Sunday"}} disabled>Sunday
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer form-group">
+              <button type="submit" class="btn btn-primary submitdelete">DELETE</button>
+              <button type="button" class="btn btn-default closed" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

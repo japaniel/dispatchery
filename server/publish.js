@@ -6,7 +6,7 @@ Meteor.publish('statuses', function () {
 });
 
 Meteor.publish('working', function () {
-  return _Queue.find({});
+  return _Techs.find({});
 });
 
 Meteor.publish('tasks', function () {

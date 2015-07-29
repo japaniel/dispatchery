@@ -1,16 +1,19 @@
 //tech working
 Template.techsWorking.helpers({
   techsWorking: function() {
-    return _Queue.find({}, {
+    return _Techs.find({
+      queue: true
+    }, {
       sort: {
-        status: -1, timesincelast: 1
+        status: -1,
+        timesincelast: 1
       }
     });
   }
 });
 
 // function sorting (){
-//   _Queue.find({}).forEach(status);
+//   _Techs.find({}).forEach(status);
 //   function status(info){
 //     if(info.status === "OOTO")
 //   }
@@ -38,7 +41,7 @@ Template.techWorking.helpers({
 
 Template.techWorking.events({
   'click .plus-one': function plusOne() {
-    _Queue.update({
+    _Techs.update({
       _id: this._id
     }, {
       $set: {
@@ -62,13 +65,7 @@ Template.options.events({
   'click li': function(evt, template) {
     var status = $(evt.target).text();
     var parent = Template.parentData(0);
+    console.log("fun");
     Meteor.call('updateStatus', parent._id, status);
   }
 });
-
-var removeWorking = function(id) {
-  _Queue.remove({
-    _id: id
-  })
-  Meteor.call('updateWorking', id);
-};

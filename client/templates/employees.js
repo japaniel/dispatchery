@@ -1,5 +1,7 @@
 Session.setDefault('ShowProjectDialog', false);
 Session.setDefault('SelectedTech', null);
+Session.setDefault('ShowDeleteTechBox', false);
+
 Session.set('techInQ', false);
 var d = new Date();
 var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
@@ -36,6 +38,7 @@ Template.addUserForm.events = {
     event.preventDefault();
     Session.set('ShowProjectDialog', false);
     Session.set('SelectedTech', null);
+    Session.setDefault('ShowDeleteTechBox', false);
   },
   'click .clockpicker': function() {
     $('.clockpicker').clockpicker();
@@ -60,6 +63,11 @@ Template.addUserForm.events = {
     Meteor.call("updateCron");
     Session.set('ShowProjectDialog', false);
     Session.set('SelectedTech', null);
+  },
+  "click .submitdelete": function() {
+    event.preventDefault();
+    deleteTech(this);
+    Session.setDefault('ShowDeleteTechBox', false);
   }
 };
 
@@ -71,7 +79,8 @@ Template.addUserForm.helpers({
     });
   },
   checking: function checking(day) {
-    if (Session.get('SelectedTech', this[day])) {
+    var dayinfo = _Techs.findOne(Session.get('SelectedTech'))
+    if (dayinfo[day]) {
       return {
         checked: ""
       };
@@ -92,7 +101,8 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Friday: Friday,
     Saturday: Saturday,
     Sunday: Sunday,
-    queue: false
+    queue: false,
+    status: "Working"
   });
   Meteor.call("updateCron");
 };
@@ -110,7 +120,8 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Friday: Friday,
       Saturday: Saturday,
       Sunday: Sunday,
-      queue: false
+      queue: false,
+      status: "Working"
     }
   });
   Meteor.call("updateCron");
@@ -121,7 +132,7 @@ Template.schedule.helpers({
   disabled: function disabled() {
     if (_Techs.findOne({
         _id: this._id,
-          queue : true
+        queue: true
       })) {
       return {
         disabled: ""
@@ -142,9 +153,8 @@ Template.schedule.helpers({
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
     event.preventDefault();
-    _Techs.update({_id : this._id},{
-      $set : {
-        queue : true,
+    _Techs.update({_id: this._id}, {$set: {
+        queue: true,
         totaltickets: 0,
         dispatched: false,
         timesincelast: new Date(),
@@ -159,23 +169,23 @@ Template.schedule.events({
   },
   "click .removetech": function removeFromQButton(event, tmpl) {
     event.preventDefault();
-    if (_Techs.findOne({
-        _id: this._id,
-        queue : true
-      })
-    ){
-      _Techs.update({ _id : this._id },
-         {
-        $set : {
-        queue : false
-        }
-      });
+    if (_Techs.findOne({_id: this._id, queue: true})) {
+      _Techs.update({_id: this._id}, {$set: {queue: false}});
 
-    } else {
-      _Techs.remove({
-        _id: this._id
-      });
+    } else if (_Techs.findOne({_id: this._id, queue: false})) {
+      event.preventDefault();
+      Session.set('SelectedTech', this._id);
+      Session.set('ShowDeleteTechBox', true);
+      console.log("fun");
+
     }
+      // _Techs.update({
+      //   _id: this._id
+      // }, {
+      //   $set: {
+      //     queue: false
+      //   }
+      // });
   }
 });
 
@@ -185,9 +195,14 @@ Template.techs.helpers({
   }
 });
 
-Template.techs.events({
-});
+Template.techs.events({});
 
 Template.registerHelper("prettifyDate", function timer(timestamp) {
   return moment(new Date(timestamp)).fromNow();
 });
+
+function deleteTech(techId) {
+  _Techs.remove({
+    _id: techId._id
+  });
+}
