@@ -64,14 +64,6 @@ Meteor.methods({
   },
   updateCron: function() {
     SyncedCron.stop();
-    // console.log("");
-    // console.log("");
-    // console.log("");
-    // console.log("");
-    // console.log("");
-    // console.log("");
-    // console.log("");
-    // console.log("");
     var temp = [
       "Monday",
       "Tuesday",
@@ -91,7 +83,6 @@ Meteor.methods({
         var endTimeTemp = 'at ' + tech.EndTime + " every " + day;
 
         if (tech.startTime != "") {
-          console.log(startTimeTemp);
           SyncedCron.add({
             name: tech.name + " " + day,
             schedule: function(parser) {
@@ -114,7 +105,6 @@ Meteor.methods({
         }
 
         if (tech.endTime != "") {
-          console.log(endTimeTemp);
           SyncedCron.add({
             name: tech.name + ' hour End Time for ' + day,
             schedule: function(parser) {
@@ -126,7 +116,7 @@ Meteor.methods({
               _Techs.update({
                 _id: tech._id
               }, {
-                $set: {
+                $set: { 
                   queue: true
                 }
               });

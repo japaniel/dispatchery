@@ -1,7 +1,8 @@
 <template name="employees">
   <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
   <button type="button" class="btn btn-default addUser">Add User</button>
-  {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{>techs}}
+  {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{# if ShowDeleteBox}} {{> deleteUser}} {{/if}} {{>techs}}
+  <!-- {{#if ShowDeleteBox}} {{> deleteUser}} {{/if}} -->
 </template>
 
 
@@ -216,7 +217,6 @@
     <td>
       <div>
         <button class="btn btn-default">
-          {{#if ShowDeleteTechBox}} {{>deleteUser}} {{/if}}
           <span class="glyphicon glyphicon-remove removetech center col-md-1"></span>
         </button>
       </div>
@@ -229,7 +229,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title">Are You Sure!!???</h3>
+          <h3 class="modal-title">Are You Sure This User Needs To Be Delete!!??</h3>
         </div>
         <div class="modal-body">
           <form data-toggle="validator" role="form">
@@ -319,8 +319,8 @@
               </table>
             </div>
             <div class="modal-footer form-group">
-              <button type="submit" class="btn btn-primary submitdelete">DELETE</button>
-              <button type="button" class="btn btn-default closed" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary submitdelete">DELETE?</button>
+              <button type="button" class="btn btn-default closeddelete" data-dismiss="modal">Close</button>
             </div>
           </form>
         </div>
