@@ -24,7 +24,7 @@ Template.employees.helpers({
   showProjectDialog: function showProjectDialog() {
     return Session.get('ShowProjectDialog');
   },
-  ShowDeleteBox: function ShowDeleteBox(){
+  ShowDeleteBox: function ShowDeleteBox() {
     return Session.get('ShowDeleteBox');
 
   }
@@ -151,17 +151,24 @@ Template.schedule.helpers({
       };
     }
     return {};
-  }
+  },
+   colorChecked: function colorChecked(day){
+     if (this[day]) {
+     return {style: "color: blue"};
+   };
+   return {};
+   }
 });
-
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
     event.preventDefault();
-    _Techs.update({_id: this._id}, {$set: {
+    _Techs.update({
+      _id: this._id
+    }, {
+      $set: {
         queue: true,
         totaltickets: 0,
         dispatched: false,
-        timesincelast: new Date(),
         status: "Working"
       }
     });
@@ -173,10 +180,22 @@ Template.schedule.events({
   },
   "click .removetech": function removeFromQButton(event, tmpl) {
     event.preventDefault();
-    if (_Techs.findOne({_id: this._id, queue: true})) {
-      _Techs.update({_id: this._id}, {$set: {queue: false}});
+    if (_Techs.findOne({
+        _id: this._id,
+        queue: true
+      })) {
+      _Techs.update({
+        _id: this._id
+      }, {
+        $set: {
+          queue: false
+        }
+      });
 
-    } else if (_Techs.findOne({_id: this._id, queue: false})) {
+    } else if (_Techs.findOne({
+        _id: this._id,
+        queue: false
+      })) {
       event.preventDefault();
       Session.set('SelectedTech', this._id);
       Session.set('ShowDeleteBox', true);

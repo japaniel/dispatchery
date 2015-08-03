@@ -76,58 +76,74 @@ Meteor.methods({
 
     temp.forEach(function(day) {
       var temp = {};
-      temp[day] = true;
+      // temp[day] = false;
 
       _Techs.find(temp).forEach(function(tech) {
-        var startTimeTemp = 'at ' + tech.StartTime + " every " + day;
-        var endTimeTemp = 'at ' + tech.EndTime + " every " + day;
 
-        if (tech.startTime != "") {
-          SyncedCron.add({
-            name: tech.name + " " + day,
-            schedule: function(parser) {
-              // parser is a later.parse object
-              //return parser.text('every '+day+' at '+ tech.StartTime);
-              return parser.text(startTimeTemp);
-            },
-            job: function() {
-              _Techs.update({
-                _id: tech._id
-              }, {
-                $set: {
-                  queue: true
+        if (tech.StartTime != "" && tech[day]) {
+          console.log(tech.name, day);
+          var startTimeTemp = "at " + tech.StartTime + " on " + day;
+          SyncedCron.add({name: tech.name + " Work Start " + day,
+          schedule: function(parser) {return parser.text(startTimeTemp);},
+            job: function() {_Techs.update({_id: tech._id}, {$set: {
+                  queue: true,
+                  totaltickets: 0,
+                  dispatched: false,
+                  status: "Working"
                 }
               });
-              console.log(tech.name + " Entered Queue");
+              // console.log(tech.name + " Entered Queue");
               return "Worked";
             }
           });
-        }
+        };
 
-        if (tech.endTime != "") {
+        if (tech.EndTime != "" && tech[day]) {
+          var endTimeTemp = "at " + tech.EndTime + " on " + day;
           SyncedCron.add({
-            name: tech.name + ' hour End Time for ' + day,
+            name: tech.name + ' Work End Time for ' + day,
             schedule: function(parser) {
-              // parser is a later.parse object
-              //return parser.text('every '+day+' at '+ tech.StartTime);
               return parser.text(endTimeTemp);
             },
             job: function() {
               _Techs.update({
                 _id: tech._id
               }, {
-                $set: { 
-                  queue: true
+                $set: {
+                  queue: false,
+                  totaltickets: 0,
+                  dispatched: false,
+                  timesincelast: new Date(),
+                  status: "Working"
                 }
               });
-              console.log(tech.name + " Left Queue");
+              // console.log(tech.name + " Left Queue");
               return "Worked";
             }
           });
-        }
+      };
       });
     });
     SyncedCron.start();
+  },
+  updateLunch: function(tech,hour){
+    console.log(hour + 1);
+
+    SyncedCron.add({
+      name: tech.name + ' Time For Lunch ' + hour,
+      schedule: function(parser) {
+        return parser.recur().on(hour).time();
+      },
+      job: function() {
+        _Techs.update({
+          _id: tech._id
+        }, {
+          $set: {
+            status: "Working"
+          }
+        });
+      }
+    });
   }
 
 
