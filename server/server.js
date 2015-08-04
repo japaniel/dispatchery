@@ -79,9 +79,8 @@ Meteor.methods({
       // temp[day] = false;
 
       _Techs.find(temp).forEach(function(tech) {
-
+        // console.log(tech.StartTime, thirdShiftEndDay);
         if (tech.StartTime != "" && tech[day]) {
-          console.log(tech.name, day);
           var startTimeTemp = "at " + tech.StartTime + " on " + day;
           SyncedCron.add({name: tech.name + " Work Start " + day,
           schedule: function(parser) {return parser.text(startTimeTemp);},
@@ -97,6 +96,49 @@ Meteor.methods({
             }
           });
         };
+        if (tech.StartTime >= "16:00" && tech[day]) {
+          if (day == "Monday") {
+            day = "Tuesday"
+          }else if (day == "Tuesday") {
+            day = "Wednesday"
+          }else if (day == "Wednesday") {
+            day = "Thursday"
+          }else if (day == "Thursday") {
+            day = "Friday"
+          }else if (day == "Friday") {
+            day = "Saturday"
+          }else if (day == "Saturday") {
+            day = "Sunday"
+          }else{
+            day = "Monday"
+          };
+          console.log(tech[day], day);
+
+          if (tech.EndTime != "") {
+            var endTimeTemp = "at " + tech.EndTime + " on " + day;
+            SyncedCron.add({
+              name: tech.name + ' Work End Time for ' + day,
+              schedule: function(parser) {
+                return parser.text(endTimeTemp);
+              },
+              job: function() {
+                _Techs.update({
+                  _id: tech._id
+                }, {
+                  $set: {
+                    queue: false,
+                    totaltickets: 0,
+                    dispatched: false,
+                    timesincelast: new Date(),
+                    status: "Working"
+                  }
+                });
+                // console.log(tech.name + " Left Queue");
+                return "Worked";
+              }
+            });
+        };
+      }else if (tech.StartTime <= "16:00") {
 
         if (tech.EndTime != "" && tech[day]) {
           var endTimeTemp = "at " + tech.EndTime + " on " + day;
@@ -122,6 +164,7 @@ Meteor.methods({
             }
           });
       };
+    };
       });
     });
     SyncedCron.start();
@@ -145,12 +188,7 @@ Meteor.methods({
       }
     });
   }
-
-
 });
-
-
-
 
 Meteor.startup(function() {
   SyncedCron.start();
