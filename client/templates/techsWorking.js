@@ -13,8 +13,7 @@ Template.techsWorking.helpers({
 });
 
 var d = new Date();
-var hourAddOne = d.setHours(d.getHours() + 1);
-var hours = hourAddOne.toString().length == 1 ? '0' + d.getHours() : d.getHours();
+var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
 var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
 var newTime = hours + ':' + min;
 
@@ -33,17 +32,42 @@ Template.techWorking.helpers({
   }
 });
 
+function saveLastTicketTime (techinfo){
+  return techinfo.timesincelast
+};
+
+function getLastTicketTime (techinfo){
+  return techinfo.timesincelastTicket
+}
+
 Template.techWorking.events({
   'click .plus-one': function plusOne() {
     _Techs.update({
       _id: this._id
     }, {
       $set: {
+        timesincelastTicket: saveLastTicketTime(this),
         timesincelast: new Date()
       },
       $inc: {
         totaltickets: 1,
         weight: 1
+      }
+    });
+  },
+  'click .minus-one': function minusOne() {
+    if (this.totaltickets == 0) {
+      return {}
+    };
+    _Techs.update({
+      _id: this._id
+    }, {
+      $set: {
+        timesincelast: getLastTicketTime(this)
+      },
+      $inc: {
+        totaltickets: -1,
+        weight: -1
       }
     });
   }
@@ -60,16 +84,11 @@ function OOTQ(techthis) {
 };
 
 function OOTO(slectedstatus, techthis) {
-  if (slectedstatus == "OOTO") {
+  if (slectedstatus == "Working") {
+    Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
-    _Techs.update({
-      _id: techthis._id
-    }, {
-      $set: {
-        timesincelast: new Date()
-      }
-    });
-    Meteor.call('updateLunch', techthis, newTime);
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    Meteor.call('updateLunch', techthis);
   }
 };
 

@@ -74,52 +74,65 @@ Meteor.methods({
       "Sunday"
     ];
 
+    dayNum: function dayNum(day){
+      if (day == "Monday") {
+        return 2;
+      }else if (day == "Tuesday") {
+        return 3;
+      }else if (day == "Wednesday") {
+        return 4;
+      }else if (day == "Thursday") {
+        return 5;
+      }else if (day == "Friday") {
+        return 6;
+      }else if (day == "Saturday") {
+        return 7;
+      }else{
+        return 1;
+      };
+    };
+    nextDayNum: function nextDayNum(day){
+      if (day == "Monday") {
+        return 3;
+      }else if (day == "Tuesday") {
+        return 4;
+      }else if (day == "Wednesday") {
+        return 5;
+      }else if (day == "Thursday") {
+        return 6;
+      }else if (day == "Friday") {
+        return 7;
+      }else if (day == "Saturday") {
+        return 1;
+      }else{
+        return 2;
+      };
+    };
+
     temp.forEach(function(day) {
       var temp = {};
-      // temp[day] = false;
 
       _Techs.find(temp).forEach(function(tech) {
-        // console.log(tech.StartTime, thirdShiftEndDay);
         if (tech.StartTime != "" && tech[day]) {
-          var startTimeTemp = "at " + tech.StartTime + " on " + day;
           SyncedCron.add({name: tech.name + " Work Start " + day,
-          schedule: function(parser) {return parser.text(startTimeTemp);},
+          schedule: function(parser) {return parser.recur().on(tech.StartTime).time().on(dayNum(day)).dayOfWeek();},
             job: function() {_Techs.update({_id: tech._id}, {$set: {
                   queue: true,
                   totaltickets: 0,
-                  dispatched: false,
                   status: "Working"
                 }
               });
-              // console.log(tech.name + " Entered Queue");
               return "Worked";
             }
           });
         };
         if (tech.StartTime >= "16:00" && tech[day]) {
-          if (day == "Monday") {
-            day = "Tuesday"
-          }else if (day == "Tuesday") {
-            day = "Wednesday"
-          }else if (day == "Wednesday") {
-            day = "Thursday"
-          }else if (day == "Thursday") {
-            day = "Friday"
-          }else if (day == "Friday") {
-            day = "Saturday"
-          }else if (day == "Saturday") {
-            day = "Sunday"
-          }else{
-            day = "Monday"
-          };
-          console.log(tech[day], day);
 
           if (tech.EndTime != "") {
-            var endTimeTemp = "at " + tech.EndTime + " on " + day;
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.text(endTimeTemp);
+                return parser.recur().on(tech.EndTime).time().on(nextDayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
@@ -128,24 +141,22 @@ Meteor.methods({
                   $set: {
                     queue: false,
                     totaltickets: 0,
-                    dispatched: false,
                     timesincelast: new Date(),
                     status: "Working"
                   }
                 });
-                // console.log(tech.name + " Left Queue");
                 return "Worked";
               }
             });
         };
-      }else if (tech.StartTime <= "16:00") {
+      }else if (tech.StartTime < "16:00") {
+
 
         if (tech.EndTime != "" && tech[day]) {
-          var endTimeTemp = "at " + tech.EndTime + " on " + day;
           SyncedCron.add({
             name: tech.name + ' Work End Time for ' + day,
             schedule: function(parser) {
-              return parser.text(endTimeTemp);
+              return parser.recur().on(tech.EndTime).time().on(dayNum(day)).dayOfWeek();
             },
             job: function() {
               _Techs.update({
@@ -159,7 +170,6 @@ Meteor.methods({
                   status: "Working"
                 }
               });
-              // console.log(tech.name + " Left Queue");
               return "Worked";
             }
           });
@@ -168,14 +178,19 @@ Meteor.methods({
       });
     });
     SyncedCron.start();
-  },
-  updateLunch: function(tech,hour){
-    console.log(hour + 1);
-
+},
+updateLunch: function(tech) {
+    var d = new Date();
+    var hourPlusOne = d.getHours() + 1
+    if (hourPlusOne == 24) {
+      hourPlusOne = 00
+    };
+    var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+    console.log(hourPlusOne + ":" + min);
     SyncedCron.add({
-      name: tech.name + ' Time For Lunch ' + hour,
+      name: tech.name + ' Lunch time ' + hourPlusOne + ":" + min,
       schedule: function(parser) {
-        return parser.recur().on(hour).time();
+        return parser.recur().on(hourPlusOne + ":" + min).time()
       },
       job: function() {
         _Techs.update({
@@ -185,8 +200,14 @@ Meteor.methods({
             status: "Working"
           }
         });
+        removeLunch(tech);
       }
     });
+    _Techs.update({_id: tech._id}, {$set: {LunchClockOut: hourPlusOne + ":" + min}});
+  },
+  removeLunch: function(tech) {
+    console.log(tech.name + ' Lunch time ' + tech.LunchClockOut);
+    SyncedCron.remove(tech.name + ' Lunch time ' + tech.LunchClockOut)
   }
 });
 

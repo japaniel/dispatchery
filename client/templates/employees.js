@@ -101,9 +101,7 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Sunday: Sunday,
     queue: false,
     status: "Working",
-    weight: 1,
-    OOTO: false,
-    Lunch: false
+    weight: 1
   });
   Meteor.call("updateCron");
 };
@@ -123,9 +121,7 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Sunday: Sunday,
       queue: false,
       status: "Working",
-      weight: 1,
-      OOTO: false,
-      Lunch: false
+      weight: 1
     }
   });
   Meteor.call("updateCron");
@@ -206,9 +202,14 @@ Template.schedule.events({
 
 Template.techs.helpers({
   techs: function findTechs() {
-    return _Techs.find();
+    return _Techs.find({},
+      {sort: {
+      name: 1
+    }
+  });
   }
 });
+
 
 Template.techs.events({});
 
