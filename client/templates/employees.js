@@ -222,18 +222,18 @@ Template.schedule.events({
       event.preventDefault();
       Session.set('SelectedTech', this._id);
       Session.set('ShowDeleteBox', true);
-
-    }
-  }
+}
+}
 });
 
 Template.techs.helpers({
   techs: function findTechs() {
-    return _Techs.find({},
-      {sort: {
-      name: 1
-    }
-  });
+    return _Techs.find({}, {
+      sort: {
+        Shift: 1,
+        name: 1
+      }
+    });
   }
 });
 
