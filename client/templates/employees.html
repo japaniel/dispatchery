@@ -43,6 +43,14 @@
                       </span>
                     </div>
                   </td>
+                  <div class="dropdown">
+                    <select class="slect-dropdown">
+                        <option selected disabled>What Shift?</option>
+                        <option {{firstCheck "1st"}}>1st</option>
+                        <option {{secondCheck "2nd"}}>2nd</option>
+                        <option {{thirdCheck "3rd"}}>3rd</option>
+                    </select>
+                  </div>
                 </tr>
               </tbody>
             </table>
@@ -180,31 +188,31 @@
       </div>
     </td>
     <td>
-      <div class="row radio" id="Wednesday"  {{colorChecked "Wednesday"}}>
+      <div class="row radio" id="Wednesday" {{colorChecked "Wednesday"}}>
         <label class="left col-md-1">
           <input type="radio" disabled {{checking "Wednesday"}}>Wednesday</label>
       </div>
     </td>
     <td>
-      <div class="row radio" id="Thursday"  {{colorChecked "Thursday"}}>
+      <div class="row radio" id="Thursday" {{colorChecked "Thursday"}}>
         <label class="left col-md-1">
           <input type="radio" disabled {{checking "Thursday"}}>Thursday</label>
       </div>
     </td>
     <td>
-      <div class="row radio" id="Friday"  {{colorChecked "Friday"}}>
+      <div class="row radio" id="Friday" {{colorChecked "Friday"}}>
         <label class="left col-md-1">
           <input type="radio" disabled {{checking "Friday"}}>Friday</label>
       </div>
     </td>
     <td>
-      <div class="row radio" id="Saturday"  {{colorChecked "Saturday"}}>
+      <div class="row radio" id="Saturday" {{colorChecked "Saturday"}}>
         <label class="left col-md-1">
           <input type="radio" disabled {{checking "Saturday"}}>Saturday</label>
       </div>
     </td>
     <td>
-      <div class="row radio" id="Sunday"  {{colorChecked "Sunday"}}>
+      <div class="row radio" id="Sunday" {{colorChecked "Sunday"}}>
         <label class="left col-md-1">
           <input type="radio" disabled {{checking "Sunday"}}>Sunday</label>
       </div>
@@ -246,10 +254,10 @@
               <tbody>
                 <tr>
                   <td>
-                      <input type="text" class="form-control startT" id="startT" value="{{tech.StartTime}}" disabled>
+                    <input type="text" class="form-control startT" id="startT" value="{{tech.StartTime}}" disabled>
                   </td>
                   <td>
-                      <input type="text" class="form-control endT" id="endT" value="{{tech.EndTime}}" disabled>
+                    <input type="text" class="form-control endT" id="endT" value="{{tech.EndTime}}" disabled>
                   </td>
                 </tr>
               </tbody>

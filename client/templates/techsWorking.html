@@ -3,11 +3,11 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Dudes/Dudettes</th>
-          <th class="col-md-1 center ">status</th>
+          <th class="col-md-1 center ">Dudes/Dudettes</th>
+          <th class="col-md-1 center ">Shift</th>
+          <th class="col-md-1 center ">Status</th>
           <th class="col-md-1 center">Total Tickets</th>
-          <th class="col-md-1 center"></th>
-          <th class="col-md-2 center">Time Since Last</th>
+          <th class="col-md-1 center">Time Since Last</th>
           <th class="col-md-1 center">Give the Pain</th>
         </tr>
       </thead>
@@ -21,9 +21,9 @@
 <template name='techWorking'>
   <tr class="techWorking" bgcolor="{{color}}">
     <td>{{name}}</td>
+    <td class="center">{{Shift}}</td>
     <td class="center">{{>options}}</td>
     <td class="center">{{totaltickets}}</td>
-    <td class="center">{{dispatched}}</td>
     <td class="center">{{livestamp timesincelast}}</td>
     <td class="center">{{repeatCheck}}
       <a>

@@ -58,10 +58,11 @@ Template.addUserForm.events = {
     var Sunday = template.find('.day7').checked;
     var startT = template.find('.startT').value;
     var endT = template.find('.endT').value;
+    var shift = template.find('.slect-dropdown').value;
     if (Session.get('SelectedTech')) {
-      updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
+      updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift);
     } else {
-      addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday);
+      addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift);
     }
     Meteor.call("updateCron");
     Session.set('ShowProjectDialog', false);
@@ -84,10 +85,34 @@ Template.addUserForm.helpers({
       };
     }
     return {};
+},
+firstCheck: function shiftCheck(shift) {
+  var tech = _Techs.findOne(Session.get('SelectedTech'))
+if (tech.Shift == '1st') {
+  return {
+    selected: ""
   }
+}
+},
+secondCheck: function secondCheck(shift){
+  var tech = _Techs.findOne(Session.get('SelectedTech'))
+if (tech.Shift == '2nd') {
+  return {
+    selected: ""
+  };
+};
+},
+thirdCheck: function thirdCheck(shift){
+  var tech = _Techs.findOne(Session.get('SelectedTech'))
+if (tech.Shift == '3rd') {
+  return {
+    selected: ""
+  };
+};
+}
 });
 
-var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) {
+var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
   _Techs.insert({
     name: name,
     StartTime: startT,
@@ -101,12 +126,13 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Sunday: Sunday,
     queue: false,
     status: "Working",
-    weight: 1
+    weight: 1,
+    Shift: shift
   });
   Meteor.call("updateCron");
 };
 
-var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday) {
+var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
   _Techs.update(Session.get('SelectedTech'), {
     $set: {
       name: name,
@@ -121,7 +147,8 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Sunday: Sunday,
       queue: false,
       status: "Working",
-      weight: 1
+      weight: 1,
+      Shift: shift
     }
   });
   Meteor.call("updateCron");

@@ -21,10 +21,26 @@ Template.techsWorking.rendered = function() {};
 
 Meteor.startup(function() {});
 
+function shiftColor(shift){
+  if (shift == "1st") {
+    return "#87CEEB"  //SkyBlue
+  };
+  if (shift == "2nd") {
+    return "#FFFACD" //LemonChiffon
+};
+if (shift == "3rd") {
+  return "#00CED1" //Olive
+}
+};
+
 //techWorking
 Template.techWorking.helpers({
   color: function() {
-    if (Session.get('statuses_loaded')) {
+    if (this.status == "Working"){
+      var techshift = _Techs.findOne({_id: this._id}).Shift
+      return shiftColor(techshift);
+      console.log(shiftColor(techshift), techshift);
+    }else if (Session.get('statuses_loaded')) {
       return _Statuses.findOne({
         statusName: this.status
       }).color;
