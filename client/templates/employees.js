@@ -203,6 +203,7 @@ Template.schedule.events({
   },
   "click .removetech": function removeFromQButton(event, tmpl) {
     event.preventDefault();
+    console.log(this.queue);
     if (_Techs.findOne({
         _id: this._id,
         queue: true
