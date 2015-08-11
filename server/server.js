@@ -215,3 +215,16 @@ Meteor.startup(function() {
   SyncedCron.start();
   Meteor.call("updateCron");
 });
+
+Meteor.startup(function() {
+    SSLProxy({
+       port: 443, //or 443 (normal port/requires sudo)
+       ssl : {
+            key: Assets.getText("serverkey.pem"),
+            cert: Assets.getText("servercrt.pem"),
+
+            //Optional CA
+           //Assets.getText("ca.pem")
+       }
+    });
+});
