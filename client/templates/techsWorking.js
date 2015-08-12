@@ -100,6 +100,7 @@ function OOTQ(techthis) {
 };
 
 function OOTO(slectedstatus, techthis) {
+  console.log(slectedstatus);
   if (slectedstatus == "Working") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {

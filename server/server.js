@@ -185,12 +185,13 @@ updateLunch: function(tech) {
     if (hourPlusOne == 24) {
       hourPlusOne = 00
     };
-    var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-    console.log(hourPlusOne + ":" + min);
+    min = d.getMinutes() + 1
+    //var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+    console.log(d.getHours() + ":" + min);
     SyncedCron.add({
-      name: tech.name + ' Lunch time ' + hourPlusOne + ":" + min,
+      name: tech.name + ' Lunch time ' + d.getHours() + ":" + min,
       schedule: function(parser) {
-        return parser.recur().on(hourPlusOne + ":" + min).time()
+        return parser.recur().on(d.getHours() + ":" + min).time()
       },
       job: function() {
         _Techs.update({
