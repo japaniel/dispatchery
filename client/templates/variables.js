@@ -1,5 +1,3 @@
-Session.setDefault('ShowProjectDialog', false);
-Session.setDefault('SelectedTech', null);
 
 Template.statusTable.helpers({
     status: function () {
@@ -15,7 +13,7 @@ Template.statusTable.events({
         addStatus(name, color)
     },
     "click .xmarks": function () {
-      _Statuses.remove (this._id);
+      _Statuses.remove(this._id);
     }
 });
 

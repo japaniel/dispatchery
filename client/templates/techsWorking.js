@@ -1,138 +1,129 @@
-
-Session.setDefault('showChatModal', false);
-
 //tech working
 Template.techsWorking.helpers({
-  techsWorking: function () {
-    return _Queue.find({}, {sort : {timesincelast : 1}});
-  },
-  showChatModal : function() {
-    return Session.get('showChatModal');
+  techsWorking: function() {
+    return _Techs.find({
+      queue: true
+    }, {
+      sort: {
+        status: -1,
+        timesincelast: 1
+      }
+    });
   }
-
 });
 
-Template.techsWorking.events({
+var d = new Date();
+var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+var newTime = hours + ':' + min;
 
-});
+Template.techsWorking.rendered = function() {};
 
-Template.techsWorking.rendered = function(){
+Meteor.startup(function() {});
 
-
+function shiftColor(shift){
+  if (shift == "1st") {
+    return "#87CEEB"  //SkyBlue
+  };
+  if (shift == "2nd") {
+    return "#FFFACD" //LemonChiffon
 };
-
-Meteor.startup(function () {
-
-});
-
+if (shift == "3rd") {
+  return "#00CED1" //Olive
+}
+};
 
 //techWorking
 Template.techWorking.helpers({
-    line : function()
-    {
-        if(Session.get('chat_loaded')){
-            var temp = _Chat.findOne({owner : this._id}, {sort : {time : -1}});
-            if(temp)
-            {
-                return temp.message;
-            }
-
-        }
-    },
-    color : function(){
-        if(Session.get('statuses_loaded')){
-            return _Statuses.findOne({statusName : this.status}).color;
-        }
-}
-
-});
-
-Template.techWorking.events({
-    'click .plus-one' : function plusOne () {
-        _Queue.update(
-            {_id : this._id},
-            {
-                $set : {timesincelast : new Date()},
-                $inc : {totaltickets : 1}
-            }
-        );
-    },
-    'click .lastChatLine' : function(){
-
-        Session.set('chatEmployId', this._id);
-        Session.set('showChatModal', true);
+  color: function() {
+    if (this.status == "Working"){
+      var techshift = _Techs.findOne({_id: this._id}).Shift
+      return shiftColor(techshift);
+      console.log(shiftColor(techshift), techshift);
+    }else if (Session.get('statuses_loaded')) {
+      return _Statuses.findOne({
+        statusName: this.status
+      }).color;
     }
-
-
+  }
 });
 
-Template.techWorking.rendered = function(){
-    jscolor.install();
-
+function saveLastTicketTime (techinfo){
+  return techinfo.timesincelast
 };
 
-
-
-//chat
-Template.chat.helpers({
-      chatMessage : function(){
-        return _Chat.find
-        ({
-            owner : Session.get('chatEmployId')
-        });
-      }
-});
-
-Template.chat.events({
-  'click .close' : function(){
-    Session.set('showChatModal', false);
-  },'click .save' : function(event, template) {
-
-    addMessage(Session.get('chatEmployId'), template.find('input').value);
-    template.find('input').Text = String.empty;
-    $(".panel-body").animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 0);
-  }
-
-});
-
-Template.chat.rendered = function(){
-    $(".panel-body").animate({ scrollTop: $(".panel-body")[0].scrollHeight}, 0);
+function getLastTicketTime (techinfo){
+  return techinfo.timesincelastTicket
 }
 
-var addMessage = function(id, message) {
-  _Chat.insert({
-        owner : id,
-        message : message,
-        time : new Date()
+Template.techWorking.events({
+  'click .plus-one': function plusOne() {
+    _Techs.update({
+      _id: this._id
+    }, {
+      $set: {
+        timesincelastTicket: saveLastTicketTime(this),
+        timesincelast: new Date()
+      },
+      $inc: {
+        totaltickets: 1,
+        weight: 1
+      }
+    });
+  },
+  'click .minus-one': function minusOne() {
+    if (this.totaltickets == 0) {
+      return {}
+    };
+    _Techs.update({
+      _id: this._id
+    }, {
+      $set: {
+        timesincelast: getLastTicketTime(this)
+      },
+      $inc: {
+        totaltickets: -1,
+        weight: -1
+      }
+    });
+  }
+});
+
+function OOTQ(techthis) {
+  _Techs.update({
+    _id: techthis._id
+  }, {
+    $inc: {
+      weight: 1000
+    }
   })
 };
 
-//options
-
-Template.options.helpers({
-    statuses : function(){
-
-        return _Statuses.find();
-    }
-});
-
-
-
-Template.options.events ({
-    'click li' : function(evt,template){
-        var status = $(evt.target).text();
-        var parent = Template.parentData(0);
-        if(statuses === "Remove From Work")
-        {
-          _Queue.remove (this._id);
-        }else
-        {
-            Meteor.call('updateStatus', parent._id, status);
-        }
-    }
-});
-
-var removeWorking = function(id){
-    _Queue.remove( {_id : id})
-    Meteor.call('updateWorking', id);
+function OOTO(slectedstatus, techthis) {
+  console.log(slectedstatus);
+  if (slectedstatus == "Working") {
+    Meteor.call('removeLunch', techthis);
+  } else if (slectedstatus == "Lunch") {
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    Meteor.call('updateLunch', techthis);
+  }
 };
+
+  Template.options.helpers({
+    statuses: function() {
+      return _Statuses.find();
+    }
+  });
+
+  Template.options.events({
+    'click li': function(evt, template) {
+      // var slectedstatus = _Statuses.findOne({statusName: this.status});
+      var techthis = _Techs.findOne({
+        _id: this._id
+      });
+      var status = $(evt.target).text();
+      var parent = Template.parentData(0);
+      Meteor.call('updateStatus', parent._id, status);
+      OOTO(status, parent);
+    }
+  });

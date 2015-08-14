@@ -1,8 +1,11 @@
 accounts-base@1.2.0
 accounts-meteor-developer@1.0.4
 accounts-oauth@1.1.5
+aldeed:template-extension@3.4.3
+andrasph:clockpicker@0.0.2
 autoupdate@1.2.1
 base64@1.0.3
+benjaminrh:bootstrap-timepicker@0.1.0
 binary-heap@1.0.3
 blaze@2.1.2
 blaze-tools@1.0.3
@@ -14,6 +17,7 @@ ddp@1.1.0
 deps@1.0.7
 ejson@1.0.6
 fastclick@1.0.3
+force-ssl@1.0.4
 geojson-utils@1.0.3
 html-tools@1.0.4
 htmljs@1.0.4
@@ -28,6 +32,10 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
+<<<<<<< HEAD
+=======
+jplack:bootstrap-timepicker@0.2.1
+>>>>>>> e79882fc0ed9bd5e027d4468dc46a74a4dc73318
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
@@ -43,10 +51,12 @@ mobile-status-bar@1.0.3
 momentjs:moment@2.9.0
 mongo@1.1.0
 mrt:moment@2.8.1
+nsinenko:jsforce@1.4.1
 oauth@1.1.4
 oauth2@1.1.3
 observe-sequence@1.0.6
 ordered-dict@1.0.3
+percolate:synced-cron@1.2.1
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5
@@ -58,6 +68,7 @@ service-configuration@1.0.4
 session@1.1.0
 spacebars@1.0.6
 spacebars-compiler@1.0.6
+tarang:ssl@1.0.1
 templating@1.1.1
 tracker@1.0.7
 twbs:bootstrap@3.3.5

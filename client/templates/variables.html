@@ -1,5 +1,4 @@
 <template name="variables">
-
 {{>statusTable}}
 </template>
 
@@ -10,7 +9,7 @@
         </div>
         <div class="form-group">
             <div class="input-group demo2">
-                <input type="text" value="" class="form-control inputColor" />
+                <div style="display: none"> <input type="text" value="" class="form-control inputColor" /></div>
                 <span class="input-group-addon"><i></i></span>
             </div>
             <!--<input type="text" class="demo1 inputColor form-control" placeholder="Color" />-->
@@ -36,15 +35,6 @@
 </template>
 
 <template name="statusRow">
-    <!--<tr class="tech">-->
-        <!--<td>-->
-            <!--{{name}}-->
-        <!--</td>-->
-        <!--<td>-->
-            <!--{{color}}-->
-        <!--</td>-->
-    <!--</tr>-->
-
         <tr class="techWorking">
             <td class=""> {{statusName}}</td>
             <td class="center" bgcolor="{{color}}"></td>

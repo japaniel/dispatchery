@@ -1,115 +1,284 @@
 Session.setDefault('ShowProjectDialog', false);
 Session.setDefault('SelectedTech', null);
+Session.setDefault('ShowDeleteBox', false);
+
+Session.set('techInQ', false);
+var d = new Date();
+var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+var newTime = hours + ':' + min;
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+
+var n = weekday[d.getDay()];
+var today = n;
 
 Template.employees.helpers({
 
-    showProjectDialog : function(){
-        return Session.get('ShowProjectDialog');
-    }
+  showProjectDialog: function showProjectDialog() {
+    return Session.get('ShowProjectDialog');
+  },
+  ShowDeleteBox: function ShowDeleteBox() {
+    return Session.get('ShowDeleteBox');
+
+  }
 });
 
-
 Template.employees.events = {
-    "click .addUser" :  function(event,template){
-       event.preventDefault();
-       Session.set('ShowProjectDialog', true);
-        //$("#" + $(event.target).attr("href")).modal("show");
-    }
-    //,
-    //'click save' :  function(event,template){
-    //    event.preventDefault();
-    //    $("#" + $(event.target).attr("href")).modal("show");
-    //
-    //}
+  "click .addUser": function openForm(event, template) {
+    event.preventDefault();
+    Session.set('ShowProjectDialog', true);
+  }
 };
-
 //add User Form
-
 Template.addUserForm.events = {
-    "click .close" :  function(event,template){
-        event.preventDefault();
-        Session.set('ShowProjectDialog', false);
-        Session.set('SelectedTech', null);
-    },
-    'click .submit' :  function(event,template){
-        event.preventDefault();
-        var name = template.find('.inputName').value;
-        if(Session.get('SelectedTech'))
-        {
-            updateProject(name);
-        }
-        else{
-            addUser(name);
-        }
-
-        Session.set('ShowProjectDialog', false);
-        Session.set('SelectedTech', null);
-}
+  "click .close": function closeForm(event, template) {
+    event.preventDefault();
+    Session.set('ShowProjectDialog', false);
+    Session.set('SelectedTech', null);
+  },
+  'click .clockpicker': function() {
+    $('.clockpicker').clockpicker();
+  },
+  'click .submit': function submitForm(event, template) {
+    event.preventDefault();
+    var name = template.find('.inputName').value;
+    var Monday = template.find('.day1').checked;
+    var Tuesday = template.find('.day2').checked;
+    var Wednesday = template.find('.day3').checked;
+    var Thursday = template.find('.day4').checked;
+    var Friday = template.find('.day5').checked;
+    var Saturday = template.find('.day6').checked;
+    var Sunday = template.find('.day7').checked;
+    var startT = template.find('.startT').value;
+    var endT = template.find('.endT').value;
+    var shift = template.find('.slect-dropdown').value;
+    if (Session.get('SelectedTech')) {
+      updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift);
+    } else {
+      addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift);
+    }
+    Meteor.call("updateCron");
+    Session.set('ShowProjectDialog', false);
+    Session.set('SelectedTech', null);
+  }
 };
 
 Template.addUserForm.helpers({
 
-    tech : function(){
-        return _Techs.findOne({_id : Session.get('SelectedTech')});
+  tech: function tech() {
+    return _Techs.findOne({
+      _id: Session.get('SelectedTech')
+    });
+  },
+  checking: function checking(day) {
+    var dayinfo = _Techs.findOne(Session.get('SelectedTech'))
+    if (dayinfo[day]) {
+      return {
+        checked: ""
+      };
     }
-
+    return {};
+},
+firstCheck: function shiftCheck(shift) {
+  var tech = _Techs.findOne(Session.get('SelectedTech'))
+if (tech.Shift == '1st') {
+  return {
+    selected: ""
+  }
+}
+},
+secondCheck: function secondCheck(shift){
+  var tech = _Techs.findOne(Session.get('SelectedTech'))
+if (tech.Shift == '2nd') {
+  return {
+    selected: ""
+  };
+};
+},
+thirdCheck: function thirdCheck(shift){
+  var tech = _Techs.findOne(Session.get('SelectedTech'))
+if (tech.Shift == '3rd') {
+  return {
+    selected: ""
+  };
+};
+}
 });
 
-var addUser = function(name){
-    _Techs.insert({name:name})
+var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  _Techs.insert({
+    name: name,
+    StartTime: startT,
+    EndTime: endT,
+    Monday: Monday,
+    Tuesday: Tuesday,
+    Wednesday: Wednesday,
+    Thursday: Thursday,
+    Friday: Friday,
+    Saturday: Saturday,
+    Sunday: Sunday,
+    queue: false,
+    status: "Working",
+    weight: 1,
+    Shift: shift
+  });
+  Meteor.call("updateCron");
 };
 
-var updateProject = function(name){
-    _Techs.update(Session.get('SelectedTech'), {$set :{name : name}});
-    Meteor.call('updateWorking', Session.get('SelectedTech'));
+var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  _Techs.update(Session.get('SelectedTech'), {
+    $set: {
+      name: name,
+      StartTime: startT,
+      EndTime: endT,
+      Monday: Monday,
+      Tuesday: Tuesday,
+      Wednesday: Wednesday,
+      Thursday: Thursday,
+      Friday: Friday,
+      Saturday: Saturday,
+      Sunday: Sunday,
+      queue: false,
+      status: "Working",
+      weight: 1,
+      Shift: shift
+    }
+  });
+  Meteor.call("updateCron");
 };
 
+Template.schedule.helpers({
 
-
-Template.tech.helpers({
-
-    disabled : function(){
-
-        if(_Queue.findOne({_id : this._id}))
-        {
-            return {disabled : ""};
+  disabled: function disabled() {
+    if (_Techs.findOne({
+        _id: this._id,
+        queue: true
+      })) {
+      return {
+        disabled: ""
+      };
+    }
+    return {};
+  },
+  checking: function checking(day) {
+    if (this[day]) {
+      return {
+        checked: ""
+      };
+    }
+    return {};
+  },
+   colorChecked: function colorChecked(day){
+     if (this[day]) {
+     return {style: "color: blue"};
+   };
+   return {};
+   }
+});
+Template.schedule.events({
+  "click .sendToWork": function addTechToQ(event, template) {
+    event.preventDefault();
+    _Techs.update({
+      _id: this._id
+    }, {
+      $set: {
+        queue: true,
+        totaltickets: 0,
+        dispatched: false,
+        status: "Working"
+      }
+    });
+  },
+  "dblclick .schedule": function editTech(event, tmpl) {
+    event.preventDefault();
+    Session.set('SelectedTech', this._id);
+    Session.set('ShowProjectDialog', true);
+  },
+  "click .removetech": function removeFromQButton(event, tmpl) {
+    event.preventDefault();
+    if (_Techs.findOne({
+        _id: this._id,
+        queue: true
+      })) {
+      _Techs.update({
+        _id: this._id
+      }, {
+        $set: {
+          queue: false
         }
-        return {};
-    }
+      });
 
-
+    } else if (_Techs.findOne({
+        _id: this._id,
+        queue: false
+      })) {
+      event.preventDefault();
+      Session.set('SelectedTech', this._id);
+      Session.set('ShowDeleteBox', true);
+}
+}
 });
-
-Template.tech.events({
-    "click .sendToWork" :  function(event,template){
-        event.preventDefault();
-        _Queue.insert({
-            name : this.name,
-            _id : this._id,
-            totaltickets : 0,
-            dispatched : false,
-            timesincelast : new Date(),
-            status : "working"
-        })
-    },"dblclick .tech" : function(event, tmpl){
-        event.preventDefault();
-        Session.set('SelectedTech', this._id);
-        Session.set('ShowProjectDialog', true);
-    }
-});
-
-
 
 Template.techs.helpers({
-    techs: function () {
-        return _Techs.find();
+  techs: function findTechs() {
+    return _Techs.find({}, {
+      sort: {
+        Shift: 1,
+        name: 1
+      }
+    });
+  }
+});
+
+
+Template.techs.events({});
+
+Template.registerHelper("prettifyDate", function timer(timestamp) {
+  return moment(new Date(timestamp)).fromNow();
+});
+
+function deleteTech(techId) {
+  _Techs.remove({
+    _id: techId._id
+  });
+}
+
+
+Template.deleteUser.helpers({
+
+  tech: function tech() {
+    return _Techs.findOne({
+      _id: Session.get('SelectedTech')
+    });
+  },
+  checking: function checking(day) {
+    var dayinfo = _Techs.findOne(Session.get('SelectedTech'))
+    if (dayinfo[day]) {
+      return {
+        checked: ""
+      };
     }
+    return {};
+  }
 });
 
-Template.techs.events({
-
-});
-
-Template.registerHelper("prettifyDate", function(timestamp) {
-    return moment(new Date(timestamp)).fromNow();
-});
+Template.deleteUser.events = {
+  "click .closeddelete": function closeForm(event, template) {
+    event.preventDefault();
+    Session.set('SelectedTech', null);
+    Session.set('ShowDeleteBox', false);
+  },
+  "click .submitdelete": function() {
+    event.preventDefault();
+    var techinfo = _Techs.findOne(Session.get('SelectedTech'));
+    deleteTech(techinfo);
+    Session.set('ShowDeleteBox', false);
+  }
+};
