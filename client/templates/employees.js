@@ -127,7 +127,10 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     queue: false,
     status: "Working",
     weight: 1,
-    Shift: shift
+    Shift: shift,
+    lunch: false,
+    meeting: false,
+    training: false
   });
   Meteor.call("updateCron");
 };
@@ -148,7 +151,10 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       queue: false,
       status: "Working",
       weight: 1,
-      Shift: shift
+      Shift: shift,
+      lunch: false,
+      meeting: false,
+      training: false
     }
   });
   Meteor.call("updateCron");

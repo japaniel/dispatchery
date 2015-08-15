@@ -89,23 +89,30 @@ Template.techWorking.events({
   }
 });
 
-function OOTQ(techthis) {
-  _Techs.update({
-    _id: techthis._id
-  }, {
-    $inc: {
-      weight: 1000
-    }
-  })
-};
-
-function OOTO(slectedstatus, techthis) {
-  console.log(slectedstatus);
-  if (slectedstatus == "Working") {
+function lunch(slectedstatus, techthis) {
+  if (slectedstatus != "Lunch") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
     _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
     Meteor.call('updateLunch', techthis);
+  }
+};
+
+function meeting(slectedstatus, techthis) {
+  if (slectedstatus != "Meeting") {
+    Meteor.call('removeMeeting', techthis);
+  } else if (slectedstatus == "Meeting") {
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    Meteor.call('updateMeeting', techthis);
+  }
+};
+
+function training(slectedstatus, techthis) {
+  if (slectedstatus != "Training") {
+    Meteor.call('removeTraining', techthis);
+  } else if (slectedstatus == "Training") {
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    Meteor.call('updateTraining', techthis);
   }
 };
 
@@ -124,6 +131,9 @@ function OOTO(slectedstatus, techthis) {
       var status = $(evt.target).text();
       var parent = Template.parentData(0);
       Meteor.call('updateStatus', parent._id, status);
-      OOTO(status, parent);
+      lunch(status, parent);
+      meeting(status, parent);
+      training(status, parent);
+      console.log(parent);
     }
   });
