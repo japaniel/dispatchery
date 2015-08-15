@@ -286,6 +286,6 @@ Meteor.startup(function() {
   SyncedCron.start();
   Meteor.call("updateCron");
   Meteor.call("updateLunch");
-//  Meteor.call("updateMeeting");
-//  Meteor.call("updateTraining");
+  Meteor.call("updateMeeting");
+  Meteor.call("updateTraining");
 });
