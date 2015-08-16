@@ -45,6 +45,9 @@ Template.techWorking.helpers({
         statusName: this.status
       }).color;
     }
+  },
+  timeStamp: function(){
+    return moment(this.timesincelast).fromNow();
   }
 });
 
