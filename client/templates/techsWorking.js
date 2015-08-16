@@ -47,8 +47,16 @@ Template.techWorking.helpers({
     }
   },
   timeStamp: function(){
+    if (this.status == "Meeting") {
+      return moment(this.timesincelast).add(1, 'hours').fromNow();
+    }else if (this.status == "Training") {
+      return moment(this.timesincelast).add(2, 'hours').fromNow();
+    }else if (this.status == "Lunch") {
+      return moment(this.timesincelast).add(1, 'hours').fromNow();
+    }else {
     return moment(this.timesincelast).fromNow();
   }
+}
 });
 
 function saveLastTicketTime (techinfo){
