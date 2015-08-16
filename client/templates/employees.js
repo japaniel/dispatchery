@@ -189,7 +189,7 @@ Template.schedule.helpers({
  },
  queueCheckColor: function queueCheckColor(){
    if (this.queue) {
-     return {style: "background-color:#1E90FF"};
+     return {style: "background-color:#5AE873"};
    }else {
      return {style: "background-color:#FF574F"};
    }
