@@ -127,7 +127,10 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     queue: false,
     status: "Working",
     weight: 1,
-    Shift: shift
+    Shift: shift,
+    lunch: false,
+    meeting: false,
+    training: false
   });
   Meteor.call("updateCron");
 };
@@ -148,7 +151,10 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       queue: false,
       status: "Working",
       weight: 1,
-      Shift: shift
+      Shift: shift,
+      lunch: false,
+      meeting: false,
+      training: false
     }
   });
   Meteor.call("updateCron");
@@ -177,11 +183,39 @@ Template.schedule.helpers({
   },
    colorChecked: function colorChecked(day){
      if (this[day]) {
-     return {style: "color: blue"};
+     return {style: "color:#1E90FF;font-size:120%;font-family:Fantasy"};
    };
    return {};
+ },
+ queueCheckColor: function queueCheckColor(){
+   if (this.queue) {
+     return {style: "background-color:#5AE873"};
+   }else {
+     return {style: "background-color:#FF574F"};
    }
+ },
+ queueCheck: function queueCheck(){
+   if (this.queue) {
+     return "Now Working";
+   }else {
+     return "Send To Work";
+   }
+ },
+ shiftColor: function shiftColor(shift){
+   console.log(shift);
+   if (shift == "1st") {
+     return "#87CEEB"  //SkyBlue
+   };
+   if (shift == "2nd") {
+     return "#4DFFFC"
+ };
+ if (shift == "3rd") {
+   return "#00CED1" //Olive
+ }
+ }
 });
+
+
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
     event.preventDefault();

@@ -26,7 +26,7 @@ function shiftColor(shift){
     return "#87CEEB"  //SkyBlue
   };
   if (shift == "2nd") {
-    return "#FFFACD" //LemonChiffon
+    return "#4DFFFC" 
 };
 if (shift == "3rd") {
   return "#00CED1" //Olive
@@ -39,13 +39,23 @@ Template.techWorking.helpers({
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift
       return shiftColor(techshift);
-      console.log(shiftColor(techshift), techshift);
     }else if (Session.get('statuses_loaded')) {
       return _Statuses.findOne({
         statusName: this.status
       }).color;
     }
+  },
+  timeStamp: function(){
+    if (this.status == "Meeting") {
+      return moment(this.timesincelast).add(1, 'hours').fromNow();
+    }else if (this.status == "Training") {
+      return moment(this.timesincelast).add(2, 'hours').fromNow();
+    }else if (this.status == "Lunch") {
+      return moment(this.timesincelast).add(1, 'hours').fromNow();
+    }else {
+    return moment(this.timesincelast).fromNow();
   }
+}
 });
 
 function saveLastTicketTime (techinfo){
@@ -89,23 +99,30 @@ Template.techWorking.events({
   }
 });
 
-function OOTQ(techthis) {
-  _Techs.update({
-    _id: techthis._id
-  }, {
-    $inc: {
-      weight: 1000
-    }
-  })
-};
-
-function OOTO(slectedstatus, techthis) {
-  console.log(slectedstatus);
-  if (slectedstatus == "Working") {
+function lunch(slectedstatus, techthis) {
+  if (slectedstatus != "Lunch") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
     _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
     Meteor.call('updateLunch', techthis);
+  }
+};
+
+function meeting(slectedstatus, techthis) {
+  if (slectedstatus != "Meeting") {
+    Meteor.call('removeMeeting', techthis);
+  } else if (slectedstatus == "Meeting") {
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    Meteor.call('updateMeeting', techthis);
+  }
+};
+
+function training(slectedstatus, techthis) {
+  if (slectedstatus != "Training") {
+    Meteor.call('removeTraining', techthis);
+  } else if (slectedstatus == "Training") {
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    Meteor.call('updateTraining', techthis);
   }
 };
 
@@ -124,6 +141,9 @@ function OOTO(slectedstatus, techthis) {
       var status = $(evt.target).text();
       var parent = Template.parentData(0);
       Meteor.call('updateStatus', parent._id, status);
-      OOTO(status, parent);
+      lunch(status, parent);
+      meeting(status, parent);
+      training(status, parent);
+      console.log(parent);
     }
   });
