@@ -183,10 +183,24 @@ Template.schedule.helpers({
   },
    colorChecked: function colorChecked(day){
      if (this[day]) {
-     return {style: "color: blue"};
+     return {style: "color:blue;font-size:120%;font-family:Fantasy"};
    };
    return {};
+ },
+ queueCheckColor: function queueCheckColor(){
+   if (this.queue) {
+     return {style: "background-color:#00FF00"};
+   }else {
+     return {style: "background-color:#FF0000"};
    }
+ },
+ queueCheck: function queueCheck(){
+   if (this.queue) {
+     return "Now Working";
+   }else {
+     return "Send To Work";
+   }
+ }
 });
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
