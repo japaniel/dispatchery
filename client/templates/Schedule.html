@@ -1,4 +1,4 @@
-<template name="employees">
+<template name="Schedule">
   <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
   <button type="button" class="btn btn-default addUser">Add User</button>
   {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{# if ShowDeleteBox}} {{> deleteUser}} {{/if}} {{>techs}}
@@ -54,7 +54,7 @@
                 </tr>
               </tbody>
             </table>
-            <label for="InputName" class="control-label">
+            <label for="inputName" class="control-label">
               <strong>Days This Tech Works</strong>
             </label>
             <div class="techSchedule">
@@ -266,7 +266,7 @@
                 </tr>
               </tbody>
             </table>
-            <label for="InputName" class="control-label">
+            <label for="inputName" class="control-label">
               <strong>Days This Tech Works</strong>
             </label>
             <div class="techSchedule">

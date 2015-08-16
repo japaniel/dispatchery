@@ -19,7 +19,7 @@ weekday[6] = "Saturday";
 var n = weekday[d.getDay()];
 var today = n;
 
-Template.employees.helpers({
+Template.Schedule.helpers({
 
   showProjectDialog: function showProjectDialog() {
     return Session.get('ShowProjectDialog');
@@ -30,7 +30,7 @@ Template.employees.helpers({
   }
 });
 
-Template.employees.events = {
+Template.Schedule.events = {
   "click .addUser": function openForm(event, template) {
     event.preventDefault();
     Session.set('ShowProjectDialog', true);

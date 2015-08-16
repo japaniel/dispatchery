@@ -31,8 +31,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="todos.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/templates/todos.js">
+      <file leaf-file-name="input.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/templates/input.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.70804596">
               <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
@@ -41,8 +41,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="employees.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/templates/employees.html">
+      <file leaf-file-name="Schedule.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/templates/Schedule.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-1.5454545">
               <caret line="5" column="27" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="27" />
@@ -51,8 +51,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="employees.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/templates/employees.js">
+      <file leaf-file-name="Schedule.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/templates/Schedule.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-8.206897">
               <caret line="14" column="37" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="37" />
@@ -77,7 +77,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/client/templates/statuses.html" />
-        <option value="$PROJECT_DIR$/client/employees.html" />
+        <option value="$PROJECT_DIR$/client/Schedule.html" />
         <option value="$PROJECT_DIR$/client/templates/addUserForm.js.css" />
         <option value="$PROJECT_DIR$/client/templates/menu.ts" />
         <option value="$PROJECT_DIR$/.meteor/packages" />
@@ -87,9 +87,9 @@
         <option value="$PROJECT_DIR$/lib/collections/working.js" />
         <option value="$PROJECT_DIR$/lib/collections/techs.js" />
         <option value="$PROJECT_DIR$/client/templates/statuses.js" />
-        <option value="$PROJECT_DIR$/client/stylesheets/todos.css" />
+        <option value="$PROJECT_DIR$/client/stylesheets/input.css" />
         <option value="$PROJECT_DIR$/lib/collections/tasks.js" />
-        <option value="$PROJECT_DIR$/client/templates/todos.html" />
+        <option value="$PROJECT_DIR$/client/templates/input.html" />
         <option value="$PROJECT_DIR$/client/templates/menu.js" />
         <option value="$PROJECT_DIR$/client/templates/techWorking.html" />
         <option value="$PROJECT_DIR$/client/templates/techWorking.js" />
@@ -100,7 +100,7 @@
         <option value="$PROJECT_DIR$/client/templates/tech.js" />
         <option value="$PROJECT_DIR$/client/templates/techs.html" />
         <option value="$PROJECT_DIR$/client/templates/techs.js" />
-        <option value="$PROJECT_DIR$/client/templates/employees.html" />
+        <option value="$PROJECT_DIR$/client/templates/Schedule.html" />
         <option value="$PROJECT_DIR$/client/templates/application/layout.html" />
         <option value="$PROJECT_DIR$/client/templates/menu.html" />
         <option value="$PROJECT_DIR$/lib/router.js" />
@@ -111,15 +111,15 @@
         <option value="$PROJECT_DIR$/lib/jscolor/demo.html" />
         <option value="$PROJECT_DIR$/client/jscolor/demo.html" />
         <option value="$PROJECT_DIR$/client/jscolor/jscolor.js" />
-        <option value="$PROJECT_DIR$/client/templates/variables.html" />
-        <option value="$PROJECT_DIR$/client/templates/todos.js" />
+        <option value="$PROJECT_DIR$/client/templates/Status.html" />
+        <option value="$PROJECT_DIR$/client/templates/input.js" />
         <option value="$PROJECT_DIR$/client/subscribe.js" />
         <option value="$PROJECT_DIR$/client/isClient.js" />
         <option value="$PROJECT_DIR$/client/templates/techsWorking.html" />
-        <option value="$PROJECT_DIR$/client/templates/employees.js" />
+        <option value="$PROJECT_DIR$/client/templates/Schedule.js" />
         <option value="$PROJECT_DIR$/client/templates/techsWorking.js" />
         <option value="$PROJECT_DIR$/server/server.js" />
-        <option value="$PROJECT_DIR$/client/templates/variables.js" />
+        <option value="$PROJECT_DIR$/client/templates/Status.js" />
       </list>
     </option>
   </component>
@@ -541,14 +541,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="100" selection-start-line="1" selection-start-column="93" selection-end-line="1" selection-end-column="100" />
@@ -564,7 +564,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/todos.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/input.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
@@ -572,7 +572,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/todos.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/input.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="27" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
@@ -608,14 +608,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="100" selection-start-line="1" selection-start-column="93" selection-end-line="1" selection-end-column="100" />
@@ -631,7 +631,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/todos.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/input.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
@@ -639,7 +639,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/todos.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/input.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="27" selection-start-line="51" selection-start-column="27" selection-end-line="51" selection-end-column="27" />
@@ -675,14 +675,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/variables.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/Status.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -703,7 +703,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -759,7 +759,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/stylesheets/todos.css">
+    <entry file="file://$PROJECT_DIR$/client/stylesheets/input.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7369942">
           <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
@@ -780,7 +780,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/variables.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/Status.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12552302">
           <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
@@ -846,14 +846,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/variables.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/Status.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46896553">
           <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/todos.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/input.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44312796">
           <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
@@ -875,7 +875,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.html">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5454545">
           <caret line="5" column="27" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="27" />
@@ -883,7 +883,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/employees.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/Schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.206897">
           <caret line="14" column="37" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="37" />
@@ -899,7 +899,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/templates/todos.js">
+    <entry file="file://$PROJECT_DIR$/client/templates/input.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70804596">
           <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
