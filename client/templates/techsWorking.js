@@ -26,7 +26,7 @@ function shiftColor(shift){
     return "#87CEEB"  //SkyBlue
   };
   if (shift == "2nd") {
-    return "#FFFACD" //LemonChiffon
+    return "#4DFFFC" 
 };
 if (shift == "3rd") {
   return "#00CED1" //Olive
@@ -39,7 +39,6 @@ Template.techWorking.helpers({
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift
       return shiftColor(techshift);
-      console.log(shiftColor(techshift), techshift);
     }else if (Session.get('statuses_loaded')) {
       return _Statuses.findOne({
         statusName: this.status
