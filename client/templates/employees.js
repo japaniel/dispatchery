@@ -183,15 +183,15 @@ Template.schedule.helpers({
   },
    colorChecked: function colorChecked(day){
      if (this[day]) {
-     return {style: "color:blue;font-size:120%;font-family:Fantasy"};
+     return {style: "color:#1E90FF;font-size:120%;font-family:Fantasy"};
    };
    return {};
  },
  queueCheckColor: function queueCheckColor(){
    if (this.queue) {
-     return {style: "background-color:#00FF00"};
+     return {style: "background-color:#1E90FF"};
    }else {
-     return {style: "background-color:#FF0000"};
+     return {style: "background-color:#FF574F"};
    }
  },
  queueCheck: function queueCheck(){
