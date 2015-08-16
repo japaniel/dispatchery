@@ -1,6 +1,6 @@
 
 
-    Template.Input.helpers({
+    Template.input.helpers({
         tasks: function () {
             if (Session.get("hideCompleted")) {
                 // If hide completed is checked, filter tasks
@@ -18,7 +18,7 @@
         }
     });
 
-    Template.Input.events({
+    Template.input.events({
         "submit .new-task": function (event) {
             // This function is called when the new task form is submitted
             var text = event.target.text.value;
