@@ -120,7 +120,7 @@ Meteor.methods({
 updateLunch: function(tech) {
   _Techs.find().forEach(function(tech){
     console.log(tech.lunch, "lunch check");
-  if (tech.lunch) {
+  if (tech.lunch && tech.status == "Lunch") {
     SyncedCron.add({
       name: tech.name + ' Lunch time ' + tech.LunchClockOut,
       schedule: function(parser) {
@@ -138,7 +138,7 @@ updateLunch: function(tech) {
         removeLunch(tech);
       }
     });
-  } else {
+  } else if (tech.status == "Lunch") {
     var d = new Date();
     var hourPlusOne = d.getHours() + 1
     if (hourPlusOne == 24) {
@@ -174,7 +174,7 @@ updateLunch: function(tech) {
   updateMeeting: function(tech) {
     _Techs.find().forEach(function(tech){
       console.log(tech.meeting, "meeting check");
-    if (tech.meeting) {
+    if (tech.meeting && tech.status == "Meeting") {
       SyncedCron.add({
         name: tech.name + ' Meeting time ' + tech.MeetingClockOut,
         schedule: function(parser) {
@@ -192,7 +192,7 @@ updateLunch: function(tech) {
           removeMeeting(tech);
         }
       });
-    } else {
+    } else if (tech.status == "Meeting") {
       var d = new Date();
       var hourPlusOne = d.getHours() + 1
       if (hourPlusOne == 24) {
@@ -228,7 +228,7 @@ updateLunch: function(tech) {
     updateTraining: function(tech) {
       _Techs.find().forEach(function(tech){
         console.log(tech.training, "training check");
-      if (tech.training) {
+      if (tech.training && tech.status == "Training") {
         SyncedCron.add({
           name: tech.name + ' Training time ' + tech.TrainingClockOut,
           schedule: function(parser) {
@@ -246,7 +246,7 @@ updateLunch: function(tech) {
             removeTraining(tech);
           }
         });
-      } else {
+      } else if (tech.status == "Training"){
         var d = new Date();
         var hourPlusOne = d.getHours() + 2
         if (hourPlusOne == 24) {
