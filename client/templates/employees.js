@@ -200,8 +200,22 @@ Template.schedule.helpers({
    }else {
      return "Send To Work";
    }
+ },
+ shiftColor: function shiftColor(shift){
+   console.log(shift);
+   if (shift == "1st") {
+     return "#87CEEB"  //SkyBlue
+   };
+   if (shift == "2nd") {
+     return "#4DFFFC"
+ };
+ if (shift == "3rd") {
+   return "#00CED1" //Olive
+ }
  }
 });
+
+
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
     event.preventDefault();
