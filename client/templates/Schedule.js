@@ -167,9 +167,7 @@ Template.schedule.helpers({
         _id: this._id,
         queue: true
       })) {
-      return {
-        disabled: ""
-      };
+      return {disabled: ""};
     }
     return {};
   },
@@ -183,34 +181,33 @@ Template.schedule.helpers({
   },
    colorChecked: function colorChecked(day){
      if (this[day]) {
-     return {style: "color:#1E90FF;font-size:120%;font-family:Fantasy"};
+     return {style: "color:#0daecd;font-size:120%;font-weight:bold"};
    };
    return {};
  },
- queueCheckColor: function queueCheckColor(){
+ queueButtonColorCheck: function queueButtonColorCheck(){
    if (this.queue) {
-     return {style: "background-color:#5AE873"};
+     return {style: "background-color:#80FF95"};
    }else {
-     return {style: "background-color:#FF574F"};
+     return {style: "background-color:#FF8280"};
    }
  },
  queueCheck: function queueCheck(){
    if (this.queue) {
-     return "Now Working";
+     return "Getting Pain ;)";
    }else {
      return "Send To Work";
    }
  },
  shiftColor: function shiftColor(shift){
-   console.log(shift);
    if (shift == "1st") {
-     return "#87CEEB"  //SkyBlue
+     return "#EFEFEF"  //SkyBlue
    };
    if (shift == "2nd") {
-     return "#4DFFFC"
+     return "#DFDFDF"
  };
  if (shift == "3rd") {
-   return "#00CED1" //Olive
+   return "#CDCDCD" //Olive
  }
  }
 });

@@ -26,7 +26,7 @@ function shiftColor(shift){
     return "#87CEEB"  //SkyBlue
   };
   if (shift == "2nd") {
-    return "#4DFFFC" 
+    return "#4DFFFC"
 };
 if (shift == "3rd") {
   return "#00CED1" //Olive
