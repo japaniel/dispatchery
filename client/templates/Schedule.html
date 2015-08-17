@@ -169,7 +169,7 @@
 
 <template name='schedule'>
   <tr class="schedule" bgcolor="{{shiftColor Shift}}">
-    <td>
+    <td style="color:#111c24;font-weight:bold">
       <div class="names">{{name}}</div>
     </td>
     <td>
@@ -223,12 +223,12 @@
     </td>
     <td>
       <div class="btn-group center">
-        <button type="button" class="btn btn-default sendToWork" {{disabled}}>{{queueCheck}}</button>
+        <button type="button" class="btn btn-default sendToWork" style="background-color:#ee6129" {{disabled}}>{{queueCheck}}</button>
       </div>
     </td>
     <td>
       <div>
-        <button class="btn btn-default removetech" {{queueCheckColor}}>
+        <button class="btn btn-default removetech" {{queueButtonColorCheck}}>
           <span class="glyphicon glyphicon-remove center col-md-1"></span>
         </button>
       </div>
