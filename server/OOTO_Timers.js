@@ -1,6 +1,6 @@
 Meteor.methods({
 updateLunch: function(tech) {
-  _Techs.find().forEach(function(tech){
+  _Techs.find({queue: true}).forEach(function(tech){
   if (tech.lunch && tech.status == "Lunch") {
     SyncedCron.add({
       name: tech.name + ' Lunch time ' + tech.LunchClockOut,
@@ -52,7 +52,7 @@ updateLunch: function(tech) {
     _Techs.update({_id: tech._id}, {$set: {LunchClockOut: "", lunch: false}});
   },
   updateMeeting: function(tech) {
-    _Techs.find().forEach(function(tech){
+    _Techs.find({queue: true}).forEach(function(tech){
     if (tech.meeting && tech.status == "Meeting") {
       SyncedCron.add({
         name: tech.name + ' Meeting time ' + tech.MeetingClockOut,
@@ -104,7 +104,7 @@ updateLunch: function(tech) {
       _Techs.update({_id: tech._id}, {$set: {MeetingClockOut: "", meeting: false}});
     },
     updateTraining: function(tech) {
-      _Techs.find().forEach(function(tech){
+      _Techs.find({queue: true}).forEach(function(tech){
       if (tech.training && tech.status == "Training") {
         SyncedCron.add({
           name: tech.name + ' Training time ' + tech.TrainingClockOut,
