@@ -45,7 +45,6 @@ Template.pretechWorking.helpers({
   }
 },
 preStartTime: function preStartTime() {
-  console.log(this);
   return moment(this.timesincelastTicket).add(30, 'm').fromNow();
 }
 });
@@ -84,7 +83,6 @@ Template.techWorking.helpers({
     }
   },
   timeStamp: function(){
-    console.log(this.StartTime - 30);
     if (this.status == "Meeting") {
       return moment(this.timesincelast).add(1, 'hours').fromNow();
     }else if (this.status == "Training") {

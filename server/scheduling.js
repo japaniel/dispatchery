@@ -123,27 +123,47 @@ Meteor.methods({
         };
       });
     });
-    SyncedCron.start();
 
-  addToprequeue: function addToprequeue(tech, day) {
-    var d = 
-    SyncedCron.add({
-      name: tech.name + " Work Start " + day,
-      schedule: function(parser) {
-        return parser.recur().on(tech.StartTime).time().on(dayNum(day)).dayOfWeek();
-      },
-      job: function() {
-        _Techs.update({
-          _id: tech._id
-        }, {
-          $set: {
-            queue: true,
-            totaltickets: 0,
-            status: "Working",
-          }
-        });
+    addToprequeue: function addToprequeue(tech, day) {
+      var d = new Date();
+      var min30 = d.getMinutes() + 30;
+      var addhour = d.getHours() + 1;
+      var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+      var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+      var minMore = 0
+        if (min30 > 59) {
+          var extramin = min30 - 60
+          minMore = addhour + ':' + extramin;
+        } else {
+          minMore = hours + ':' + min30;
+        }
+      console.log(minMore);
+      if (true) {
+
       }
-    });
+      // _Techs.update({_id: tech._id}, {$set:{workStart: minMore}});
+      SyncedCron.add({
+        name: tech.name + " Work Start " + day,
+        schedule: function(parser) {
+          return parser.recur().on(minMore).time().on(dayNum(day)).dayOfWeek();
+        },
+        job: function() {
+          _Techs.update({
+            _id: tech._id
+          }, {
+            $set: {
+              prequeue: false,
+              queue: true,
+              totaltickets: 0,
+            }
+          });
+          removePreQueueSchedule(tech, day);
+        }
+      });
+    }
+  removePreQueueSchedule: function removePreQueueSchedule(tech, day){
+    SyncedCron.remove(tech.name + " Work Start " + day);
   }
+  SyncedCron.start();
 }
 });
