@@ -125,12 +125,14 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Saturday: Saturday,
     Sunday: Sunday,
     queue: false,
+    prequeue: false,
     status: "Working",
     weight: 1,
     Shift: shift,
     lunch: false,
     meeting: false,
-    training: false
+    training: false,
+    timesincelastTicket: 0
   });
   Meteor.call("updateCron");
 };
@@ -149,12 +151,14 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Saturday: Saturday,
       Sunday: Sunday,
       queue: false,
+      prequeue: false,
       status: "Working",
       weight: 1,
       Shift: shift,
       lunch: false,
       meeting: false,
-      training: false
+      training: false,
+      timesincelastTicket: 0
     }
   });
   Meteor.call("updateCron");

@@ -58,9 +58,6 @@ Meteor.methods({
         status: status
       }
     });
-  },
-  TechsInQ: function() {
-    _Techs.find({});
   }
 });
 
