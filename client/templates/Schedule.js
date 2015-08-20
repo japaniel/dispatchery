@@ -111,7 +111,9 @@ if (tech.Shift == '3rd') {
 }
 });
 
+
 var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  var startT30 = startT + 30;
   _Techs.insert({
     name: name,
     StartTime: startT,
@@ -131,12 +133,14 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     lunch: false,
     meeting: false,
     training: false,
-    timesincelastTicket: 0
+    timesincelastTicket: 0,
+    preQueueEnterTime: 0
   });
   Meteor.call("updateCron");
 };
 
 var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  var startT30 = startT + 30;
   _Techs.update(Session.get('SelectedTech'), {
     $set: {
       name: name,

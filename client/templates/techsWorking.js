@@ -45,7 +45,7 @@ Template.pretechWorking.helpers({
   }
 },
 preStartTime: function preStartTime() {
-  return moment(this.timesincelastTicket).add(30, 'm').fromNow();
+  return moment(this.preQueueEnterTime).add(30, 'm').fromNow(TimeSync.serverTime());
 }
 });
 
@@ -73,6 +73,7 @@ if (shift == "3rd") {
 //techWorking
 Template.techWorking.helpers({
   color: function() {
+    console.log(_Techs.this);
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift
       return shiftColor(techshift);

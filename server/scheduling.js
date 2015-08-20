@@ -1,5 +1,6 @@
 Meteor.methods({
   updateCron: function() {
+
     SyncedCron.stop();
     var temp = [
       "Monday",
@@ -49,6 +50,21 @@ Meteor.methods({
       var temp = {};
 
       _Techs.find(temp).forEach(function(tech) {
+
+        timeToWork: function timeToWork() {
+          var d = new Date();
+          var min30 = d.getMinutes() + 31;
+          var addhour = d.getHours() + 1;
+          var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+          var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+          if (min30 > 59) {
+            var extramin = min30 - 60
+            return addhour + ':' + extramin;
+          } else {
+            return hours + ':' + min30;
+          }
+        };
+
         if (tech.StartTime != "" && tech[day]) {
           SyncedCron.add({
             name: tech.name + " Prework Start " + day,
@@ -56,19 +72,20 @@ Meteor.methods({
               return parser.recur().on(tech.StartTime).time().on(dayNum(day)).dayOfWeek();
             },
             job: function() {
+              console.log(timeToWork());
               _Techs.update({
                 _id: tech._id
               }, {
                 $set: {
-                  prequeue: true,
                   totaltickets: 0,
                   status: "Working",
-                  timesincelastTicket: new Date()
+                  prequeue: true
                 }
               });
-              addToprequeue(tech, day);
+              addToPreQueue(tech, day);
             }
           });
+          _Techs.update({_id: tech._id}, {$set: {timesincelastTicket: timeToWork()}});
         };
         if (tech.StartTime >= "16:00" && tech[day]) {
 
@@ -123,47 +140,32 @@ Meteor.methods({
         };
       });
     });
+    SyncedCron.start();
 
-    addToprequeue: function addToprequeue(tech, day) {
-      var d = new Date();
-      var min30 = d.getMinutes() + 30;
-      var addhour = d.getHours() + 1;
-      var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
-      var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-      var minMore = 0
-        if (min30 > 59) {
-          var extramin = min30 - 60
-          minMore = addhour + ':' + extramin;
-        } else {
-          minMore = hours + ':' + min30;
-        }
-      console.log(minMore);
-      if (true) {
-
+  addToPreQueue: function addToPreQueue(tech, day) {
+    _Techs.update({_id: tech._id}, {$set: {preQueueEnterTime: new Date()}});
+    console.log(tech.timesincelastTicket, "tech timesincelastTicket");
+    SyncedCron.add({
+      name: tech.name + " Work Start " + day,
+      schedule: function(parser) {
+        return parser.recur().on(tech.timesincelastTicket).time().on(dayNum(day)).dayOfWeek();
+      },
+      job: function() {
+        _Techs.update({
+          _id: tech._id
+        }, {
+          $set: {
+            prequeue: false,
+            queue: true,
+            totaltickets: 0
+          }
+        });
+        removePreQueueSchedule(tech, day);
       }
-      // _Techs.update({_id: tech._id}, {$set:{workStart: minMore}});
-      SyncedCron.add({
-        name: tech.name + " Work Start " + day,
-        schedule: function(parser) {
-          return parser.recur().on(minMore).time().on(dayNum(day)).dayOfWeek();
-        },
-        job: function() {
-          _Techs.update({
-            _id: tech._id
-          }, {
-            $set: {
-              prequeue: false,
-              queue: true,
-              totaltickets: 0,
-            }
-          });
-          removePreQueueSchedule(tech, day);
-        }
-      });
-    }
-  removePreQueueSchedule: function removePreQueueSchedule(tech, day){
+    });
+  }
+  removePreQueueSchedule: function removePreQueueSchedule(tech, day) {
     SyncedCron.remove(tech.name + " Work Start " + day);
   }
-  SyncedCron.start();
-}
+  }
 });
