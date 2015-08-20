@@ -45,8 +45,13 @@ Template.pretechWorking.helpers({
   }
 },
 preStartTime: function preStartTime() {
+  if (this.queue) {
+    console.log("in queue true");
+    _Techs.update({_id: this._id}, {$set: {prequeue: false}})
+  }else {
+  console.log("in queue false");
   return moment(this.preQueueEnterTime).add(30, 'm').fromNow(TimeSync.serverTime());
-}
+}}
 });
 
 var d = new Date();
