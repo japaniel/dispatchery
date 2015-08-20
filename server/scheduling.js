@@ -140,7 +140,6 @@ Meteor.methods({
         };
       });
     });
-    SyncedCron.start();
 
   addToPreQueue: function addToPreQueue(tech, day) {
     _Techs.update({_id: tech._id}, {$set: {preQueueEnterTime: new Date()}});
@@ -167,5 +166,6 @@ Meteor.methods({
   removePreQueueSchedule: function removePreQueueSchedule(tech, day) {
     SyncedCron.remove(tech.name + " Work Start " + day);
   }
+  SyncedCron.start();
   }
 });
