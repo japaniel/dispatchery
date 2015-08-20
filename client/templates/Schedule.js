@@ -15,7 +15,6 @@ weekday[3] = "Wednesday";
 weekday[4] = "Thursday";
 weekday[5] = "Friday";
 weekday[6] = "Saturday";
-
 var n = weekday[d.getDay()];
 var today = n;
 
@@ -112,7 +111,9 @@ if (tech.Shift == '3rd') {
 }
 });
 
+
 var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  var startT30 = startT + 30;
   _Techs.insert({
     name: name,
     StartTime: startT,
@@ -125,17 +126,21 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Saturday: Saturday,
     Sunday: Sunday,
     queue: false,
+    prequeue: false,
     status: "Working",
     weight: 1,
     Shift: shift,
     lunch: false,
     meeting: false,
-    training: false
+    training: false,
+    timesincelastTicket: 0,
+    preQueueEnterTime: 0
   });
   Meteor.call("updateCron");
 };
 
 var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  var startT30 = startT + 30;
   _Techs.update(Session.get('SelectedTech'), {
     $set: {
       name: name,
@@ -149,12 +154,14 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Saturday: Saturday,
       Sunday: Sunday,
       queue: false,
+      prequeue: false,
       status: "Working",
       weight: 1,
       Shift: shift,
       lunch: false,
       meeting: false,
-      training: false
+      training: false,
+      timesincelastTicket: 0
     }
   });
   Meteor.call("updateCron");

@@ -9,7 +9,44 @@ Template.techsWorking.helpers({
         timesincelast: 1
       }
     });
+  },
+  preWorking: function() {
+    return _Techs.find({
+      prequeue: true
+    }, {
+      sort: {
+        status: -1,
+        timesincelast: 1
+      }
+    });
   }
+});
+
+Template.pretechWorking.helpers({
+  color: function() {
+    if (this.status == "Working"){
+      var techshift = _Techs.findOne({_id: this._id}).Shift
+      return shiftColor(techshift);
+    }else if (Session.get('statuses_loaded')) {
+      return _Statuses.findOne({
+        statusName: this.status
+      }).color;
+    }
+  },
+  timeStamp: function(){
+    if (this.status == "Meeting") {
+      return moment(this.timesincelast).add(1, 'hours').fromNow();
+    }else if (this.status == "Training") {
+      return moment(this.timesincelast).add(2, 'hours').fromNow();
+    }else if (this.status == "Lunch") {
+      return moment(this.timesincelast).add(1, 'hours').fromNow();
+    }else {
+    return moment(this.timesincelast).fromNow();
+  }
+},
+preStartTime: function preStartTime() {
+  return moment(this.preQueueEnterTime).add(30, 'm').fromNow(TimeSync.serverTime());
+}
 });
 
 var d = new Date();
@@ -36,6 +73,7 @@ if (shift == "3rd") {
 //techWorking
 Template.techWorking.helpers({
   color: function() {
+    console.log(_Techs.this);
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift
       return shiftColor(techshift);
