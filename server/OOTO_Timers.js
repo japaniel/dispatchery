@@ -164,4 +164,5 @@ Meteor.startup(function() {
   Meteor.call("updateLunch");
   Meteor.call("updateMeeting");
   Meteor.call("updateTraining");
+  Meteor.call("moveToWork");
 });
