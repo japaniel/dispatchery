@@ -10,7 +10,8 @@ Template.techsWorking.helpers({
       }
     });
   },
-  preWorking: function() {
+  preWorking: function(tech) {
+setInterval(prequeueCheck, 20000);
     return _Techs.find({
       prequeue: true
     }, {
@@ -31,21 +32,31 @@ Template.pretechWorking.helpers({
       return _Statuses.findOne({
         statusName: this.status
       }).color;
-    }
+    };
   },
   timeStamp: function(){
     if (this.status == "Meeting") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow();
+      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
     }else if (this.status == "Training") {
-      return moment(this.timesincelast).add(2, 'hours').fromNow();
+      return moment(this.timesincelast).add(2, 'hours').fromNow(new Date(TimeSync.serverTime()));
     }else if (this.status == "Lunch") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow();
+      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
     }else {
-    return moment(this.timesincelast).fromNow();
+    return moment(this.timesincelast).fromNow(TimeSync.serverTime());
   }
+
 },
 preStartTime: function preStartTime() {
-  return moment(this.preQueueEnterTime).add(30, 'm').fromNow(TimeSync.serverTime());
+  if (this.queue) {
+    _Techs.update({
+      _id: tech._id
+    }, {
+      $set: {
+        prequeue: false,
+      }
+    });
+  };
+  return moment(this.preQueueEnterTime).add(30, 'm').fromNow(new Date(TimeSync.serverTime()));
 }
 });
 
@@ -73,7 +84,6 @@ if (shift == "3rd") {
 //techWorking
 Template.techWorking.helpers({
   color: function() {
-    console.log(_Techs.this);
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift
       return shiftColor(techshift);
@@ -85,14 +95,14 @@ Template.techWorking.helpers({
   },
   timeStamp: function(){
     if (this.status == "Meeting") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow();
+      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
     }else if (this.status == "Training") {
-      return moment(this.timesincelast).add(2, 'hours').fromNow();
+      return moment(this.timesincelast).add(2, 'hours').fromNow(new Date(TimeSync.serverTime()));
     }else if (this.status == "Lunch") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow();
+      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
     }else {
-    return moment(this.timesincelast).fromNow();
-  }
+    return moment(this.timesincelast).fromNow(TimeSync.serverTime());
+}
 }
 });
 
@@ -163,6 +173,15 @@ function training(slectedstatus, techthis) {
     Meteor.call('updateTraining', techthis);
   }
 };
+
+function prequeueCheckdelay() {
+  setInterval(prequeueCheck(), 5000);
+};
+
+function prequeueCheck(tech) {
+  Meteor.call('moveToWork', tech);
+};
+
 
   Template.options.helpers({
     statuses: function() {

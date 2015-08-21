@@ -82,11 +82,32 @@ Meteor.methods({
                   prequeue: true
                 }
               });
-              addToPreQueue(tech, day);
+              _Techs.update({
+                _id: tech._id
+              }, {
+                $set: {
+                  preQueueEnterTime: new Date(),
+                  timesincelastTicket: timeToWork()
+                }
+              });
             }
           });
-          _Techs.update({_id: tech._id}, {$set: {timesincelastTicket: timeToWork()}});
         };
+
+
+        // timeToStopWork: function timeToStopWork() {
+        //   var d = new Date();
+        //   var min30 = d.getMinutes() - 29;
+        //   var addhour = d.getHours() - 1;
+        //   var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+        //   var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+        //   if (min30 < 0) {
+        //     var extramin = min30 + 60
+        //     return addhour + ':' + extramin;
+        //   } else {
+        //     return hours + ':' + min30;
+        //   }
+        // };
         if (tech.StartTime >= "16:00" && tech[day]) {
 
           if (tech.EndTime != "") {
@@ -107,7 +128,6 @@ Meteor.methods({
                     status: "Working"
                   }
                 });
-                SyncedCron.remove(tech.name + " Prework Start " + day);
               }
             });
           };
@@ -128,12 +148,10 @@ Meteor.methods({
                     prequeue: false,
                     queue: false,
                     totaltickets: 0,
-                    dispatched: false,
                     timesincelast: new Date(),
                     status: "Working"
                   }
                 });
-                SyncedCron.remove(tech.name + " Prework Start " + day);
               }
             });
           };
@@ -141,14 +159,30 @@ Meteor.methods({
       });
     });
     SyncedCron.start();
-
-  addToPreQueue: function addToPreQueue(tech, day) {
-    _Techs.update({_id: tech._id}, {$set: {preQueueEnterTime: new Date()}});
-    console.log(tech.timesincelastTicket, "tech timesincelastTicket");
+  },
+  moveToWork: function(tech) {
+    _Techs.find({prequeue: true}).forEach(function(tech){
+      var d = new Date();
+      var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+      var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+      var newTime = hours + ':' + min;
+    var today = d.getDay();
+    console.log(newTime, "server time", tech.timesincelastTicket, 'tech time');
+    if (newTime > tech.timesincelastTicket) {
+      _Techs.update({
+        _id: tech._id
+      }, {
+        $set: {
+          prequeue: false,
+          queue: true,
+          totaltickets: 0
+        }
+      });
+    }else {
     SyncedCron.add({
-      name: tech.name + " Work Start " + day,
+      name: tech.name + ' Work Start ' + tech.timesincelastTicket,
       schedule: function(parser) {
-        return parser.recur().on(tech.timesincelastTicket).time().on(dayNum(day)).dayOfWeek();
+        return parser.recur().on(tech.timesincelastTicket).time().on(today).dayOfWeek();
       },
       job: function() {
         _Techs.update({
@@ -160,12 +194,21 @@ Meteor.methods({
             totaltickets: 0
           }
         });
-        removePreQueueSchedule(tech, day);
       }
     });
   }
-  removePreQueueSchedule: function removePreQueueSchedule(tech, day) {
-    SyncedCron.remove(tech.name + " Work Start " + day);
-  }
+})
+  },
+  removePreQueue: function(tech) {
+    SyncedCron.remove(tech.name + ' Work Start ' + tech.timesincelastTicket);
+    _Techs.update({
+      _id: tech._id
+    }, {
+      $set: {
+        prequeue: false,
+        queue: true,
+        totaltickets: 0
+      }
+    });
   }
 });
