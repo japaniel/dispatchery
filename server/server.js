@@ -62,14 +62,24 @@ Meteor.methods({
 });
 
 Meteor.startup(function() {
-    SSLProxy({
-       port: 443, //or 443 (normal port/requires sudo)
-       ssl : {
-            key: Assets.getText("serverkey.pem"),
-            cert: Assets.getText("servercrt.pem")
+  httpProxy.createServer({
+  ssl: {
+    key: fs.readFileSync('serverkey.pem', 'utf8'),
+    cert: fs.readFileSync('servercrt.pem', 'utf8')
+  },
+  target: 'https://localhost:443',
+  secure: true // Depends on your needs, could be false.
+}).listen(443);
 
-            //Optional CA
-           //Assets.getText("ca.pem")
-       }
-    });
+
+    // SSLProxy({
+    //    port: 443, //or 443 (normal port/requires sudo)
+    //    ssl : {
+    //         key: Assets.getText("serverkey.pem"),
+    //         cert: Assets.getText("servercrt.pem")
+    //
+    //         //Optional CA
+    //        //Assets.getText("ca.pem")
+    //    }
+    // });
 });
