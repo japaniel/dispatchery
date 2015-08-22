@@ -103,7 +103,7 @@ Meteor.methods({
                 $set: {
                   preQueueEnterTime: new Date(),
                   WorkQueueStart: timeToWork(),
-                  WorkQueueExit: timeToStopWork()
+                  // WorkQueueExit: timeToStopWork()
                 }
               });
             }
