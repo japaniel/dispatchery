@@ -23,6 +23,10 @@ setInterval(prequeueCheck, 20000);
   }
 });
 
+function Now() {
+  return TimeSync.serverTime(null, 20000);
+};
+
 Template.pretechWorking.helpers({
   color: function() {
     if (this.status == "Working"){
@@ -36,13 +40,13 @@ Template.pretechWorking.helpers({
   },
   timeStamp: function(){
     if (this.status == "Meeting") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
+      return moment(this.timesincelast).add(1, 'hours').fromNow(Now());
     }else if (this.status == "Training") {
-      return moment(this.timesincelast).add(2, 'hours').fromNow(new Date(TimeSync.serverTime()));
+      return moment(this.timesincelast).add(2, 'hours').fromNow(Now());
     }else if (this.status == "Lunch") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
+      return moment(this.timesincelast).add(1, 'hours').fromNow(Now());
     }else {
-    return moment(this.timesincelast).fromNow(TimeSync.serverTime());
+    return moment(this.timesincelast).fromNow(Now());
   }
 
 },
@@ -56,7 +60,7 @@ preStartTime: function preStartTime() {
       }
     });
   };
-  return moment(this.preQueueEnterTime).add(30, 'm').fromNow(new Date(TimeSync.serverTime()));
+  return moment(this.preQueueEnterTime).add(30, 'm').fromNow(Now());
 }
 });
 
@@ -95,13 +99,13 @@ Template.techWorking.helpers({
   },
   timeStamp: function(){
     if (this.status == "Meeting") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
+      return moment(this.timesincelast).add(1, 'hours').fromNow(Now());
     }else if (this.status == "Training") {
-      return moment(this.timesincelast).add(2, 'hours').fromNow(new Date(TimeSync.serverTime()));
+      return moment(this.timesincelast).add(2, 'hours').fromNow(Now());
     }else if (this.status == "Lunch") {
-      return moment(this.timesincelast).add(1, 'hours').fromNow(new Date(TimeSync.serverTime()));
+      return moment(this.timesincelast).add(1, 'hours').fromNow(Now());
     }else {
-    return moment(this.timesincelast).fromNow(TimeSync.serverTime());
+    return moment(this.timesincelast).fromNow(Now());
 }
 }
 });
@@ -172,10 +176,6 @@ function training(slectedstatus, techthis) {
     _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
     Meteor.call('updateTraining', techthis);
   }
-};
-
-function prequeueCheckdelay() {
-  setInterval(prequeueCheck(), 5000);
 };
 
 function prequeueCheck(tech) {
