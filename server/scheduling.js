@@ -116,7 +116,7 @@ Meteor.methods({
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.recur().on(tech.EndTime).time().on(nextDayNum(day)).dayOfWeek();
+                return parser.recur().on(tech.WorkQueueExit).time().on(nextDayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
@@ -140,7 +140,7 @@ Meteor.methods({
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.recur().on(tech.EndTime).time().on(dayNum(day)).dayOfWeek();
+                return parser.recur().on(tech.WorkQueueExit).time().on(dayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
