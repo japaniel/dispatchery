@@ -65,22 +65,22 @@ Meteor.methods({
           }
         };
 
-        timeToStopWork: function timeToStopWork() {
-          var d = new Date();
-          var min30 = d.getMinutes() - 29;
-          var addhour = d.getHours() - 1;
-          var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
-          var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-          if (min30 < 0) {
-            var extramin = min30 + 60
-            return addhour + ':' + extramin;
-          } else {
-            return hours + ':' + min30;
-          }
-        };
+        // timeToStopWork: function timeToStopWork() {
+        //   var d = new Date();
+        //   var min30 = d.getMinutes() - 29;
+        //   var addhour = d.getHours() - 1;
+        //   var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+        //   var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+        //   if (min30 < 0) {
+        //     var extramin = min30 + 60
+        //     return addhour + ':' + extramin;
+        //   } else {
+        //     return hours + ':' + min30;
+        //   }
+        // };
 
         if (tech.StartTime != "" && tech[day]) {
-          console.log(timeToStopWork());
+          // console.log(timeToStopWork());
           SyncedCron.add({
             name: tech.name + " Prework Start " + day,
             schedule: function(parser) {
@@ -116,7 +116,7 @@ Meteor.methods({
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.recur().on(tech.WorkQueueExit).time().on(nextDayNum(day)).dayOfWeek();
+                return parser.recur().on(tech.EndTime).time().on(nextDayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
@@ -140,7 +140,7 @@ Meteor.methods({
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.recur().on(tech.WorkQueueExit).time().on(dayNum(day)).dayOfWeek();
+                return parser.recur().on(tech.EndTime).time().on(dayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
