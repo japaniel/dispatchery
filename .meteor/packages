@@ -18,6 +18,6 @@ benjaminrh:bootstrap-timepicker
 andrasph:clockpicker
 percolate:synced-cron
 nsinenko:jsforce
-force-ssl
 momentjs:moment
 mizzao:timesync
+hitchcott:app-dump
