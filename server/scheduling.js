@@ -65,7 +65,22 @@ Meteor.methods({
           }
         };
 
+        timeToStopWork: function timeToStopWork() {
+          var d = new Date();
+          var min30 = d.getMinutes() - 29;
+          var addhour = d.getHours() - 1;
+          var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+          var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+          if (min30 < 0) {
+            var extramin = min30 + 60
+            return addhour + ':' + extramin;
+          } else {
+            return hours + ':' + min30;
+          }
+        };
+
         if (tech.StartTime != "" && tech[day]) {
+          console.log(timeToStopWork());
           SyncedCron.add({
             name: tech.name + " Prework Start " + day,
             schedule: function(parser) {
@@ -87,27 +102,14 @@ Meteor.methods({
               }, {
                 $set: {
                   preQueueEnterTime: new Date(),
-                  timesincelastTicket: timeToWork()
+                  WorkQueueStart: timeToWork(),
+                  WorkQueueExit: timeToStopWork()
                 }
               });
             }
           });
         };
 
-
-        // timeToStopWork: function timeToStopWork() {
-        //   var d = new Date();
-        //   var min30 = d.getMinutes() - 29;
-        //   var addhour = d.getHours() - 1;
-        //   var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
-        //   var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-        //   if (min30 < 0) {
-        //     var extramin = min30 + 60
-        //     return addhour + ':' + extramin;
-        //   } else {
-        //     return hours + ':' + min30;
-        //   }
-        // };
         if (tech.StartTime >= "16:00" && tech[day]) {
 
           if (tech.EndTime != "") {
@@ -167,8 +169,8 @@ Meteor.methods({
       var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
       var newTime = hours + ':' + min;
     var today = d.getDay();
-    console.log(newTime, "server time", tech.timesincelastTicket, 'tech time');
-    if (newTime > tech.timesincelastTicket) {
+    console.log(newTime, "server time", tech.WorkQueueStart, 'tech time');
+    if (newTime > tech.WorkQueueStart) {
       _Techs.update({
         _id: tech._id
       }, {
@@ -180,9 +182,9 @@ Meteor.methods({
       });
     }else {
     SyncedCron.add({
-      name: tech.name + ' Work Start ' + tech.timesincelastTicket,
+      name: tech.name + ' Work Start ' + tech.WorkQueueStart,
       schedule: function(parser) {
-        return parser.recur().on(tech.timesincelastTicket).time().on(today).dayOfWeek();
+        return parser.recur().on(tech.WorkQueueStart).time().on(today).dayOfWeek();
       },
       job: function() {
         _Techs.update({
@@ -200,7 +202,7 @@ Meteor.methods({
 })
   },
   removePreQueue: function(tech) {
-    SyncedCron.remove(tech.name + ' Work Start ' + tech.timesincelastTicket);
+    SyncedCron.remove(tech.name + ' Work Start ' + tech.WorkQueueStart);
     _Techs.update({
       _id: tech._id
     }, {
