@@ -245,15 +245,13 @@ Template.schedule.events({
   },
   "click .removetech": function removeFromQButton(event, tmpl) {
     event.preventDefault();
-    if (_Techs.findOne({
-        _id: this._id,
-        queue: true
-      })) {
+    if (this.queue | this.prequeue) {
       _Techs.update({
         _id: this._id
       }, {
         $set: {
-          queue: false
+          queue: false,
+          prequeue: false
         }
       });
 
