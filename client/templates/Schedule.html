@@ -1,4 +1,4 @@
-<template name="employees">
+<template name="Schedule">
   <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
   <button type="button" class="btn btn-default addUser">Add User</button>
   {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{# if ShowDeleteBox}} {{> deleteUser}} {{/if}} {{>techs}}
@@ -54,7 +54,7 @@
                 </tr>
               </tbody>
             </table>
-            <label for="InputName" class="control-label">
+            <label for="inputName" class="control-label">
               <strong>Days This Tech Works</strong>
             </label>
             <div class="techSchedule">
@@ -149,7 +149,7 @@
           </th>
           <th>Monday</th>
           <th>Tuesday</th>
-          <th>wednesday</th>
+          <th>Wednesday</th>
           <th>Thursday</th>
           <th>Friday</th>
           <th>Saturday</th>
@@ -168,8 +168,8 @@
 </template>
 
 <template name='schedule'>
-  <tr class="schedule">
-    <td>
+  <tr class="schedule" bgcolor="{{shiftColor Shift}}">
+    <td style="color:#111c24;font-weight:bold">
       <div class="names">{{name}}</div>
     </td>
     <td>
@@ -223,12 +223,12 @@
     </td>
     <td>
       <div class="btn-group center">
-        <button type="button" class="btn btn-default sendToWork" {{disabled}}>Send To Work</button>
+        <button type="button" class="btn btn-default sendToWork" style="background-color:#ee6129" {{disabled}}>{{queueCheck}}</button>
       </div>
     </td>
     <td>
       <div>
-        <button class="btn btn-default removetech">
+        <button class="btn btn-default removetech" {{queueButtonColorCheck}}>
           <span class="glyphicon glyphicon-remove center col-md-1"></span>
         </button>
       </div>
@@ -241,7 +241,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title">Are You Sure This User Needs To Be Delete!!??</h3>
+          <h3 class="modal-title">Are You Sure This User Needs To Be Deleted!!??</h3>
         </div>
         <div class="modal-body">
           <form data-toggle="validator" role="form">
@@ -266,7 +266,7 @@
                 </tr>
               </tbody>
             </table>
-            <label for="InputName" class="control-label">
+            <label for="inputName" class="control-label">
               <strong>Days This Tech Works</strong>
             </label>
             <div class="techSchedule">

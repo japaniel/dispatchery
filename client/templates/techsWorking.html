@@ -15,6 +15,26 @@
         {{#each techsWorking}} {{> techWorking}} {{/each}}
       </tbody>
     </table>
+    <br>
+    <br>
+    <br>
+    <h2 class="center">Pre Pain Queue</h2>
+    <br>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="col-md-1 center ">Dudes/Dudettes</th>
+          <th class="col-md-1 center ">Shift</th>
+          <th class="col-md-1 center ">Status</th>
+          <th class="col-md-1 center">Total Tickets</th>
+          <th class="col-md-1 center">Time Since Last</th>
+          <th class="col-md-1 center">Time Till Pain</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each preWorking}} {{> pretechWorking}} {{/each}}
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -24,11 +44,11 @@
     <td class="center">{{Shift}}</td>
     <td class="center">{{>options}}</td>
     <td class="center">{{totaltickets}}</td>
-    <td class="center">{{livestamp timesincelast}}</td>
+    <td class="center">{{timeStamp}}</td>
     <td class="center">{{repeatCheck}}
       <a>
-        <span class="glyphicon glyphicon-plus  plus-one" style="font-size:25px;"></span>
-        <span class="glyphicon glyphicon-minus  minus-one" style="font-size:25px;"></span>
+        <span class="glyphicon glyphicon-plus  plus-one" style="font-size:25px;color:#0daecd"></span>
+        <span class="glyphicon glyphicon-minus  minus-one #0daecd" style="font-size:25px;color:#0daecd;padding-left:20px"></span>
       </a>
     </td>
   </tr>
@@ -46,4 +66,16 @@
       {{/each}}
     </ul>
   </div>
+</template>
+
+
+<template name='pretechWorking'>
+  <tr class="pretechWorking" bgcolor="{{color}}">
+    <td>{{name}}</td>
+    <td class="center">{{Shift}}</td>
+    <td class="center">{{>options}}</td>
+    <td class="center">{{totaltickets}}</td>
+    <td class="center">{{timeStamp}}</td>
+    <td class="center">{{preStartTime}}</td>
+  </tr>
 </template>

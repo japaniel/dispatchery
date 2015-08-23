@@ -15,11 +15,10 @@ weekday[3] = "Wednesday";
 weekday[4] = "Thursday";
 weekday[5] = "Friday";
 weekday[6] = "Saturday";
-
 var n = weekday[d.getDay()];
 var today = n;
 
-Template.employees.helpers({
+Template.Schedule.helpers({
 
   showProjectDialog: function showProjectDialog() {
     return Session.get('ShowProjectDialog');
@@ -30,7 +29,7 @@ Template.employees.helpers({
   }
 });
 
-Template.employees.events = {
+Template.Schedule.events = {
   "click .addUser": function openForm(event, template) {
     event.preventDefault();
     Session.set('ShowProjectDialog', true);
@@ -112,11 +111,15 @@ if (tech.Shift == '3rd') {
 }
 });
 
+
 var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  var startT30 = startT + 30;
   _Techs.insert({
     name: name,
     StartTime: startT,
+    WorkQueueStart: null,
     EndTime: endT,
+    WorkQueueExit: null,
     Monday: Monday,
     Tuesday: Tuesday,
     Wednesday: Wednesday,
@@ -125,19 +128,28 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     Saturday: Saturday,
     Sunday: Sunday,
     queue: false,
+    prequeue: false,
     status: "Working",
     weight: 1,
-    Shift: shift
+    Shift: shift,
+    lunch: false,
+    meeting: false,
+    training: false,
+    timesincelastTicket: 0,
+    preQueueEnterTime: 0
   });
   Meteor.call("updateCron");
 };
 
 var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
+  var startT30 = startT + 30;
   _Techs.update(Session.get('SelectedTech'), {
     $set: {
       name: name,
       StartTime: startT,
+      WorkQueueStart: null,
       EndTime: endT,
+      WorkQueueExit: null,
       Monday: Monday,
       Tuesday: Tuesday,
       Wednesday: Wednesday,
@@ -146,9 +158,14 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       Saturday: Saturday,
       Sunday: Sunday,
       queue: false,
+      prequeue: false,
       status: "Working",
       weight: 1,
-      Shift: shift
+      Shift: shift,
+      lunch: false,
+      meeting: false,
+      training: false,
+      timesincelastTicket: 0
     }
   });
   Meteor.call("updateCron");
@@ -161,9 +178,7 @@ Template.schedule.helpers({
         _id: this._id,
         queue: true
       })) {
-      return {
-        disabled: ""
-      };
+      return {disabled: ""};
     }
     return {};
   },
@@ -177,11 +192,38 @@ Template.schedule.helpers({
   },
    colorChecked: function colorChecked(day){
      if (this[day]) {
-     return {style: "color: blue"};
+     return {style: "color:#0daecd;font-size:120%;font-weight:bold"};
    };
    return {};
+ },
+ queueButtonColorCheck: function queueButtonColorCheck(){
+   if (this.queue) {
+     return {style: "background-color:#80FF95"};
+   }else {
+     return {style: "background-color:#FF8280"};
    }
+ },
+ queueCheck: function queueCheck(){
+   if (this.queue) {
+     return "Getting Pain ;)";
+   }else {
+     return "Send To Work";
+   }
+ },
+ shiftColor: function shiftColor(shift){
+   if (shift == "1st") {
+     return "#EFEFEF"  //SkyBlue
+   };
+   if (shift == "2nd") {
+     return "#DFDFDF"
+ };
+ if (shift == "3rd") {
+   return "#CDCDCD" //Olive
+ }
+ }
 });
+
+
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
     event.preventDefault();

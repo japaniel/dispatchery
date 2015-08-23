@@ -18,5 +18,5 @@ benjaminrh:bootstrap-timepicker
 andrasph:clockpicker
 percolate:synced-cron
 nsinenko:jsforce
-tarang:ssl
-force-ssl
+momentjs:moment
+mizzao:timesync

@@ -22,7 +22,7 @@ var addStatus = function(name, color){
     _Statuses.insert({statusName : name, color : color});
 };
 
-Template.variables.rendered = function()
+Template.Status.rendered = function()
 {
     $('.demo1').colorpicker();
     $('.demo2').colorpicker();
