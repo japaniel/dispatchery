@@ -169,6 +169,7 @@ Meteor.methods({
     var today = d.getDay();
     console.log(newTime, "server time", tech.timesincelastTicket, 'tech time');
     if (tech.queue) {
+      console.log(tech.queue, tech.name);
       _Techs.update({
         _id: tech._id
       }, {
