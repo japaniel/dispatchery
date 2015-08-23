@@ -32,10 +32,7 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
-<<<<<<< HEAD
-=======
 jplack:bootstrap-timepicker@0.2.1
->>>>>>> e79882fc0ed9bd5e027d4468dc46a74a4dc73318
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
