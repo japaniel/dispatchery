@@ -20,3 +20,5 @@ percolate:synced-cron
 nsinenko:jsforce
 momentjs:moment
 mizzao:timesync
+hitchcott:backup-restore
+hitchcott:app-dump
