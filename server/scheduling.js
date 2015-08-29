@@ -53,10 +53,11 @@ Meteor.methods({
 
         timeToWork: function timeToWork() {
           var d = new Date();
-          var min30 = d.getMinutes() + 31;
+          var min30 = d.getMinutes() + 2;
           var addhour = d.getHours() + 1;
           var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
           var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+          min30 = min30.length == 1 ? '0' + min30 : min30;
           if (min30 > 59) {
             var extramin = min30 - 60
             return addhour + ':' + extramin;
