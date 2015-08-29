@@ -53,10 +53,11 @@ Meteor.methods({
 
         timeToWork: function timeToWork() {
           var d = new Date();
-          var min30 = d.getMinutes() + 31;
+          var min30 = d.getMinutes() + 1;
           var addhour = d.getHours() + 1;
           var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
           var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+          var min = min30.length == 1 ? '0' + min30 : min30;
           if (min30 > 59) {
             var extramin = min30 - 60
             return addhour + ':' + extramin;
@@ -87,7 +88,7 @@ Meteor.methods({
               }, {
                 $set: {
                   preQueueEnterTime: new Date(),
-                  timesincelastTicket: timeToWork()
+                  WorkQueueEnter: timeToWork()
                 }
               });
             }
@@ -167,7 +168,7 @@ Meteor.methods({
       var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
       var newTime = hours + ':' + min;
     var today = d.getDay();
-    console.log(newTime, "server time", tech.timesincelastTicket, 'tech time');
+    console.log(newTime, "server time", tech.WorkQueueEnter, 'tech time');
     if (tech.queue) {
       console.log(tech.queue, tech.name);
       _Techs.update({
@@ -180,7 +181,7 @@ Meteor.methods({
         }
       });
     };
-    if (newTime > tech.timesincelastTicket) {
+    if (newTime > tech.WorkQueueEnter) {
       _Techs.update({
         _id: tech._id
       }, {
@@ -192,9 +193,9 @@ Meteor.methods({
       });
     }else {
     SyncedCron.add({
-      name: tech.name + ' Work Start ' + tech.timesincelastTicket,
+      name: tech.name + ' Work Start ' + tech.WorkQueueEnter,
       schedule: function(parser) {
-        return parser.recur().on(tech.timesincelastTicket).time().on(today).dayOfWeek();
+        return parser.recur().on(tech.WorkQueueEnter).time().on(today).dayOfWeek();
       },
       job: function() {
         _Techs.update({
@@ -212,7 +213,7 @@ Meteor.methods({
 })
   },
   removePreQueue: function(tech) {
-    SyncedCron.remove(tech.name + ' Work Start ' + tech.timesincelastTicket);
+    SyncedCron.remove(tech.name + ' Work Start ' + tech.WorkQueueEnter);
     _Techs.update({
       _id: tech._id
     }, {

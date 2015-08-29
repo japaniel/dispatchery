@@ -57,11 +57,12 @@ Template.addUserForm.events = {
     var Sunday = template.find('.day7').checked;
     var startT = template.find('.startT').value;
     var endT = template.find('.endT').value;
+    var managerT = template.find('.manager').value;
     var shift = template.find('.slect-dropdown').value;
     if (Session.get('SelectedTech')) {
-      updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift);
+      updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT);
     } else {
-      addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift);
+      addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT);
     }
     Meteor.call("updateCron");
     Session.set('ShowProjectDialog', false);
@@ -112,12 +113,11 @@ if (tech.Shift == '3rd') {
 });
 
 
-var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
-  var startT30 = startT + 30;
+var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
   _Techs.insert({
     name: name,
     StartTime: startT,
-    WorkQueueStart: null,
+    WorkQueueEnter: null,
     EndTime: endT,
     WorkQueueExit: null,
     Monday: Monday,
@@ -136,13 +136,13 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     meeting: false,
     training: false,
     timesincelastTicket: 0,
-    preQueueEnterTime: 0
+    preQueueEnterTime: 0,
+    manager: managerT
   });
   Meteor.call("updateCron");
 };
 
-var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift) {
-  var startT30 = startT + 30;
+var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
   _Techs.update(Session.get('SelectedTech'), {
     $set: {
       name: name,
@@ -165,7 +165,9 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       lunch: false,
       meeting: false,
       training: false,
-      timesincelastTicket: 0
+      timesincelastTicket: 0,
+      preQueueEnterTime: 0,
+      manager: managerT
     }
   });
   Meteor.call("updateCron");
@@ -197,7 +199,7 @@ Template.schedule.helpers({
    return {};
  },
  queueButtonColorCheck: function queueButtonColorCheck(){
-   if (this.queue) {
+   if (this.queue || this.prequeue) {
      return {style: "background-color:#80FF95"};
    }else {
      return {style: "background-color:#FF8280"};
@@ -206,8 +208,10 @@ Template.schedule.helpers({
  queueCheck: function queueCheck(){
    if (this.queue) {
      return "Getting Pain ;)";
+   }else if(this.prequeue){
+     return "Waiting For Pain";
    }else {
-     return "Send To Work";
+     return "Send To Work"
    }
  },
  shiftColor: function shiftColor(shift){
@@ -246,7 +250,7 @@ Template.schedule.events({
   },
   "click .removetech": function removeFromQButton(event, tmpl) {
     event.preventDefault();
-    if (this.queue | this.prequeue) {
+    if (this.queue || this.prequeue) {
       _Techs.update({
         _id: this._id
       }, {

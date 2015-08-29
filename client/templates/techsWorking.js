@@ -107,6 +107,16 @@ Template.techWorking.helpers({
     }else {
     return moment(this.timesincelast).fromNow(Now());
 }
+},
+techManager: function(){
+  return this.manager
+},
+dayCheck: function(day){
+  if (this[day]) {
+    return "Working"
+  }else{
+  return "Not"
+}
 }
 });
 
