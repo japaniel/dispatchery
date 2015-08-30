@@ -60,6 +60,7 @@ Meteor.methods({
     });
   },
   updateTechs: function(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
+    _Techs.find().forEach(function(){
     _Techs.insert({
       name: name,
       StartTime: startT,
@@ -86,6 +87,7 @@ Meteor.methods({
       preQueueExit: "00:00",
       manager: managerT
     });
+  });
   }
 });
 
