@@ -78,6 +78,10 @@ Template.addUserForm.events = {
   }
 };
 
+Meteor.startup(function() {
+  Meteor.call("updateTechs", name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT)
+)};
+
 Template.addUserForm.helpers({
 
   tech: function tech() {

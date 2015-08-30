@@ -58,29 +58,35 @@ Meteor.methods({
         status: status
       }
     });
-  }
+  },
+  updateTechs: function(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
+    _Techs.insert({
+      name: name,
+      StartTime: startT,
+      WorkQueueEnter: 0,
+      EndTime: endT,
+      WorkQueueExit: 0,
+      Monday: Monday,
+      Tuesday: Tuesday,
+      Wednesday: Wednesday,
+      Thursday: Thursday,
+      Friday: Friday,
+      Saturday: Saturday,
+      Sunday: Sunday,
+      queue: false,
+      prequeue: false,
+      status: "Working",
+      weight: TimeSync.serverTime(),
+      Shift: shift,
+      lunch: false,
+      meeting: false,
+      training: false,
+      timesincelastTicket: 0,
+      preQueueEnterTime: "00:00",
+      preQueueExit: "00:00",
+      manager: managerT
+    });
 });
 
 Meteor.startup(function() {
-//   var httpProxy = require('http-proxy');
-//   httpProxy.createServer({
-//   ssl: {
-//     key: fs.readFileSync('serverkey.pem', 'utf8'),
-//     cert: fs.readFileSync('servercrt.pem', 'utf8')
-//   },
-//   target: 'https://localhost:443',
-//   secure: true // Depends on your needs, could be false.
-// }).listen(3000);
-
-
-    // SSLProxy({
-    //    port: 443, //or 443 (normal port/requires sudo)
-    //    ssl : {
-    //         key: Assets.getText("serverkey.pem"),
-    //         cert: Assets.getText("servercrt.pem")
-    //
-    //         //Optional CA
-    //        //Assets.getText("ca.pem")
-    //    }
-    // });
 });
