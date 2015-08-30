@@ -2,6 +2,8 @@ Session.setDefault('ShowProjectDialog', false);
 Session.setDefault('SelectedTech', null);
 Session.setDefault('ShowDeleteBox', false);
 
+
+
 Session.set('techInQ', false);
 var d = new Date();
 var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
@@ -33,6 +35,12 @@ Template.Schedule.events = {
   "click .addUser": function openForm(event, template) {
     event.preventDefault();
     Session.set('ShowProjectDialog', true);
+  },
+  "click .updateTech": function updateTech(event, template){
+    _Techs.find().forEach(function(){
+      addUser
+    })
+    return "Update Techs"
   }
 };
 //add User Form
@@ -112,14 +120,20 @@ if (tech.Shift == '3rd') {
 }
 });
 
+// function queueWeight(tech){
+//   var start = parseInt(tech.WorkQueueEnter);
+//   var now = parseInt(TimeSync.serverTime());
+//   var tickets = parseInt(tech.totaltickets);
+//   return (Math.round((now - start) / tickets));
+// };
 
 var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
   _Techs.insert({
     name: name,
     StartTime: startT,
-    WorkQueueEnter: null,
+    WorkQueueEnter: 0,
     EndTime: endT,
-    WorkQueueExit: null,
+    WorkQueueExit: 0,
     Monday: Monday,
     Tuesday: Tuesday,
     Wednesday: Wednesday,
@@ -130,13 +144,14 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     queue: false,
     prequeue: false,
     status: "Working",
-    weight: 1,
+    weight: TimeSync.serverTime(),
     Shift: shift,
     lunch: false,
     meeting: false,
     training: false,
     timesincelastTicket: 0,
-    preQueueEnterTime: 0,
+    preQueueEnterTime: "00:00",
+    preQueueExit: "00:00",
     manager: managerT
   });
   Meteor.call("updateCron");
@@ -147,9 +162,9 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
     $set: {
       name: name,
       StartTime: startT,
-      WorkQueueStart: null,
+      WorkQueueEnter: 0,
       EndTime: endT,
-      WorkQueueExit: null,
+      WorkQueueExit: 0,
       Monday: Monday,
       Tuesday: Tuesday,
       Wednesday: Wednesday,
@@ -160,13 +175,14 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       queue: false,
       prequeue: false,
       status: "Working",
-      weight: 1,
+      weight: TimeSync.serverTime(),
       Shift: shift,
       lunch: false,
       meeting: false,
       training: false,
       timesincelastTicket: 0,
-      preQueueEnterTime: 0,
+      preQueueEnterTime: "00:00",
+      preQueueExit: "00:00",
       manager: managerT
     }
   });
@@ -230,6 +246,9 @@ Template.schedule.helpers({
 
 Template.schedule.events({
   "click .sendToWork": function addTechToQ(event, template) {
+    Now: function Now() {
+      TimeSync.serverTime()
+    };
     event.preventDefault();
     _Techs.update({
       _id: this._id
@@ -239,7 +258,8 @@ Template.schedule.events({
         prequeue:false,
         totaltickets: 0,
         dispatched: false,
-        status: "Working"
+        status: "Working",
+        WorkQueueEnter: TimeSync.serverTime()
       }
     });
   },

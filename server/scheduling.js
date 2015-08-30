@@ -53,11 +53,11 @@ Meteor.methods({
 
         timeToWork: function timeToWork() {
           var d = new Date();
-          var min30 = d.getMinutes() + 1;
+          var min30 = d.getMinutes() + 0;
           var addhour = d.getHours() + 1;
           var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
           var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-          var min = min30.length == 1 ? '0' + min30 : min30;
+          min30 = min30.toString().length == 1 ? '0' + min30 : min30;
           if (min30 > 59) {
             var extramin = min30 - 60
             return addhour + ':' + extramin;
@@ -88,7 +88,7 @@ Meteor.methods({
               }, {
                 $set: {
                   preQueueEnterTime: new Date(),
-                  WorkQueueEnter: timeToWork()
+                  WorkQueueStart: timeToWork()
                 }
               });
             }
@@ -160,68 +160,5 @@ Meteor.methods({
       });
     });
     SyncedCron.start();
-  },
-  moveToWork: function(tech) {
-    _Techs.find({prequeue: true}).forEach(function(tech){
-      var d = new Date();
-      var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
-      var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-      var newTime = hours + ':' + min;
-    var today = d.getDay();
-    console.log(newTime, "server time", tech.WorkQueueEnter, 'tech time');
-    if (tech.queue) {
-      console.log(tech.queue, tech.name);
-      _Techs.update({
-        _id: tech._id
-      }, {
-        $set: {
-          prequeue: false,
-          queue: true,
-          totaltickets: 0
-        }
-      });
-    };
-    if (newTime > tech.WorkQueueEnter) {
-      _Techs.update({
-        _id: tech._id
-      }, {
-        $set: {
-          prequeue: false,
-          queue: true,
-          totaltickets: 0
-        }
-      });
-    }else {
-    SyncedCron.add({
-      name: tech.name + ' Work Start ' + tech.WorkQueueEnter,
-      schedule: function(parser) {
-        return parser.recur().on(tech.WorkQueueEnter).time().on(today).dayOfWeek();
-      },
-      job: function() {
-        _Techs.update({
-          _id: tech._id
-        }, {
-          $set: {
-            prequeue: false,
-            queue: true,
-            totaltickets: 0
-          }
-        });
-      }
-    });
-  }
-})
-  },
-  removePreQueue: function(tech) {
-    SyncedCron.remove(tech.name + ' Work Start ' + tech.WorkQueueEnter);
-    _Techs.update({
-      _id: tech._id
-    }, {
-      $set: {
-        prequeue: false,
-        queue: true,
-        totaltickets: 0
-      }
-    });
   }
 });
