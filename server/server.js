@@ -86,6 +86,7 @@ Meteor.methods({
       preQueueExit: "00:00",
       manager: managerT
     });
+  }
 });
 
 Meteor.startup(function() {

@@ -77,10 +77,8 @@ Template.addUserForm.events = {
     Session.set('SelectedTech', null);
   }
 };
-
-Meteor.startup(function() {
-  Meteor.call("updateTechs", name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT)
-)};
+Meteor.startup(function() {  Meteor.call("updateTechs", name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT);
+});
 
 Template.addUserForm.helpers({
 
