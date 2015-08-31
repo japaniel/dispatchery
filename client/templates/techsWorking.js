@@ -122,7 +122,7 @@ queueWeight: function(){
   if (this.status == "Working") {
   var start = parseInt(this.WorkQueueEnter);
   var now = parseInt(TimeSync.serverTime(null, 2000));
-  var tickets = parseInt(this.totaltickets) * 500;
+  var tickets = parseInt(this.totaltickets) * 5000;
   var math = (Math.round((now - start)));
   math = Math.floor(math / tickets);
   var lowtickets = (Math.round((now - start - 5000)));
