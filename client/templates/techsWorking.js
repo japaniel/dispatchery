@@ -127,22 +127,22 @@ queueWeight: function(){
   var lowtickets = (Math.round((now - start - 5000)));
   var lowesttickets = (Math.round((now - start)));
   if (this.totaltickets == 0) {
-    return lowesttickets
+    // return lowesttickets
   }else if (this.totaltickets == 1 ) {
-    return lowtickets
+    // return lowtickets
   }else {
       _Techs.update({_id: this._id}, {$set: {weight: math}})
-      return math
+      // return math
     }
 }else if (this.status == "Lunch"){
   lunch
-  return this.weight
+  // return this.weight
 }else if (this.status == "Meeting") {
   meeting
-  return this.weight
+  // return this.weight
 }else if (this.status == "Training") {
   training
-  return this.weight
+  // return this.weight
 }
 },
 todaysTickets: function(){
@@ -233,7 +233,7 @@ function prequeueCheck(tech) {
         $set: {
           prequeue: false,
           queue: true,
-          totaltickets: 0,
+          totaltickets: 2,
           WorkQueueEnter: TimeSync.serverTime()
         }
       });
@@ -244,7 +244,7 @@ function prequeueCheck(tech) {
         $set: {
           prequeue: false,
           queue: true,
-          totaltickets: 0,
+          totaltickets: 2,
           WorkQueueEnter: TimeSync.serverTime()
         }
       });
@@ -262,7 +262,7 @@ function prequeueCheck(tech) {
             WorkQueueEnter: TimeSync.serverTime(),
             prequeue: false,
             queue: true,
-            totaltickets: 0
+            totaltickets: 2
           }
         });
       }

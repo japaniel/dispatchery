@@ -78,7 +78,7 @@ Meteor.methods({
                 _id: tech._id
               }, {
                 $set: {
-                  totaltickets: 0,
+                  totaltickets: 2,
                   status: "Working",
                   prequeue: true
                 }
@@ -87,6 +87,7 @@ Meteor.methods({
                 _id: tech._id
               }, {
                 $set: {
+                  totaltickets: 2,
                   preQueueEnterTime: new Date(),
                   WorkQueueStart: timeToWork()
                 }
