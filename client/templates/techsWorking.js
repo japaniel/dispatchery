@@ -5,7 +5,8 @@ Template.techsWorking.helpers({
       queue: true
     }, {
       sort: {
-        weight: -1
+        weight: -1,
+        timesincelast: 1
       }
     });
   },
