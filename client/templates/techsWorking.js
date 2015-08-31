@@ -5,9 +5,7 @@ Template.techsWorking.helpers({
       queue: true
     }, {
       sort: {
-        status: -1,
-        weight: -1,
-        timesincelast: 1
+        weight: -1
       }
     });
   },
@@ -18,8 +16,7 @@ setInterval(prequeueCheck, 20000);
     }, {
       sort: {
         status: -1,
-        weight: -1,
-        timesincelast: 1
+        weight: -1
       }
     });
   }
@@ -121,17 +118,36 @@ dayCheck: function(day){
 }
 },
 queueWeight: function(){
+  if (this.status == "Working") {
   var start = parseInt(this.WorkQueueEnter);
   var now = parseInt(TimeSync.serverTime(null, 2000));
-  var tickets = parseInt(this.totaltickets);
-  var math = (Math.round((now - start) / tickets));
+  var tickets = parseInt(this.totaltickets) * 500;
+  var math = (Math.round((now - start)));
+  math = Math.floor(math / tickets);
   var lowtickets = (Math.round((now - start - 5000)));
-  if (this.totaltickets == 1 ) {
+  var lowesttickets = (Math.round((now - start)));
+  if (this.totaltickets == 0) {
+    return lowesttickets
+  }else if (this.totaltickets == 1 ) {
     return lowtickets
   }else {
       _Techs.update({_id: this._id}, {$set: {weight: math}})
       return math
     }
+}else if (this.status == "Lunch"){
+  lunch
+  return this.weight
+}else if (this.status == "Meeting") {
+  meeting
+  return this.weight
+}else if (this.status == "Training") {
+  training
+  return this.weight
+}
+},
+todaysTickets: function(){
+  var tickets = parseInt(this.totaltickets) - 2;
+  return tickets
 }
 });
 
@@ -178,7 +194,7 @@ function lunch(slectedstatus, techthis) {
   if (slectedstatus != "Lunch") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 2000}});
     Meteor.call('updateLunch', techthis);
   }
 };
@@ -187,7 +203,7 @@ function meeting(slectedstatus, techthis) {
   if (slectedstatus != "Meeting") {
     Meteor.call('removeMeeting', techthis);
   } else if (slectedstatus == "Meeting") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 1000}});
     Meteor.call('updateMeeting', techthis);
   }
 };
@@ -196,7 +212,7 @@ function training(slectedstatus, techthis) {
   if (slectedstatus != "Training") {
     Meteor.call('removeTraining', techthis);
   } else if (slectedstatus == "Training") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 3000}});
     Meteor.call('updateTraining', techthis);
   }
 };
