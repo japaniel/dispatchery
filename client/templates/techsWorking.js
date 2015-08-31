@@ -195,7 +195,7 @@ function lunch(slectedstatus, techthis) {
   if (slectedstatus != "Lunch") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 2000}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 2}});
     Meteor.call('updateLunch', techthis);
   }
 };
@@ -204,7 +204,7 @@ function meeting(slectedstatus, techthis) {
   if (slectedstatus != "Meeting") {
     Meteor.call('removeMeeting', techthis);
   } else if (slectedstatus == "Meeting") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 1000}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 1}});
     Meteor.call('updateMeeting', techthis);
   }
 };
@@ -213,7 +213,7 @@ function training(slectedstatus, techthis) {
   if (slectedstatus != "Training") {
     Meteor.call('removeTraining', techthis);
   } else if (slectedstatus == "Training") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 3000}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 3}});
     Meteor.call('updateTraining', techthis);
   }
 };
@@ -249,26 +249,7 @@ function prequeueCheck(tech) {
           WorkQueueEnter: TimeSync.serverTime()
         }
       });
-    }else {
-    SyncedCron.add({
-      name: tech.name + ' Work Start ' + tech.WorkQueueStart,
-      schedule: function(parser) {
-        return parser.recur().on(tech.WorkQueueStart).time().on(today).dayOfWeek();
-      },
-      job: function() {
-        _Techs.update({
-          _id: tech._id
-        }, {
-          $set: {
-            WorkQueueEnter: TimeSync.serverTime(),
-            prequeue: false,
-            queue: true,
-            totaltickets: 2
-          }
-        });
-      }
-    });
-  }
+    }
 })
   };
 
@@ -296,9 +277,13 @@ function prequeueCheck(tech) {
       var now = parseInt(Now());
       var tickets = parseInt(parent.totaltickets);
       console.log(parent);
-      console.log(start, "queue enter time", parent.WorkQueueEnter);
-      console.log(now, "time now", Now());
-      console.log("tech tickets", parent.totaltickets);
-      console.log(Math.round((now - start) / tickets));
+      //
+      //   var techtime = parent.EndTime;
+      //   var hour = parseInt(techtime);
+      //   var min = parseInt(techtime.split("").reverse().join(""));
+      //   min = parseInt(min.split("").reverse().join(""));
+      //   console.log(techtime,"techtime");
+      //
+      // console.log(min, "min", "hour", hour);
     }
   });

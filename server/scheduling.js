@@ -96,21 +96,18 @@ Meteor.methods({
         };
 
 
-        timeToStopWork: function timeToStopWork() {
-          var d = new Date();
-          var min30 = d.getMinutes() - 30;
-          var subthour = d.getHours() - 1;
-          var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
-          var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-          if (min30 < 0) {
-            var extramin = min30 + 60
-            return subthour + ':' + extramin;
-            console.log(subthour + ':' + extramin, "subt a hour");
-          } else {
-            return hours + ':' + min30;
-            console.log(hours + ':' + min30, "hour plus 30 min");
-          }
-        };
+        // timeToStopWork: function timeToStopWork() {
+        //   var techtime = this.EndTime;
+        //   var min30 = parseInt(techtime) - 30;
+        //   if (min30 < 0) {
+        //     var extramin = min30 + 60
+        //     return subthour + ':' + extramin;
+        //     console.log(subthour + ':' + extramin, "subt a hour");
+        //   } else {
+        //     return hours + ':' + min30;
+        //     console.log(hours + ':' + min30, "hour plus 30 min");
+        //   }
+        // };
         if (tech.StartTime >= "16:00" && tech[day]) {
 
           if (tech.EndTime != "") {
