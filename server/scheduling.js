@@ -50,16 +50,43 @@ Meteor.methods({
       var temp = {};
 
       _Techs.find(temp).forEach(function(tech) {
+        timeToStop: function timeToStop(tech) {
+            var end = tech.EndTime;
+            var h = parseInt(end);
+            var m30 = parseInt(end.slice(3)) - 30;
+            var m = parseInt(end.slice(3));
+            var h1 = parseInt(end) - 1;
+            if (m30 < 0) {
+              var subm = m30 + 60;
+
+            if (subm.toString().length == 1){
+              var subm = ('0' + subm).toString()
+            };
+            return h1 + ":" + subm;
+          }else {
+            if (m30.toString().length == 1) {
+              var m30 = ('0' + m30).toString()
+              return h + ":" + m30;
+            };
+            return h + ":" + m30;
+          }
+
+        };
 
         timeToWork: function timeToWork() {
           var d = new Date();
           var min30 = d.getMinutes() + 30;
           var addhour = d.getHours() + 1;
+          addhour = (d.getHours() + 1).toString().length == 1 ? '0' + addhour : addhour;
           var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
           var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
           min30 = min30.toString().length == 1 ? '0' + min30 : min30;
           if (min30 > 59) {
             var extramin = min30 - 60
+            if (extramin.toString().length == 1) {
+              extramin = ('0' + extramin).toString();
+              return addhour + ':' + extramin;
+            }
             return addhour + ':' + extramin;
           } else {
             return hours + ':' + min30;
@@ -77,7 +104,7 @@ Meteor.methods({
                 _id: tech._id
               }, {
                 $set: {
-                  totaltickets: 2,
+                  totaltickets: 1,
                   status: "Working",
                   prequeue: true
                 }
@@ -86,35 +113,23 @@ Meteor.methods({
                 _id: tech._id
               }, {
                 $set: {
-                  totaltickets: 2,
+                  totaltickets: 1,
                   preQueueEnterTime: new Date(),
-                  WorkQueueStart: timeToWork()
+                  WorkQueueStart: timeToWork(),
+                  WorkQueueExit: timeToStop()
                 }
               });
             }
           });
         };
 
-
-        // timeToStopWork: function timeToStopWork() {
-        //   var techtime = this.EndTime;
-        //   var min30 = parseInt(techtime) - 30;
-        //   if (min30 < 0) {
-        //     var extramin = min30 + 60
-        //     return subthour + ':' + extramin;
-        //     console.log(subthour + ':' + extramin, "subt a hour");
-        //   } else {
-        //     return hours + ':' + min30;
-        //     console.log(hours + ':' + min30, "hour plus 30 min");
-        //   }
-        // };
         if (tech.StartTime >= "16:00" && tech[day]) {
 
           if (tech.EndTime != "") {
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.recur().on(tech.EndTime).time().on(nextDayNum(day)).dayOfWeek();
+                return parser.recur().on(tech.WorkQueueExit).time().on(nextDayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
@@ -123,7 +138,6 @@ Meteor.methods({
                   $set: {
                     prequeue: false,
                     queue: false,
-                    totaltickets: 0,
                     timesincelast: new Date(),
                     status: "Working"
                   }
@@ -138,7 +152,7 @@ Meteor.methods({
             SyncedCron.add({
               name: tech.name + ' Work End Time for ' + day,
               schedule: function(parser) {
-                return parser.recur().on(tech.EndTime).time().on(dayNum(day)).dayOfWeek();
+                return parser.recur().on(tech.WorkQueueExit).time().on(dayNum(day)).dayOfWeek();
               },
               job: function() {
                 _Techs.update({
@@ -147,7 +161,6 @@ Meteor.methods({
                   $set: {
                     prequeue: false,
                     queue: false,
-                    totaltickets: 0,
                     timesincelast: new Date(),
                     status: "Working"
                   }

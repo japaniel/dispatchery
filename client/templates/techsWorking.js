@@ -57,6 +57,7 @@ preStartTime: function preStartTime() {
     }, {
       $set: {
         prequeue: false,
+        weight: 0
       }
     });
   };
@@ -127,27 +128,22 @@ queueWeight: function(){
   math = Math.floor(math / tickets);
   var lowtickets = (Math.round((now - start - 5000)));
   var lowesttickets = (Math.round((now - start)));
-  if (this.totaltickets == 0) {
-    // return lowesttickets
-  }else if (this.totaltickets == 1 ) {
-    // return lowtickets
-  }else {
-      _Techs.update({_id: this._id}, {$set: {weight: math}})
-      // return math
-    }
-}else if (this.status == "Lunch"){
+  _Techs.update({_id: this._id}, {$set: {weight: math}})
+  return math
+
+}if (this.status == "Lunch"){
   lunch
-  // return this.weight
+  return this.weight
 }else if (this.status == "Meeting") {
   meeting
-  // return this.weight
+  return this.weight
 }else if (this.status == "Training") {
   training
-  // return this.weight
+  return this.weight
 }
 },
 todaysTickets: function(){
-  var tickets = parseInt(this.totaltickets) - 2;
+  var tickets = parseInt(this.totaltickets) - 1;
   return tickets
 }
 });
@@ -234,8 +230,9 @@ function prequeueCheck(tech) {
         $set: {
           prequeue: false,
           queue: true,
-          totaltickets: 2,
-          WorkQueueEnter: TimeSync.serverTime()
+          totaltickets: 1,
+          WorkQueueEnter: TimeSync.serverTime(),
+          weight: 0
         }
       });
     }else if (newTime >= tech.WorkQueueStart) {
@@ -245,14 +242,14 @@ function prequeueCheck(tech) {
         $set: {
           prequeue: false,
           queue: true,
-          totaltickets: 2,
-          WorkQueueEnter: TimeSync.serverTime()
+          totaltickets: 1,
+          WorkQueueEnter: TimeSync.serverTime(),
+          weight: 0
         }
       });
     }
 })
   };
-
 
   Template.options.helpers({
     statuses: function() {
@@ -277,13 +274,6 @@ function prequeueCheck(tech) {
       var now = parseInt(Now());
       var tickets = parseInt(parent.totaltickets);
       console.log(parent);
-      //
-      //   var techtime = parent.EndTime;
-      //   var hour = parseInt(techtime);
-      //   var min = parseInt(techtime.split("").reverse().join(""));
-      //   min = parseInt(min.split("").reverse().join(""));
-      //   console.log(techtime,"techtime");
-      //
-      // console.log(min, "min", "hour", hour);
+
     }
   });

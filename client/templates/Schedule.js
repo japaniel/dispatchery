@@ -36,9 +36,9 @@ Template.Schedule.events = {
     event.preventDefault();
     Session.set('ShowProjectDialog', true);
   },
-  "click .updateTech": function updateTech(event, template){
+  "click .updateTechs": function updateTechs(event, template){
     _Techs.find().forEach(function(){
-      addUser
+      addUser(this.name, this.startT, this.endT, this.Monday, this.Tuesday, this.Wednesday, this.Thursday, this.Friday, this.Saturday, this.Sunday, this.shift, this.managerT)
     })
     return "Update Techs"
   }
@@ -122,12 +122,27 @@ if (tech.Shift == '3rd') {
 }
 });
 
-// function queueWeight(tech){
-//   var start = parseInt(tech.WorkQueueEnter);
-//   var now = parseInt(TimeSync.serverTime());
-//   var tickets = parseInt(tech.totaltickets);
-//   return (Math.round((now - start) / tickets));
-// };
+function timeToStop(endT) {
+    var h = parseInt(endT);
+    var m30 = parseInt(endT.slice(3)) - 30;
+    var m = parseInt(endT.slice(3));
+    var h1 = parseInt(endT) - 1;
+    if (m30 < 0) {
+      var subm = m30 + 60;
+
+    if (subm.toString().length == 1){
+      var subm = ('0' + subm).toString()
+    };
+    return h1 + ":" + subm;
+  }else {
+    if (m30.toString().length == 1) {
+      var m30 = ('0' + m30).toString()
+      return h + ":" + m30;
+    };
+    return h + ":" + m30;
+  }
+};
+
 
 var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
   _Techs.insert({
@@ -135,7 +150,7 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     StartTime: startT,
     WorkQueueEnter: 0,
     EndTime: endT,
-    WorkQueueExit: 0,
+    WorkQueueExit: timeToStop(endT),
     Monday: Monday,
     Tuesday: Tuesday,
     Wednesday: Wednesday,
@@ -166,7 +181,7 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       StartTime: startT,
       WorkQueueEnter: 0,
       EndTime: endT,
-      WorkQueueExit: 0,
+      WorkQueueExit: timeToStop(endT),
       Monday: Monday,
       Tuesday: Tuesday,
       Wednesday: Wednesday,
@@ -258,10 +273,11 @@ Template.schedule.events({
       $set: {
         queue: true,
         prequeue:false,
-        totaltickets: 2,
+        totaltickets: 1,
         dispatched: false,
         status: "Working",
-        WorkQueueEnter: TimeSync.serverTime()
+        WorkQueueEnter: TimeSync.serverTime(),
+        weight: 0
       }
     });
   },
