@@ -6,6 +6,7 @@ Template.techsWorking.helpers({
     }, {
       sort: {
         status: -1,
+        status: -1,
         timesincelast: 1
       }
     });
