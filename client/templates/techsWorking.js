@@ -5,7 +5,7 @@ Template.techsWorking.helpers({
       queue: true
     }, {
       sort: {
-        status: -1,
+        weight: -1,
         timesincelast: 1
       }
     });
@@ -17,7 +17,7 @@ setInterval(prequeueCheck, 20000);
     }, {
       sort: {
         status: -1,
-        timesincelast: 1
+        weight: -1
       }
     });
   }
@@ -57,6 +57,7 @@ preStartTime: function preStartTime() {
     }, {
       $set: {
         prequeue: false,
+        weight: 0
       }
     });
   };
@@ -107,6 +108,43 @@ Template.techWorking.helpers({
     }else {
     return moment(this.timesincelast).fromNow(Now());
 }
+},
+techManager: function(){
+  return this.manager
+},
+dayCheck: function(day){
+  if (this[day]) {
+    return "Working"
+  }else{
+  return "Not"
+}
+},
+queueWeight: function(){
+  if (this.status == "Working") {
+  var start = parseInt(this.WorkQueueEnter);
+  var now = parseInt(TimeSync.serverTime(null, 2000));
+  var tickets = parseInt(this.totaltickets) * 5000;
+  var math = (Math.round((now - start)));
+  math = Math.floor(math / tickets);
+  var lowtickets = (Math.round((now - start - 5000)));
+  var lowesttickets = (Math.round((now - start)));
+  _Techs.update({_id: this._id}, {$set: {weight: math}})
+  return math
+
+}if (this.status == "Lunch"){
+  lunch
+  return this.weight
+}else if (this.status == "Meeting") {
+  meeting
+  return this.weight
+}else if (this.status == "Training") {
+  training
+  return this.weight
+}
+},
+todaysTickets: function(){
+  var tickets = parseInt(this.totaltickets) - 1;
+  return tickets
 }
 });
 
@@ -129,7 +167,6 @@ Template.techWorking.events({
       },
       $inc: {
         totaltickets: 1,
-        weight: 1
       }
     });
   },
@@ -145,7 +182,6 @@ Template.techWorking.events({
       },
       $inc: {
         totaltickets: -1,
-        weight: -1
       }
     });
   }
@@ -155,7 +191,7 @@ function lunch(slectedstatus, techthis) {
   if (slectedstatus != "Lunch") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 2}});
     Meteor.call('updateLunch', techthis);
   }
 };
@@ -164,7 +200,7 @@ function meeting(slectedstatus, techthis) {
   if (slectedstatus != "Meeting") {
     Meteor.call('removeMeeting', techthis);
   } else if (slectedstatus == "Meeting") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 1}});
     Meteor.call('updateMeeting', techthis);
   }
 };
@@ -173,15 +209,47 @@ function training(slectedstatus, techthis) {
   if (slectedstatus != "Training") {
     Meteor.call('removeTraining', techthis);
   } else if (slectedstatus == "Training") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 3}});
     Meteor.call('updateTraining', techthis);
   }
 };
 
 function prequeueCheck(tech) {
-  Meteor.call('moveToWork', tech);
-};
-
+    _Techs.find({prequeue: true}).forEach(function(tech){
+      var d = new Date();
+      var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
+      var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
+      var newTime = hours + ':' + min;
+    var today = d.getDay();
+    console.log(newTime, "server time", tech.WorkQueueStart, 'tech time');
+    if (tech.queue) {
+      console.log(tech.queue, tech.name);
+      _Techs.update({
+        _id: tech._id
+      }, {
+        $set: {
+          prequeue: false,
+          queue: true,
+          totaltickets: 1,
+          WorkQueueEnter: TimeSync.serverTime(),
+          weight: 0
+        }
+      });
+    }else if (newTime >= tech.WorkQueueStart) {
+      _Techs.update({
+        _id: tech._id
+      }, {
+        $set: {
+          prequeue: false,
+          queue: true,
+          totaltickets: 1,
+          WorkQueueEnter: TimeSync.serverTime(),
+          weight: 0
+        }
+      });
+    }
+})
+  };
 
   Template.options.helpers({
     statuses: function() {
@@ -201,6 +269,11 @@ function prequeueCheck(tech) {
       lunch(status, parent);
       meeting(status, parent);
       training(status, parent);
+      // console.log(parent);
+      var start = parseInt(parent.WorkQueueEnter);
+      var now = parseInt(Now());
+      var tickets = parseInt(parent.totaltickets);
       console.log(parent);
+
     }
   });

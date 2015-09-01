@@ -2,7 +2,7 @@
   <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
   <button type="button" class="btn btn-default addUser">Add User</button>
   {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{# if ShowDeleteBox}} {{> deleteUser}} {{/if}} {{>techs}}
-  <!-- {{#if ShowDeleteBox}} {{> deleteUser}} {{/if}} -->
+  <!-- <button type="button" class="btn btn-default updateTech">{{updateTechs}}</button> -->
 </template>
 
 
@@ -17,6 +17,9 @@
           <form data-toggle="validator" role="form">
             <div class="form-group">
               <input type="text" class="input-xlarge form-control inputName" value="{{tech.name}}" placeholder="Employee Name..." autofocus>
+            </div>
+            <div class="form-group">
+              <input type="text" class="input-xlarge form-control manager" value="{{tech.manager}}" placeholder="Manager Name..." autofocus>
             </div>
             <table class="">
               <thead>
