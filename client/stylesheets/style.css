@@ -13,3 +13,54 @@
     white-space: nowrap;
     /*border: 1px solid black;*/
 }
+
+a.hideDisplay{
+  position: relative; /* This makes everything work.*/
+  /* Allows you to layer overlapping elements. */
+  z-index: 20;
+  color: #000;
+  text-decoration: none;
+}
+
+a.hideDisplay:hover{
+ /* Allows you to layer overlapping elements. */
+ z-index: 30;
+}
+
+a.hideDisplay span.showDisplayOnHover{
+ display: none;
+}
+
+/* This will only display itself when the
+ 19  * user hovers the mouse over the anchor. */
+ a.hideDisplay:hover span.showDisplayOnHover{
+ display: block;
+ position: absolute;
+ font-size: 18px;
+
+ /* This sets the height of a line of text in the box. */
+ line-height: 25px;
+
+ /* These position the box where it needs to go. */
+ top: 5px;
+ left: 20px;
+
+ /* These adjust the size of the box when it appears. */
+ width: intrinsic;           /* Safari/WebKit uses a non-standard name */
+ width: -moz-max-content;    /* Firefox/Gecko */
+ width: -webkit-max-content; padding: 10px;
+
+ border: 1px solid #666666;
+ background-color: #c0cedd;
+
+ /* text color */
+ color: #000000;
+ text-align: left;
+}
+
+span.showBodyOfDisplayOnHover {
+ font-size: 16px;
+ font-weight: normal;
+ color: #444;
+ line-height: 18px;
+}

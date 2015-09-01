@@ -159,10 +159,10 @@ updateLunch: function(tech) {
 });
 
 Meteor.startup(function() {
+  Meteor.call("updateTechFields");
   SyncedCron.start();
   Meteor.call("updateCron");
   Meteor.call("updateLunch");
   Meteor.call("updateMeeting");
   Meteor.call("updateTraining");
-  Meteor.call("moveToWork");
 });
