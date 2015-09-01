@@ -35,12 +35,6 @@ Template.Schedule.events = {
   "click .addUser": function openForm(event, template) {
     event.preventDefault();
     Session.set('ShowProjectDialog', true);
-  },
-  "click .updateTechs": function updateTechs(event, template){
-    _Techs.find().forEach(function(){
-      addUser(this.name, this.startT, this.endT, this.Monday, this.Tuesday, this.Wednesday, this.Thursday, this.Friday, this.Saturday, this.Sunday, this.shift, this.managerT)
-    })
-    return "Update Techs"
   }
 };
 //add User Form
@@ -77,8 +71,6 @@ Template.addUserForm.events = {
     Session.set('SelectedTech', null);
   }
 };
-Meteor.startup(function() {  Meteor.call("updateTechs", name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT);
-});
 
 Template.addUserForm.helpers({
 

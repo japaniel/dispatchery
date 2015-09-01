@@ -159,6 +159,7 @@ updateLunch: function(tech) {
 });
 
 Meteor.startup(function() {
+  Meteor.call("updateTechFields");
   SyncedCron.start();
   Meteor.call("updateCron");
   Meteor.call("updateLunch");
