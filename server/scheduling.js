@@ -75,20 +75,12 @@ Meteor.methods({
 
         timeToWork: function timeToWork() {
           var d = new Date();
-<<<<<<< HEAD
-          var min30 = d.getMinutes() + 2;
-=======
           var min30 = d.getMinutes() + 30;
->>>>>>> 2b51eafead3d939abfbe54edaa5791c0723fbc2b
           var addhour = d.getHours() + 1;
           addhour = (d.getHours() + 1).toString().length == 1 ? '0' + addhour : addhour;
           var hours = d.getHours().toString().length == 1 ? '0' + d.getHours() : d.getHours();
           var min = d.getMinutes().toString().length == 1 ? '0' + d.getMinutes() : d.getMinutes();
-<<<<<<< HEAD
-          min30 = min30.length == 1 ? '0' + min30 : min30;
-=======
           min30 = min30.toString().length == 1 ? '0' + min30 : min30;
->>>>>>> 2b51eafead3d939abfbe54edaa5791c0723fbc2b
           if (min30 > 59) {
             var extramin = min30 - 60
             if (extramin.toString().length == 1) {
@@ -124,7 +116,7 @@ Meteor.methods({
                   totaltickets: 1,
                   preQueueEnterTime: new Date(),
                   WorkQueueStart: timeToWork(),
-                  WorkQueueExit: timeToStop()
+                  WorkQueueExit: timeToStop(tech)
                 }
               });
             }
