@@ -58,29 +58,65 @@ Meteor.methods({
         status: status
       }
     });
+  },
+  updateTechFields: function(){
+  _Techs.find({}).forEach(function(tech){
+    console.log(tech.name);
+    updateProject(tech.name, tech.StartTime, tech.EndTime, tech.Monday, tech.Tuesday, tech.Wednesday, tech.Thursday, tech.Friday, tech.Saturday, tech.Sunday, tech.Shift, tech.manager);
+    //subtract 30 min from tech schedule for case time
+    timeToStop: function timeToStop(endT) {
+        var h = parseInt(endT);
+        var m30 = parseInt(endT.slice(3)) - 30;
+        var m = parseInt(endT.slice(3));
+        var h1 = parseInt(endT) - 1;
+        if (m30 < 0) {
+          var subm = m30 + 60;
+
+        if (subm.toString().length == 1){
+          var subm = ('0' + subm).toString()
+        };
+        return h1 + ":" + subm;
+      }else {
+        if (m30.toString().length == 1) {
+          var m30 = ('0' + m30).toString()
+          return h + ":" + m30;
+        };
+        return h + ":" + m30;
+      }
+    };
+    updateProject: function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
+      _Techs.update({_id: tech._id}, {
+        $set: {
+          name: name,
+          StartTime: startT,
+          WorkQueueEnter: 0,
+          EndTime: endT,
+          WorkQueueExit: timeToStop(tech.EndTime),
+          Monday: Monday,
+          Tuesday: Tuesday,
+          Wednesday: Wednesday,
+          Thursday: Thursday,
+          Friday: Friday,
+          Saturday: Saturday,
+          Sunday: Sunday,
+          queue: false,
+          prequeue: false,
+          status: "Working",
+          weight: 0,
+          Shift: shift,
+          lunch: false,
+          meeting: false,
+          training: false,
+          timesincelastTicket: 0,
+          preQueueEnterTime: "00:00",
+          preQueueExit: "00:00",
+          manager: managerT
+        }
+      });
   }
+});
+}
 });
 
 Meteor.startup(function() {
-//   var httpProxy = require('http-proxy');
-//   httpProxy.createServer({
-//   ssl: {
-//     key: fs.readFileSync('serverkey.pem', 'utf8'),
-//     cert: fs.readFileSync('servercrt.pem', 'utf8')
-//   },
-//   target: 'https://localhost:443',
-//   secure: true // Depends on your needs, could be false.
-// }).listen(3000);
-
-
-    // SSLProxy({
-    //    port: 443, //or 443 (normal port/requires sudo)
-    //    ssl : {
-    //         key: Assets.getText("serverkey.pem"),
-    //         cert: Assets.getText("servercrt.pem")
-    //
-    //         //Optional CA
-    //        //Assets.getText("ca.pem")
-    //    }
-    // });
 });

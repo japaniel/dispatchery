@@ -7,6 +7,7 @@
           <th class="col-md-1 center ">Shift</th>
           <th class="col-md-1 center ">Status</th>
           <th class="col-md-1 center">Total Tickets</th>
+          <th class="col-md-1 center">Weight</th>
           <th class="col-md-1 center">Time Since Last</th>
           <th class="col-md-1 center">Give the Pain</th>
         </tr>
@@ -40,10 +41,49 @@
 
 <template name='techWorking'>
   <tr class="techWorking" bgcolor="{{color}}">
-    <td>{{name}}</td>
+    <td><span >
+    <a class="hideDisplay">{{name}}
+      <span class="showDisplayOnHover">
+        Manager Name: {{techManager}}<br>
+        <span class="showBodyOfDisplayOnHover">
+
+          <table class="table table-hover" style="background-color:#c0cedd">
+            <thead>
+              <tr>
+                <th >Days</th>
+                <th >Working Or Not</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>
+    M<br>
+    T<br>
+    W<br>
+    Tu<br>
+    F<br>
+    S<br>
+    Su
+  </td>
+<td>
+  {{dayCheck "Monday"}}<br>
+  {{dayCheck "Tuesday"}}<br>
+  {{dayCheck "Wednesday"}}<br>
+   {{dayCheck "Thursday"}}<br>
+  {{dayCheck "Friday"}}<br>
+  {{dayCheck "Saturday"}}<br>
+   {{dayCheck "Sunday"}}
+
+</td>
+            </tbody>
+            </table>
+          </span>
+          </span>
+        </a></span>
+    </td>
     <td class="center">{{Shift}}</td>
     <td class="center">{{>options}}</td>
-    <td class="center">{{totaltickets}}</td>
+    <td class="center"> {{todaysTickets}}</td>
+    <td class="center">{{queueWeight}}</td>
     <td class="center">{{timeStamp}}</td>
     <td class="center">{{repeatCheck}}
       <a>
@@ -74,7 +114,7 @@
     <td>{{name}}</td>
     <td class="center">{{Shift}}</td>
     <td class="center">{{>options}}</td>
-    <td class="center">{{totaltickets}}</td>
+    <td class="center">{{todaysTickets}}</td>
     <td class="center">{{timeStamp}}</td>
     <td class="center">{{preStartTime}}</td>
   </tr>
