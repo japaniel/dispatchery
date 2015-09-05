@@ -127,10 +127,16 @@ queueWeight: function(){
   var tickets = parseInt(this.totaltickets) * 5000;
   var math = (Math.round((now - start)));
   math = Math.floor(math / tickets);
-  var lowtickets = (Math.round((now - start - 5000)));
-  var lowesttickets = (Math.round((now - start)));
-  _Techs.update({_id: this._id}, {$set: {weight: math}})
-  return math
+  var lowtickets = (Math.round((now - start + 5000)));
+  var lowesttickets = (Math.round((now - start - 1000)));
+  if (this.totaltickets == 1) {
+    _Techs.update({_id: this._id}, {$set: {weight: lowesttickets}})
+    return lowesttickets
+    console.log(lowtickets);
+  }else {
+    _Techs.update({_id: this._id}, {$set: {weight: math}})
+    return math
+  }
 
 }if (this.status == "Lunch"){
   lunch
