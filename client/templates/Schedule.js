@@ -265,7 +265,7 @@ Template.schedule.events({
       $set: {
         queue: true,
         prequeue:false,
-        totaltickets: 0,
+        totaltickets: 1,
         dispatched: false,
         status: "Working",
         WorkQueueEnter: TimeSync.serverTime(),

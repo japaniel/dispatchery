@@ -144,7 +144,7 @@ queueWeight: function(){
 }
 },
 todaysTickets: function(){
-  var tickets = parseInt(this.totaltickets);
+  var tickets = parseInt(this.totaltickets) - 1;
   return tickets
 }
 });
@@ -167,7 +167,7 @@ Template.techWorking.events({
         timesincelast: new Date()
       },
       $inc: {
-        totaltickets: 0,
+        totaltickets: 1,
       }
     });
   },
@@ -231,7 +231,7 @@ function prequeueCheck(tech) {
         $set: {
           prequeue: false,
           queue: true,
-          totaltickets: 0,
+          totaltickets: 1,
           WorkQueueEnter: TimeSync.serverTime(),
           weight: 0
         }
@@ -243,7 +243,7 @@ function prequeueCheck(tech) {
         $set: {
           prequeue: false,
           queue: true,
-          totaltickets: 0,
+          totaltickets: 1,
           WorkQueueEnter: TimeSync.serverTime(),
           weight: 0
         }
