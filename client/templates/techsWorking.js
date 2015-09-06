@@ -133,7 +133,7 @@ queueWeight: function(){
   if (this.totaltickets == 1) {
     _Techs.update({_id: this._id}, {$set: {weight: lowesttickets}})
     return lowesttickets
-    console.log(lowtickets);
+    console.log(lowesttickets);
   }else {
     _Techs.update({_id: this._id}, {$set: {weight: math}})
     return math
