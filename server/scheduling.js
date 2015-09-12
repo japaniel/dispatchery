@@ -53,7 +53,7 @@ Meteor.methods({
         timeToStop: function timeToStop(tech) {
             var end = tech.EndTime;
             var h = parseInt(end);
-            var m30 = parseInt(end.slice(3)) - 30;
+            var m30 = parseInt(end.slice(3)) - 29;
             var m = parseInt(end.slice(3));
             var h1 = parseInt(end) - 1;
             if (m30 < 0) {
