@@ -128,11 +128,12 @@ dayCheck: function(day){
 //   var math = (Math.round((now - start)));
 //   math = Math.floor(math / tickets);
 //   var lowtickets = (Math.round((now - start + 5000)));
-//   var lowesttickets = (Math.round((now - start - 1000)));
+// //  var lowesttickets = (Math.round((now - start)));
+//   lowesttickets = 10000;
 //   if (this.totaltickets == 1) {
 //     _Techs.update({_id: this._id}, {$set: {weight: lowesttickets}})
 //     return lowesttickets
-//     console.log(lowtickets);
+//     console.log(lowesttickets);
 //   }else {
 //     _Techs.update({_id: this._id}, {$set: {weight: math}})
 //     return math
