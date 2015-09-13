@@ -72,6 +72,7 @@ Meteor.methods({
           }
 
         };
+        console.log(timeToStop);
 
         timeToWork: function timeToWork() {
           var d = new Date();
@@ -106,14 +107,7 @@ Meteor.methods({
                 $set: {
                   totaltickets: 1,
                   status: "Working",
-                  prequeue: true
-                }
-              });
-              _Techs.update({
-                _id: tech._id
-              }, {
-                $set: {
-                  totaltickets: 1,
+                  prequeue: true,
                   preQueueEnterTime: new Date(),
                   WorkQueueStart: timeToWork(),
                   WorkQueueExit: timeToStop(tech)

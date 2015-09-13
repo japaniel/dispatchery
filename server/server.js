@@ -99,7 +99,6 @@ Meteor.methods({
           Friday: Friday,
           Saturday: Saturday,
           Sunday: Sunday,
-          queue: false,
           prequeue: false,
           status: "Working",
           weight: 0,
