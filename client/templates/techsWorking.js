@@ -1,5 +1,18 @@
 //tech working
 Template.techsWorking.helpers({
+  addUser: function() {
+    var user = Meteor.user();
+    if (Meteor.user().profile.Role == undefined) {
+      Meteor.users.update({
+        _id: user._id
+      }, {
+        $set: {
+          "profile.Role": "Dispatch"
+        }
+      });
+    }
+    console.log(user.profile.Role);
+  },
   techsWorking: function() {
     return _Techs.find({
       queue: true

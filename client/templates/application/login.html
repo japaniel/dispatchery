@@ -1,0 +1,36 @@
+
+
+
+
+
+
+
+<template name="Login">
+  {{#if currentUser}}
+  <h2>Create User</h2>
+{{else}}
+<h2>Login</h2>
+{{/if}}
+{{#if currentUser}}
+  <select class="dropdown" name="role">
+    <option selected disabled>What Role?</option>
+    <option>Dispatch</option>
+    <option>Manager</option>
+  </select>
+  <form class="login">
+      <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
+    </p>
+      <p>Password: <input id="pass" type="password" name="password" placeholder="Password . . . "></p>
+      <p><button type="button" class="btn btn-default createUser">Create User</button>
+  </p>
+      </form>
+  {{else}}
+  <form class="login">
+      <p>Email: <input type="email" name="email" placeholder=" Email@purestorage.com">
+    </p>
+      <p>Password: <input type="password" name="password" placeholder="Password . . . "></p>
+      <p><button type="button" class="btn btn-default loginbutton">Login</button>
+  </p>
+  </form>
+  {{/if}}
+</template>

@@ -10,7 +10,16 @@ Template.menu.helpers({
         //alert(pageName);
 
         return Router.current().route.getName() == pageName
+    },
+    logincheck: function logincheck(){
+      if (Meteor.userId() == null) {
+        return Router.go('Login')
+      }else {
+      if (Meteor.userId().length > 1 || null) {
+      return Router.go('techsWorking')
     }
+  }
+  }
 })
 
 Template.menu.events({
@@ -18,5 +27,11 @@ Template.menu.events({
 
         Session.set('currentMenu', $(event.currentTarget).attr("class"));
 
+    },
+
+    'click .logout': function(event){
+        event.preventDefault();
+        Meteor.logout();
+        Router.go('Login')
     }
 });

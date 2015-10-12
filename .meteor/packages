@@ -6,7 +6,6 @@
 
 insecure
 iron:router
-accounts-meteor-developer
 twbs:bootstrap
 underscore
 mrt:moment
@@ -35,3 +34,7 @@ random
 ejson
 spacebars
 check
+accounts-password
+accounts-base
+accounts-ui
+alanning:roles

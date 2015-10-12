@@ -28,6 +28,13 @@ Template.Schedule.helpers({
   ShowDeleteBox: function ShowDeleteBox() {
     return Session.get('ShowDeleteBox');
 
+  },
+  Dcheck: function Dcheck(){
+    if (Meteor.user().profile.Role == "Dispatch") {
+      return false
+    }else {
+      return true
+    }
   }
 });
 
@@ -35,6 +42,9 @@ Template.Schedule.events = {
   "click .addUser": function openForm(event, template) {
     event.preventDefault();
     Session.set('ShowProjectDialog', true);
+  },
+  "click .addAccount": function addAccount(){
+    Router.go('/')
   }
 };
 //add User Form

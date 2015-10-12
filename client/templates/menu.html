@@ -1,8 +1,9 @@
 <template name="menu" >
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
     	<ul class="nav navbar-nav" style="position: fixed;width: 100%;">
+        {{#if currentUser}}
     		<li class="{{#if isCurrentPage 'techsWorking'}}active{{/if}} workingMenu">
-    			<a href="/">Queue</a>
+    			<a href="/techsWorking">Queue</a>
     		</li>
     		<li class="{{#if isCurrentPage 'Schedule'}}active{{/if}} ScheduleMenu">
     			<a href="/Schedule">Schedule</a>
@@ -13,8 +14,16 @@
             <li class="{{#if isCurrentPage 'Feedback'}}active{{/if}} FeedbackMenu">
         			<a href="/Feedback">Feedback</a>
         		</li>
-
-
+            <li class="logout"><a href="/" class="logout">Logout</a></li>
+            {{else}}
+            {{logincheck}}
+            <li class="{{#if isCurrentPage 'login'}}active{{/if}}">
+              <a href="/">Login</a>
+            </li>
+        {{/if}}
+        <li class="{{#if isCurrentPage 'login'}}active{{/if}} hidden">
+          <a href="/createUser">Create User</a>
+        </li>
     	</ul>
     </nav>
 </template>
