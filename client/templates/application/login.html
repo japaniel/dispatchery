@@ -24,13 +24,45 @@
       <p><button type="button" class="btn btn-default createUser">Create User</button>
   </p>
       </form>
+      {{>users}}
   {{else}}
   <form class="login">
+    <!-- <select class="dropdown" name="role">
+      <option selected disabled>What Role?</option>
+      <option>Dispatch</option>
+      <option>Manager</option>
+    </select> -->
       <p>Email: <input type="email" name="email" placeholder=" Email@purestorage.com">
     </p>
       <p>Password: <input type="password" name="password" placeholder="Password . . . "></p>
       <p><button type="button" class="btn btn-default loginbutton">Login</button>
+        <!-- <button type="button" class="btn btn-default createUser">Create User</button> -->
   </p>
   </form>
   {{/if}}
 </template>
+
+<template name="users">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}} {{>list}} {{/each}}
+  </tbody>
+</table>
+</template>
+
+  <template name="list">
+  <tr>
+    <td style="color:#111c24;font-weight:bold">
+      <div class="names">{{email}} "some text"</div>
+    </td>
+    <td>
+      <div class="names">{{profile.Role}} "more text"</div>
+</td>
+</tr>
+  </template>

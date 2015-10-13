@@ -1,4 +1,4 @@
-
+var _users = Meteor.users;
 
 Template.Login.events({
     "click .loginbutton":  function(event, template){
@@ -11,23 +11,26 @@ Template.Login.events({
         var role = document.getElementsByName("role")[0].value;
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
-        Accounts.createUser({
-            email: email,
-            password: password,
-        });
+        Meteor.call('makeUser', email, password, role)
         document.getElementById("email").value = "";
         document.getElementById("pass").value = "";
-        updateUser(role, email);
       }
 });
 
 Template.Login.helpers({
-
+moveLoggedIn: function moveLoggedIn(){
+  if (Meteor.user()._id == null) {
+    Router.go('/')
+  }else {
+  Router.go('techsWorking')
+}}
 });
 
-
-updateUser: function updateUser (role, email){
-  var user = Meteor.users.findOne(email);
-  console.log(user);
-  Meteor.users.update({ _id: user._id}, {$set: {'profile.Role': role}})
-};
+Template.users.helpers({
+  users: function users(){
+    return _users.find({},
+    {sort: {
+      profile.Role: 1
+    }})
+  }
+})
