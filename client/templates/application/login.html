@@ -21,27 +21,29 @@
       <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
     </p>
       <p>Password: <input id="pass" type="password" name="password" placeholder="Password . . . "></p>
-      <p><button type="button" class="btn btn-default createUser">Create User</button>
-  </p>
+      <p><button type="button" class="btn btn-default createUser">Create User</button></p>
       </form>
       {{>users}}
   {{else}}
   <form class="login">
+    <!-- code that is blocked out unless we need to make a user when no others exist. -->
     <!-- <select class="dropdown" name="role">
       <option selected disabled>What Role?</option>
       <option>Dispatch</option>
       <option>Manager</option>
     </select> -->
-      <p>Email: <input type="email" name="email" placeholder=" Email@purestorage.com">
+      <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
     </p>
-      <p>Password: <input type="password" name="password" placeholder="Password . . . "></p>
+      <p>Password: <input id="pass" type="password" name="password" placeholder="Password . . . "></p>
       <p><button type="button" class="btn btn-default loginbutton">Login</button>
-        <!-- <button type="button" class="btn btn-default createUser">Create User</button> -->
+        <!-- part of the same only here if no other users exist. -->
+        <!-- <button type="button" class="btn btn-default createUser"> Create User</button> -->
   </p>
   </form>
   {{/if}}
 </template>
 
+<!-- get all users and list them  -->
 <template name="users">
 <table class="table table-hover">
   <thead>
@@ -56,10 +58,11 @@
 </table>
 </template>
 
+ <!-- what to do with each user -->
   <template name="list">
   <tr>
     <td style="color:#111c24;font-weight:bold">
-      <div class="names">{{email}} "some text"</div>
+      <div class="names">{{emails}} "some text"</div>
     </td>
     <td>
       <div class="names">{{profile.Role}} "more text"</div>

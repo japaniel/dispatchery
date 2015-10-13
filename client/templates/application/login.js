@@ -11,26 +11,36 @@ Template.Login.events({
         var role = document.getElementsByName("role")[0].value;
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
-        Meteor.call('makeUser', email, password, role)
+        // Meteor.call('makeUser', email, password, role)
         document.getElementById("email").value = "";
         document.getElementById("pass").value = "";
+      //   Accounts.createUser({
+      //     email: email,
+      //     password: password,
+      //     profile: {
+      //       Role: role,
+      //       Email: email
+      //     }
+      // });
       }
 });
 
 Template.Login.helpers({
-moveLoggedIn: function moveLoggedIn(){
-  if (Meteor.user()._id == null) {
-    Router.go('/')
-  }else {
-  Router.go('techsWorking')
-}}
 });
+
+Accounts.onLogin(function(){
+  Router.go('techsWorking')
+})
+
+Tracker.autorun(function () {
+    Meteor.subscribe("userList");
+    Meteor.subscribe("allUserData");
+});
+
 
 Template.users.helpers({
   users: function users(){
-    return _users.find({},
-    {sort: {
-      profile.Role: 1
-    }})
-  }
+  return Meteor.subscribe('userList') 
+}
+
 })

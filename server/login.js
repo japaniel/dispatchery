@@ -8,5 +8,11 @@ Meteor.methods({
           Email: email
         }
     });
-  }
+  },
+  allUsers: function allUsers() {
+    var ausers = Meteor.users;
+  Meteor.publish("userList", function() {
+   return ausers.find({}, {sort: {Role: 1}});
+ })
+ }
 });
