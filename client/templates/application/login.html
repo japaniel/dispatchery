@@ -11,11 +11,14 @@
 {{else}}
 <h2>Login</h2>
 {{/if}}
-{{#if currentUser}}
+<!-- {{#if currentUser}} -->
   <select class="dropdown" name="role">
     <option selected disabled>What Role?</option>
     <option>Dispatch</option>
     <option>Manager</option>
+    <!-- {{#if acheck}} -->
+    <option>Admin</option>
+    <!-- {{/if}} -->
   </select>
   <form class="login">
       <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
@@ -23,49 +26,14 @@
       <p>Password: <input id="pass" type="password" name="password" placeholder="Password . . . "></p>
       <p><button type="button" class="btn btn-default createUser">Create User</button></p>
       </form>
-      {{>users}}
-  {{else}}
+      <!-- {{>users}} -->
+  <!-- {{else}} -->
   <form class="login">
-    <!-- code that is blocked out unless we need to make a user when no others exist. -->
-    <select class="dropdown" name="role">
-      <option selected disabled>What Role?</option>
-      <option>Dispatch</option>
-      <option>Manager</option>
-    </select>
       <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
     </p>
       <p>Password: <input id="pass" type="password" name="password" placeholder="Password . . . "></p>
       <p><button type="button" class="btn btn-default loginbutton">Login</button>
-        <!-- part of the same only here if no other users exist. -->
-        <button type="button" class="btn btn-default createUser"> Create User</button>
   </p>
   </form>
-  {{/if}}
+  <!-- {{/if}} -->
 </template>
-
-<!-- get all users and list them  -->
-<template name="users">
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Role</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each users}} {{>list}} {{/each}}
-  </tbody>
-</table>
-</template>
-
- <!-- what to do with each user -->
-  <template name="list">
-  <tr>
-    <td style="color:#111c24;font-weight:bold">
-      <div class="names">{{emails}} "some text"</div>
-    </td>
-    <td>
-      <div class="names">{{profile.Role}} "more text"</div>
-</td>
-</tr>
-  </template>
