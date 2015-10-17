@@ -30,7 +30,7 @@ Template.Schedule.helpers({
 
   },
   Dcheck: function Dcheck(){
-    if (Meteor.user().profile.Role == "Dispatch") {
+    if (Meteor.user().profile.Role == "Admin") {
       return false
     }else {
       return true

@@ -11,14 +11,14 @@
 {{else}}
 <h2>Login</h2>
 {{/if}}
-<!-- {{#if currentUser}} -->
+{{#if currentUser}}
   <select class="dropdown" name="role">
     <option selected disabled>What Role?</option>
     <option>Dispatch</option>
     <option>Manager</option>
-    <!-- {{#if acheck}} -->
+    {{#if acheck}}
     <option>Admin</option>
-    <!-- {{/if}} -->
+    {{/if}}
   </select>
   <form class="login">
       <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
@@ -27,7 +27,7 @@
       <p><button type="button" class="btn btn-default createUser">Create User</button></p>
       </form>
       <!-- {{>users}} -->
-  <!-- {{else}} -->
+  {{else}}
   <form class="login">
       <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
     </p>
@@ -35,5 +35,5 @@
       <p><button type="button" class="btn btn-default loginbutton">Login</button>
   </p>
   </form>
-  <!-- {{/if}} -->
+  {{/if}}
 </template>
