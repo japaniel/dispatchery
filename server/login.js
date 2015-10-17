@@ -12,7 +12,12 @@ Meteor.methods({
   allUsers: function allUsers() {
     var ausers = Meteor.users;
   Meteor.publish("userList", function() {
-   return ausers.find({}, {sort: {Role: 1}});
+   return ausers.find().fetch();
  })
  }
 });
+// Accounts.onCreateUser(function()
+//
+// Accounts.setPassword(userId, password)
+//
+// )
