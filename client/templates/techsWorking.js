@@ -1,18 +1,5 @@
 //tech working
 Template.techsWorking.helpers({
-  addUser: function() {
-    var user = Meteor.user();
-    if (Meteor.user().profile.Role == undefined) {
-      Meteor.users.update({
-        _id: user._id
-      }, {
-        $set: {
-          "profile.Role": "Dispatch"
-        }
-      });
-    }
-    console.log(user.profile.Role);
-  },
   techsWorking: function() {
     return _Techs.find({
       queue: true
@@ -34,6 +21,11 @@ setInterval(prequeueCheck, 20000);
         weight: -1
       }
     });
+  },
+  mcheck: function mcheck() {
+    if (Meteor.user().profile.Role == "Manager") {
+      return true
+    }
   }
 });
 
@@ -42,6 +34,7 @@ function Now() {
 };
 
 Template.pretechWorking.helpers({
+
   color: function() {
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift
@@ -102,6 +95,11 @@ if (shift == "3rd") {
 
 //techWorking
 Template.techWorking.helpers({
+  mcheck: function mcheck() {
+    if (Meteor.user().profile.Role == "Manager") {
+      return true
+    }
+  },
   color: function() {
     if (this.status == "Working"){
       var techshift = _Techs.findOne({_id: this._id}).Shift

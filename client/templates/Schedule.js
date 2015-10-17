@@ -29,7 +29,7 @@ Template.Schedule.helpers({
     return Session.get('ShowDeleteBox');
 
   },
-  Dcheck: function Dcheck(){
+  acheck: function acheck(){
     if (Meteor.user().profile.Role == "Admin") {
       return false
     }else {

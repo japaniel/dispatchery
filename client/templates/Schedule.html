@@ -1,7 +1,7 @@
 <template name="Schedule">
   <!--<a class="btn btn-primary open-modal addUser" data-toggle="modal" href="addEmployee">Add User</a>-->
   <button type="button" class="btn btn-default addUser">Add TSE</button>
-  <button type="button" class="btn btn-default addAccount{{#if Dcheck}} hidden {{/if}}">Add User</button>
+  <button type="button" class="btn btn-default addAccount{{#if acheck}} hidden {{/if}}">Add User</button>
   {{#if showProjectDialog}} {{>addUserForm}} {{/if}} {{# if ShowDeleteBox}} {{> deleteUser}} {{/if}} {{>techs}}
   <!-- <button type="button" class="btn btn-default updateTech">{{updateTechs}}</button> -->
 </template>
