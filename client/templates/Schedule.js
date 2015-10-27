@@ -171,7 +171,8 @@ var addUser = function addUser(name, startT, endT, Monday, Tuesday, Wednesday, T
     timesincelastTicket: 0,
     preQueueEnterTime: "00:00",
     preQueueExit: "00:00",
-    manager: managerT
+    manager: managerT,
+    skipRound: 0
   });
   Meteor.call("updateCron");
 };
@@ -202,7 +203,8 @@ var updateProject = function updateProject(name, startT, endT, Monday, Tuesday, 
       timesincelastTicket: 0,
       preQueueEnterTime: "00:00",
       preQueueExit: "00:00",
-      manager: managerT
+      manager: managerT,
+      skipRound: 0
     }
   });
   Meteor.call("updateCron");

@@ -1,3 +1,7 @@
+Session.setDefault('SelectedWorker', null);
+Session.set('optionBox', false);
+
+
 //tech working
 Template.techsWorking.helpers({
   techsWorking: function() {
@@ -18,7 +22,7 @@ setInterval(prequeueCheck, 20000);
     }, {
       sort: {
         status: -1,
-        weight: -1
+        // weight: -1
       }
     });
   },
@@ -28,6 +32,7 @@ setInterval(prequeueCheck, 20000);
     }
   }
 });
+
 
 function Now() {
   return TimeSync.serverTime(null, 20000);
@@ -64,7 +69,7 @@ preStartTime: function preStartTime() {
     }, {
       $set: {
         prequeue: false,
-        weight: 0
+        // weight: 0
       }
     });
   };
@@ -130,7 +135,8 @@ dayCheck: function(day){
   }else{
   return "Not"
 }
-},
+}
+// ,
 // queueWeight: function(){
 //   if (this.status == "Working") {
 //   var start = parseInt(this.WorkQueueEnter);
@@ -160,12 +166,47 @@ dayCheck: function(day){
 //   training
 //   return this.weight
 // }
-// },
+// }
+,
 todaysTickets: function(){
+  var skipR = this.skipRound
+  if (skipR > 0) {
+    return "Skip for " + skipR +" Rounds"
+  }else {
   var tickets = parseInt(this.totaltickets) - 1;
   return tickets
 }
+},
+skipCheck: function(){
+  var techQOrder = _Techs.findOne({
+      queue: true
+    }, {
+      sort: {
+        status: -1,
+        // weight: -1,
+        timesincelast: 1}});
+        Session.set('SelectedWorker', techQOrder._id);
+        skipMOne(techQOrder)
+      }
+
 });
+
+function skipMOne(tech){
+  if (tech.skipRound >= 1) {
+console.log("server", tech._id, tech.skipRound);
+  // Meteor.call('minusSkip')
+
+  _Techs.update(Session.get('SelectedWorker'),
+  {
+      $set: {
+        timesincelast: new Date()
+      },
+      $inc: {
+        skipRound: -1
+      }
+    });
+  }
+};
 
 function saveLastTicketTime (techinfo){
   return techinfo.timesincelast
@@ -190,6 +231,9 @@ Template.techWorking.events({
     });
   },
   'click .minus-one': function minusOne() {
+    if (this.skipRound > 0) {
+      _Techs.update({_id: this._id}, {$inc: {skipRound: -1}});
+    }else {
     if (this.totaltickets == 0) {
       return {}
     };
@@ -204,13 +248,20 @@ Template.techWorking.events({
       }
     });
   }
+  },
+  "dblclick .techsWorking": function(event, template){
+    event.preventDefault();
+    Session.set('SelectedWorker', this._id);
+    _Techs.update({
+      _id: this._id},{ $inc: {skipRound: 1}});
+  }
 });
 
 function lunch(slectedstatus, techthis) {
   if (slectedstatus != "Lunch") {
     Meteor.call('removeLunch', techthis);
   } else if (slectedstatus == "Lunch") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 2}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
     Meteor.call('updateLunch', techthis);
   }
 };
@@ -219,7 +270,7 @@ function meeting(slectedstatus, techthis) {
   if (slectedstatus != "Meeting") {
     Meteor.call('removeMeeting', techthis);
   } else if (slectedstatus == "Meeting") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 1}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
     Meteor.call('updateMeeting', techthis);
   }
 };
@@ -228,7 +279,7 @@ function training(slectedstatus, techthis) {
   if (slectedstatus != "Training") {
     Meteor.call('removeTraining', techthis);
   } else if (slectedstatus == "Training") {
-    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date(), weight: 3}});
+    _Techs.update({_id: techthis._id}, {$set: {timesincelast: new Date()}});
     Meteor.call('updateTraining', techthis);
   }
 };
@@ -250,8 +301,7 @@ function prequeueCheck(tech) {
           prequeue: false,
           queue: true,
           totaltickets: 1,
-          WorkQueueEnter: TimeSync.serverTime(),
-          weight: 0
+          WorkQueueEnter: TimeSync.serverTime()
         }
       });
     }else if (newTime >= tech.WorkQueueStart) {
@@ -262,8 +312,7 @@ function prequeueCheck(tech) {
           prequeue: false,
           queue: true,
           totaltickets: 1,
-          WorkQueueEnter: TimeSync.serverTime(),
-          weight: 0
+          WorkQueueEnter: TimeSync.serverTime()
         }
       });
     }

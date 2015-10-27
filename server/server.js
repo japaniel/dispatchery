@@ -109,12 +109,40 @@ Meteor.methods({
           timesincelastTicket: 0,
           preQueueEnterTime: "00:00",
           preQueueExit: "00:00",
-          manager: managerT
+          manager: managerT,
+          skipRound: 0
         }
       });
   }
 });
 }
+// ,
+// minusSkip: function(){
+// //   var techQOrder = _Techs.findOne({
+// //       queue: true
+// //     }, {
+// //       sort: {
+// //         status: -1,
+// //         // weight: -1,
+// //         timesincelast: 1}});
+// //         // techQOrder = techQOrder.fetch()[0]
+// //
+// //         var techId = techQOrder._id
+// //         if (techQOrder.skipRound >= 1) {
+// //   _Techs.update({
+// //     id: techId
+// //   },
+// //   {
+// //       $set: {
+// //         timesincelast: new Date()
+// //       },
+// //       $inc: {
+// //         skipRound: -1
+// //       }
+// //     });
+// // console.log("server", techQOrder._id, techQOrder.skipRound);
+// // }
+// }
 });
 
 Meteor.startup(function() {
