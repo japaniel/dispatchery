@@ -155,13 +155,13 @@ updateLunch: function(tech) {
         SyncedCron.remove(tech.name + ' Training time ' + tech.TrainingClockOut);
         _Techs.update({_id: tech._id}, {$set: {TrainingClockOut: "", training: false}});
       },
-      updateN00b: function() {
+      updateN00b: function(tech) {
         _Techs.find({queue: true}).forEach(function(tech){
         if (tech.qn00b) {
           n00btimer: function n00btimer() {
               var end = new Date();
               var h = end.getHours();
-              var m30 = end.getMinutes() + 29;
+              var m30 = end.getMinutes() + 30;
               var m = end.getMinutes();
               var h1 = end.getHours() + 1;
               if (m30 > 60) {
@@ -179,7 +179,6 @@ updateLunch: function(tech) {
               return h + ":" + m30;
             }
           };
-          console.log(n00btimer());
           SyncedCron.add({
             name: tech.name + ' n00b ',
             schedule: function(parser) {
@@ -190,11 +189,11 @@ updateLunch: function(tech) {
                 _id: tech._id
               }, {
                 $set: {
-                  qn00btime: n00btimer(),
+                  qn00btime: "",
                   qnoob: false
                 }
               });
-              removeN00b(tech);
+              SyncedCron.remove(tech.name + ' n00b ');
             }
           });
           _Techs.update({_id: tech._id}, {$set: {qn00btime: n00btimer(), qn00b: true}});
@@ -204,7 +203,7 @@ updateLunch: function(tech) {
         removeN00b: function(tech) {
           SyncedCron.remove(tech.name + ' n00b ');
           _Techs.update({_id: tech._id}, {$set: {qn00btime: "", qn00b: false}});
-        },
+        }
 
 });
 

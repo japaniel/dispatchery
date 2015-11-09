@@ -267,7 +267,7 @@ Template.techWorking.events({
     }else {
     _Techs.update({
       _id: this._id},{ $set:{qn00b: true}});
-     Meteor.call("updateN00b");
+     Meteor.call("updateN00b", this);
    }
   }
 });
