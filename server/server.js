@@ -62,7 +62,7 @@ Meteor.methods({
   updateTechFields: function(){
   _Techs.find({}).forEach(function(tech){
     console.log(tech.name);
-    updateProject(tech.name, tech.StartTime, tech.EndTime, tech.Monday, tech.Tuesday, tech.Wednesday, tech.Thursday, tech.Friday, tech.Saturday, tech.Sunday, tech.Shift, tech.manager);
+    updateProject(tech.name, tech.StartTime, tech.EndTime, tech.Monday, tech.Tuesday, tech.Wednesday, tech.Thursday, tech.Friday, tech.Saturday, tech.Sunday, tech.Shift, tech.manager, tech.n00b, tech.weight);
     //subtract 30 min from tech schedule for case time
     timeToStop: function timeToStop(endT) {
         var h = parseInt(endT);
@@ -84,14 +84,14 @@ Meteor.methods({
         return h + ":" + m30;
       }
     };
-    updateProject: function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT) {
+    updateProject: function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT, n00b, weight) {
       _Techs.update({_id: tech._id}, {
         $set: {
           name: name,
           StartTime: startT,
           WorkQueueEnter: 0,
           EndTime: endT,
-          WorkQueueExit: timeToStop(tech.EndTime),
+          WorkQueueExit: timeToStop(endT),
           Monday: Monday,
           Tuesday: Tuesday,
           Wednesday: Wednesday,
@@ -99,9 +99,10 @@ Meteor.methods({
           Friday: Friday,
           Saturday: Saturday,
           Sunday: Sunday,
+          queue: false,
           prequeue: false,
           status: "Working",
-          weight: 0,
+          // weight: TimeSync.serverTime(),
           Shift: shift,
           lunch: false,
           meeting: false,
@@ -110,7 +111,9 @@ Meteor.methods({
           preQueueEnterTime: "00:00",
           preQueueExit: "00:00",
           manager: managerT,
-          skipRound: 0
+          skipRound: 0,
+          n00b: n00b,
+          qn00b: false
         }
       });
   }

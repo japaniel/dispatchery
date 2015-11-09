@@ -154,7 +154,57 @@ updateLunch: function(tech) {
       removeTraining: function(tech) {
         SyncedCron.remove(tech.name + ' Training time ' + tech.TrainingClockOut);
         _Techs.update({_id: tech._id}, {$set: {TrainingClockOut: "", training: false}});
-      }
+      },
+      updateN00b: function() {
+        _Techs.find({queue: true}).forEach(function(tech){
+        if (tech.qn00b) {
+          n00btimer: function n00btimer() {
+              var end = new Date();
+              var h = end.getHours();
+              var m30 = end.getMinutes() + 29;
+              var m = end.getMinutes();
+              var h1 = end.getHours() + 1;
+              if (m30 > 60) {
+                var subm = m30 - 60;
+
+              if (subm.toString().length == 1){
+                var subm = ('0' + subm).toString()
+              };
+              return h1 + ":" + subm;
+            }else {
+              if (m30.toString().length == 1) {
+                var m30 = ('0' + m30).toString()
+                return h + ":" + m30;
+              };
+              return h + ":" + m30;
+            }
+          };
+          console.log(n00btimer());
+          SyncedCron.add({
+            name: tech.name + ' n00b ',
+            schedule: function(parser) {
+              return parser.recur().on(n00btimer()).time()
+            },
+            job: function() {
+              _Techs.update({
+                _id: tech._id
+              }, {
+                $set: {
+                  qn00btime: n00btimer(),
+                  qnoob: false
+                }
+              });
+              removeN00b(tech);
+            }
+          });
+          _Techs.update({_id: tech._id}, {$set: {qn00btime: n00btimer(), qn00b: true}});
+        }
+        })
+      },
+        removeN00b: function(tech) {
+          SyncedCron.remove(tech.name + ' n00b ');
+          _Techs.update({_id: tech._id}, {$set: {qn00btime: "", qn00b: false}});
+        },
 
 });
 

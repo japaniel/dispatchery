@@ -1,5 +1,4 @@
 Session.setDefault('SelectedWorker', null);
-Session.set('optionBox', false);
 
 
 //tech working
@@ -187,6 +186,11 @@ skipCheck: function(){
         timesincelast: 1}});
         Session.set('SelectedWorker', techQOrder._id);
         skipMOne(techQOrder)
+      },
+      n00bcheck:function n00bcheck(){
+        if (this.n00b || this.qn00b) {
+          return {style: "background-color:#80FF95"}
+        }
       }
 
 });
@@ -254,6 +258,17 @@ Template.techWorking.events({
     Session.set('SelectedWorker', this._id);
     _Techs.update({
       _id: this._id},{ $inc: {skipRound: 1}});
+  },
+  "click .qn00b": function(event, template){
+    event.preventDefault();
+    Session.set('SelectedWorker', this._id);
+    if (this.qn00b) {
+      Meteor.call("removeN00b", this);
+    }else {
+    _Techs.update({
+      _id: this._id},{ $set:{qn00b: true}});
+     Meteor.call("updateN00b");
+   }
   }
 });
 
