@@ -190,7 +190,7 @@ updateLunch: function(tech) {
               }, {
                 $set: {
                   qn00btime: "",
-                  qnoob: false
+                  qn00b: false
                 }
               });
               SyncedCron.remove(tech.name + ' n00b ');

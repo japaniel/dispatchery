@@ -85,6 +85,9 @@ Meteor.methods({
       }
     };
     updateProject: function updateProject(name, startT, endT, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, shift, managerT, n00b, weight) {
+      if (n00b == null) {
+        n00b = false
+      };
       _Techs.update({_id: tech._id}, {
         $set: {
           name: name,
