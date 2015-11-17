@@ -6,19 +6,17 @@
 
 
 <template name="Login">
-  {{#if currentUser}}
+  {{#if acheck}}
   <h2>Create User</h2>
 {{else}}
 <h2>Login</h2>
 {{/if}}
-{{#if currentUser}}
+{{#if acheck}}
   <select class="dropdown" name="role">
     <option selected disabled>What Role?</option>
     <option>Dispatch</option>
     <option>Manager</option>
-    {{#if acheck}}
     <option>Admin</option>
-    {{/if}}
   </select>
   <form class="login">
       <p>Email: <input id="email" type="email" name="email" placeholder=" Email@purestorage.com">
